@@ -1,0 +1,108 @@
+<?php
+include('../config/config.php');
+ob_start(); // Start output buffering
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>BLTS</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../css/datatable.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <?php if (isLogin()) : ?>
+            <!-- Sidebar -->
+            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+                <!-- Sidebar - Brand -->
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" id="brandLink" data-title="BLTS - Dashboard" href="dashboard.php">
+                    <div class="sidebar-brand-icon">
+                        <i class="img-profile rounded-circle fas fa-user-circle fa-2x"></i>
+                    </div>
+                    <div class="sidebar-brand-text mx-3">BLTS <?php echo logUsertype(); ?></div>
+                </a>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider my-0">
+
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link Links" id="dashboardLink" href="dashboard.php" data-title="BLTS - Dashboard">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <?php if (isAdmin()) : ?>
+                    <li class="nav-item">
+                        <a class="nav-link Links" href="#" id="documentManagementLink" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages" data-title="BLTS - Document Management">
+                            <i class="fas fa-fw fa-file"></i>
+                            <span>Document Management</span>
+                        </a>
+                        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="resolution.php">Resolution</a>
+                                <a class="collapse-item" href="ordinance.php">Ordinance</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link Links" id="publishDocumentLink" href="publish_document.php" data-title="BLTS - Publish Documents">
+                            <i class="fas fa-fw fa-upload"></i>
+                            <span>Publish Documents</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link Links" id="adminPanelLink" href="admin_panel.php" data-title="BLTS - Admin Panel">
+                            <i class="fas fa-fw fa-user"></i>
+                            <span>Admin Panel</span>
+                        </a>
+                    </li>
+                <?php elseif (isMember()) : ?>
+                    <li class="nav-item">
+                        <a class="nav-link Links" id="citizenPortalLink" href="citizen_forum.php" data-title="BLTS - Citizen Portal">
+                            <i class="fas fa-fw fa-users"></i>
+                            <span>Citizen Portal</span>
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link Links" id="feedbackForumLink" href="citizen_forum.php" data-title="BLTS - Feedback Forum">
+                            <i class="fas fa-fw fa-comments"></i>
+                            <span>Feedback Forum</span>
+                        </a>
+                    </li> -->
+                <?php endif; ?>
+
+
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+
+                <!-- Sidebar Toggler (Sidebar) -->
+                <div class="text-center d-none d-md-inline">
+                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                </div>
+            </ul>
+            <!-- End of Sidebar -->
+
+        <?php endif;

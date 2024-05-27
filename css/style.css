@@ -1,0 +1,15 @@
+.login-container {
+    width: 100%;
+}
+
+.sidebar .nav-item .nav-link[data-toggle=collapse]::after {
+    content: '' !important;
+}
+
+a.portal-link {
+    text-decoration: none !important;
+}
+
+a.portal-link:hover {
+    color: #fff !important;
+}
