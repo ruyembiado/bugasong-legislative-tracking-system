@@ -56,11 +56,11 @@ ob_start(); // Start output buffering
                 </li>
                 <?php if (isAdmin()) : ?>
                     <li class="nav-item">
-                        <a class="nav-link Links" href="#" id="documentManagementLink" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages" data-title="BLTS - Document Management">
+                        <a class="nav-link Links" href="#" id="documentManagementLink" data-toggle="collapse" data-target="#DocumentManagePage" aria-expanded="true" aria-controls="DocumentManagePage" data-title="BLTS - Document Management">
                             <i class="fas fa-fw fa-file"></i>
                             <span>Document Management</span>
                         </a>
-                        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div id="DocumentManagePage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
                                 <a class="collapse-item" href="resolution.php">Resolution</a>
                                 <a class="collapse-item" href="ordinance.php">Ordinance</a>
@@ -81,17 +81,18 @@ ob_start(); // Start output buffering
                     </li>
                 <?php elseif (isMember()) : ?>
                     <li class="nav-item">
-                        <a class="nav-link Links" id="citizenPortalLink" href="citizen_forum.php" data-title="BLTS - Citizen Portal">
+                        <a class="nav-link Links" href="#" id="citizenPortalLink" data-toggle="collapse" data-target="#CitizenPortalPage" aria-expanded="true" aria-controls="CitizenPortalPage" data-title="BLTS - Citizen Portal">
                             <i class="fas fa-fw fa-users"></i>
                             <span>Citizen Portal</span>
                         </a>
+                        <div id="CitizenPortalPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="citizen_resolution.php">Resolutions</a>
+                                <a class="collapse-item" href="citizen_ordinance.php">Ordinances</a>
+                                <a class="collapse-item" href="citizen_forum.php">Feedback Forum</a>
+                            </div>
+                        </div>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link Links" id="feedbackForumLink" href="citizen_forum.php" data-title="BLTS - Feedback Forum">
-                            <i class="fas fa-fw fa-comments"></i>
-                            <span>Feedback Forum</span>
-                        </a>
-                    </li> -->
                 <?php endif; ?>
 
 

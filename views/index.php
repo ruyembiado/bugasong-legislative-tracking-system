@@ -12,7 +12,7 @@
             <h5 class="mb-2" style="font-size: 13px;">Please login to continue</h5>
             <form action="../actions/login.php" method="POST">
                 <div class="m-1">
-                    <label class="labeles" style="font-size: 13px;">Username</label>
+                    <label class="label" style="font-size: 13px;">Username</label>
                     <div class="d-flex align-items-center">
                         <i style="font-size: 14px;" class="fas fa-user position-absolute pl-2 border-end border-secondary"></i>
                         <input class="form-control" style="text-indent: 21px;" type="text" name="username" value="<?php echo getValue('username'); ?>" placeholder="Enter your username">
@@ -22,7 +22,7 @@
                     <?php endif; ?>
                 </div>
                 <div class="m-1 mb-3">
-                    <label class="labeles" style="font-size: 13px;">Password</label>
+                    <label class="label" style="font-size: 13px;">Password</label>
                     <div class="d-flex align-items-center">
                         <i style="font-size: 14px;" class="fas fa-key position-absolute pl-2 border-end border-secondary"></i>
                         <input class="form-control" style="text-indent: 21px;" type="password" name="password" placeholder="Enter your password">

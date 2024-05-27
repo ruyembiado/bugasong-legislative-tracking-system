@@ -21,11 +21,6 @@ redirectNotLogin();
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">Resolution</h1>
             </div>
-            <div class="d-sm-flex align-items-center justify-content-start mb-4">
-                <a class="portal-link p-2 text-light bg-primary m-1" href="citizen_resolution.php">Resolutions</a>
-                <a class="portal-link p-2 text-light bg-primary m-1" href="citizen_ordinance.php">Ordinances</a>
-                <a class="portal-link p-2 text-light bg-primary m-1" href="citizen_forum.php">Feedback Forum</a>
-            </div>
 
             <!-- Content Row -->
             <div class="row">
