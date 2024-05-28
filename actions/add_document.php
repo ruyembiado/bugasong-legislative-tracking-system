@@ -1,5 +1,4 @@
 <?php
-
 require_once '../config/config.php';
 require '../vendor/autoload.php';
 
@@ -23,34 +22,39 @@ if (!isTesseractInstalled()) {
     die('Error: Tesseract OCR is not installed or not found in PATH.');
 }
 
-if (isset($_FILES['uploadedFile']) && $_FILES['uploadedFile']['error'] === UPLOAD_ERR_OK) {
-    $fileTmpPath = $_FILES['uploadedFile']['tmp_name'];
-    $fileName = $_FILES['uploadedFile']['name'];
-    $fileSize = $_FILES['uploadedFile']['size'];
-    $fileType = $_FILES['uploadedFile']['type'];
-    $fileNameCmps = explode(".", $fileName);
-    $fileExtension = strtolower(end($fileNameCmps));
+if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0])) {
+    $uploadedFiles = $_FILES['uploadedFiles'];
 
-    $allowedfileExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
+    foreach ($uploadedFiles['tmp_name'] as $key => $tmp_name) {
+        $fileName = $uploadedFiles['name'][$key];
+        $fileTmpPath = $uploadedFiles['tmp_name'][$key];
+        $fileSize = $uploadedFiles['size'][$key];
+        $fileType = $uploadedFiles['type'][$key];
+        $fileNameCmps = explode(".", $fileName);
+        $fileExtension = strtolower(end($fileNameCmps));
 
-    if (in_array($fileExtension, $allowedfileExtensions)) {
-        $uploadFileDir = '../uploads/';
-        $dest_path = $uploadFileDir . $fileName;
+        $allowedfileExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
 
-        if (move_uploaded_file($fileTmpPath, $dest_path)) {
-            $extractedText = extractTextFromUploadedFile($dest_path);
+        if (in_array($fileExtension, $allowedfileExtensions)) {
+            $uploadFileDir = '../uploads/';
+            $dest_path = $uploadFileDir . $fileName;
 
-            echo '<h3>Extracted Text:</h3>';
-            echo '<pre>' . htmlspecialchars($extractedText) . '</pre>';
+            if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                $extractedText = extractTextFromUploadedFile($dest_path);
+
+                echo '<h3>Extracted Text from ' . htmlspecialchars($fileName) . ':</h3>';
+                echo '<pre>' . htmlspecialchars($extractedText) . '</pre>';
+            } else {
+                setFlash('failed', 'There was an error moving the uploaded file.');
+                redirect('add_resolution');
+            }
         } else {
-            setFlash('failed', 'There was an error moving the uploaded file.');
+            setFlash('failed', 'Upload failed. Allowed file types: ' . implode(',', $allowedfileExtensions));
             redirect('add_resolution');
         }
-    } else {
-        setFlash('failed', 'Upload failed. Allowed file types: ' . implode(',', $allowedfileExtensions));
-        redirect('add_resolution');
     }
 } else {
-    setFlash('failed', 'There was an error with the file upload.');
+    setFlash('failed', 'Please select at least one file to upload.');
     redirect('add_resolution');
 }
+?>

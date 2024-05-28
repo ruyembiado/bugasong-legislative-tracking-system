@@ -23,96 +23,15 @@ redirectNotLogin();
             </div>
 
             <!-- Content Row -->
-            <div class="container-fluid p-0">
-                <div class="row main-content">
-                    <div class="forum-post col-12 col-sm-8 order-2 order-sm-1">
-                        <div class="forum">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    test
-                                </div>
-                                <div class="card-body">
-                                    test
-                                </div>
-                            </div>
-                        </div>
-                        <div class="forum">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    test
-                                </div>
-                                <div class="card-body">
-                                    test
-                                </div>
-                            </div>
-                        </div>
-                        <div class="forum">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    test
-                                </div>
-                                <div class="card-body">
-                                    test
-                                </div>
-                            </div>
-                        </div>
-                        <div class="forum">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    test
-                                </div>
-                                <div class="card-body">
-                                    test
-                                </div>
-                            </div>
-                        </div>
-                        <div class="forum">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    test
-                                </div>
-                                <div class="card-body">
-                                    test
-                                </div>
-                            </div>
-                        </div>
-                        <div class="forum">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    test
-                                </div>
-                                <div class="card-body">
-                                    test
-                                </div>
-                            </div>
-                        </div>
-                        <div class="forum">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    test
-                                </div>
-                                <div class="card-body">
-                                    test
-                                </div>
-                            </div>
-                        </div>
-                        <div class="forum">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    test
-                                </div>
-                                <div class="card-body">
-                                    test
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="create-forum col-12 col-sm-4 order-1 order-sm-2">
-                        <div class="card shadow mb-4">
+            <div class="container-fluid p-0 d-flex flex-row">
+                <div class="col-12 col-sm-8 p-0">
+                    <!-- Post Form -->
+                    <div class="create-forum col-12 p-0">
+                        <div class="card shadow mb-3">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Create Post</h6>
                             </div>
-                            <form action="" method="POST" class="p-2">
+                            <form action="../actions/add_post.php" method="POST" class="p-2">
                                 <div class="d-flex flex-column">
                                     <div class="m-1">
                                         <label class="label" style="font-size: 13px;">Topic</label>
@@ -133,10 +52,95 @@ redirectNotLogin();
                                         <?php endif; ?>
                                     </div>
                                 </div>
-                                <div class="m-1 mb-4">
-                                    <button type="submit" name="user_login" class="button-size form-control btn-primary rounded" style="font-size: 14px;">Submit</button>
+                                <div class="m-1 mb-2 d-flex justify-content-end">
+                                    <input type="hidden" name="user_id" id="" value="<?php echo user_id(); ?>">
+                                    <button type="submit" name="create_post" value="create_post" class="button-size form-control btn-primary rounded col-2" style="font-size: 14px;">Submit</button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                    <!-- Post Lists -->
+                    <div class="forum-post col-12 p-0">
+                        <?php foreach (getAllPostRand() as $post) : ?>
+                            <div class="forum">
+                                <div class="card shadow mb-3">
+                                    <div class="card-header pt-2 pb-0 forum-topic">
+                                        <div class="d-flex flex-column">
+                                            <span class="user" style="font-size: 13px;"><?php foreach (getPostUser($post['post_id']) as $user) : echo $user['name'];
+                                                                                        endforeach; ?> - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?></span>
+                                            <h5 class="topic text-primary"><?php echo $post['topic']; ?></h5>
+                                        </div>
+                                    </div>
+                                    <div class="card-body py-2 forum-message">
+                                        <div class="message mb-2"><?php echo $post['message']; ?></div>
+                                        <div class="feedback">
+                                            <div class="d-flex">
+                                                <span><i class="fas fa-thumbs-up m-1"></i><sup>1</sup></span>
+                                                <span><i class="fas fa-comment m-1"></i><sup>5</sup></span>
+                                            </div>
+                                            <div class="comment-section">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="comment-user m-1" style="font-size: 15px;">Name -</span>
+                                                    <span class="comment-user m-1" style="font-size: 13px;">Comment</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <!-- Sidebar Topics -->
+                <div class="sidebar-container column col-12 col-sm-4 p-0">
+                    <div class="col-12 p-0">
+                        <div class="sidebar-forum col-12 pr-0">
+                            <div class="card shadow mb-3">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Latest Topics</h6>
+                                </div>
+                                <div class="card-body py-2 forum-message">
+                                    <?php foreach (getAllPostDesc(3) as $post) : ?>
+                                        <div class="d-flex flex-column">
+                                            <span class="user" style="font-size: 13px;"><?php foreach (getPostUser($post['post_id']) as $user) : echo $user['name'];
+                                                                                        endforeach; ?> - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?></span>
+                                            <h5 class="topic text-primary"><?php echo $post['topic']; ?></h5>
+                                        </div>
+                                        <div class="message mb-2"><?php echo $post['message']; ?></div>
+                                        <div class="feedback mb-4">
+                                            <div class="d-flex">
+                                                <span><i class="fas fa-thumbs-up m-1"></i><sup>1</sup></span>
+                                                <span><i class="fas fa-comment m-1"></i><sup>5</sup></span>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 p-0">
+                        <div class="sidebar-forum col-12 pr-0">
+                            <div class="card shadow mb-3">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Top Likes</h6>
+                                </div>
+                                <div class="card-body py-2 forum-message">
+                                    <?php foreach (getAllPostDesc( 3) as $post) : ?>
+                                        <div class="d-flex flex-column">
+                                            <span class="user" style="font-size: 13px;"><?php foreach (getPostUser($post['post_id']) as $user) : echo $user['name'];
+                                                                                        endforeach; ?> - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?></span>
+                                            <h5 class="topic text-primary"><?php echo $post['topic']; ?></h5>
+                                        </div>
+                                        <div class="message mb-2"><?php echo $post['message']; ?></div>
+                                        <div class="feedback mb-4">
+                                            <div class="d-flex">
+                                                <span><i class="fas fa-thumbs-up m-1"></i><sup>1</sup></span>
+                                                <span><i class="fas fa-comment m-1"></i><sup>5</sup></span>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

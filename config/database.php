@@ -96,14 +96,28 @@ function find($table, $conditions)
     return $result->fetch_assoc();
 }
 // usage example: find('tablename', ['username' => $username]);
-function findAll($table)
+
+function findAll($table, $orderBy = null, $direction = 'ASC', $limit = null)
 {
     global $conn;
     $sql = "SELECT * FROM $table";
+    // Handle sorting
+    if ($orderBy === 'RAND()') {
+        $sql .= " ORDER BY RAND()";
+    } elseif ($orderBy) {
+        $sql .= " ORDER BY $orderBy $direction";
+    }
+    // Handle limit
+    if ($limit) {
+        $sql .= " LIMIT $limit";
+    }
     $result = mysqli_query($conn, $sql);
+    if (!$result) {
+        die('Error: ' . mysqli_error($conn));
+    }
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
-//sample findAll('table_name')
+//sample findAll('table_name',column_name, direction, limit) for ASC/DESC and findAll('posts', 'RAND()'); for RANDOM 
 
 function find_where($table, $columns_and_values)
 {
@@ -205,13 +219,17 @@ function makeValuesReferenced($arr)
 //sample $result = join("users", [["departments", "users.department_id", "departments.department_id"]], ["users.name" => "John Doe"]);
 //$result = join("users", [["departments", "users.department_id", "departments.department_id"]]);
 
-function joinTable($table, $joins, $conditions = [])
+function joinTable($table, $joins, $conditions = [], $orderBy = null, $direction = 'ASC')
 {
     global $conn;
     $query = "SELECT * FROM $table";
+
+    // Add JOIN clauses
     foreach ($joins as $join) {
         $query .= " INNER JOIN $join[0] ON $join[1] = $join[2]";
     }
+
+    // Add WHERE conditions
     if (!empty($conditions)) {
         $where_clauses = array();
         $params = array();
@@ -220,11 +238,18 @@ function joinTable($table, $joins, $conditions = [])
             $params[] = $value;
         }
         $query .= " WHERE " . implode(" AND ", $where_clauses);
-        $stmt = mysqli_prepare($conn, $query);
+    }
+
+    // Add ORDER BY clause if specified
+    if ($orderBy) {
+        $query .= " ORDER BY $orderBy $direction";
+    }
+
+    // Prepare and execute the statement
+    $stmt = mysqli_prepare($conn, $query);
+    if (!empty($conditions)) {
         $types = str_repeat("s", count($params));
         $stmt->bind_param($types, ...$params);
-    } else {
-        $stmt = mysqli_prepare($conn, $query);
     }
     $stmt->execute();
     $result = $stmt->get_result();
@@ -290,7 +315,7 @@ function joinTableDistinctByID($table, $joins, $conditions = [])
     $result = $stmt->get_result();
     $rows = array();
     while ($row = $result->fetch_assoc()) {
-        $rows[$row['user_ID']] = $row; // Use user_ID as the key to ensure distinct values
+        $rows[$row['user_id']] = $row; // Use user_ID as the key to ensure distinct values
     }
     return array_values($rows); // Return only the values (distinct rows)
 }

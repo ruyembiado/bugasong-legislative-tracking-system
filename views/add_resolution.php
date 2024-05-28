@@ -31,14 +31,15 @@ redirectNotLogin();
                         <h6 class="m-0 font-weight-bold text-primary">Resolution Form</h6>
                     </div>
                     <div class="card-body">
-                        <h2>Upload a file for OCR</h2>
+                        <h2>Upload files for OCR</h2>
                         <form action="../actions/add_document.php" method="post" enctype="multipart/form-data">
-                            <label for="uploadedFile">Choose a file to upload:</label>
-                            <input type="file" name="uploadedFile" id="uploadedFile">
+                            <label for="uploadedFiles">Choose files to upload:</label>
+                            <input type="file" multiple name="uploadedFiles[]" id="uploadedFiles">
                             <br><br>
                             <input type="submit" name="uploadBtn" value="Upload">
                         </form>
                     </div>
+
                 </div>
 
             </div>

@@ -1,5 +1,6 @@
 <?php
 include('../config/config.php');
+
 ob_start(); // Start output buffering
 ?>
 
@@ -23,7 +24,7 @@ ob_start(); // Start output buffering
     <!-- Custom styles for this template-->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../css/datatable.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/styles.css" rel="stylesheet">
 
 </head>
 

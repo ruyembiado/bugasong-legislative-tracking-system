@@ -60,7 +60,8 @@ function redirectNotLogin()
 {
     if (!isset($_SESSION['isLogin'])) {
         session_destroy();
-        redirect('index', '');
+        setFlash('failed', 'Login first!');
+        redirect('index');
     }
 }
 
@@ -89,4 +90,24 @@ function logName()
 function logUsertype()
 {
     return $_SESSION['user_type'];
+}
+
+function user_id(){
+    return $_SESSION['user_id'];
+}
+
+function getAllPostDesc($limit){
+    return findAll('posts', 'post_id', 'DESC', $limit);
+}
+
+function getAllPostAsc($limit){
+    return findAll('posts', 'post_id', 'ASC', $limit);
+}
+
+function getAllPostRand(){
+    return findAll('posts', 'RAND()');
+}
+
+function getPostUser($post_id) {
+    return joinTable("users", [["posts", "users.user_id", "posts.user_id"]], ["posts.post_id" => $post_id]);
 }
