@@ -31,12 +31,12 @@ redirectNotLogin();
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Create Post</h6>
                             </div>
-                            <form action="../actions/add_post.php" method="POST" class="p-2">
+                            <form action="../actions/citizen_add.php" method="POST" class="p-2">
                                 <div class="d-flex flex-column">
                                     <div class="m-1">
                                         <label class="label" style="font-size: 13px;">Topic</label>
                                         <div class="d-flex align-items-center">
-                                            <input class="form-control" type="text" name="topic" value="<?php echo getValue('topic'); ?>" placeholder="Enter your topic">
+                                            <input class="form-control text-gray-800" type="text" name="topic" value="<?php echo getValue('topic'); ?>" placeholder="Enter your topic">
                                         </div>
                                         <?php if (showError('topic')) : ?>
                                             <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('topic'); ?></p>
@@ -45,7 +45,7 @@ redirectNotLogin();
                                     <div class="m-1">
                                         <label class="label" style="font-size: 13px;">Message</label>
                                         <div class="d-flex align-items-center">
-                                            <textarea class="form-control" name="message" placeholder="Enter your message"><?php echo getValue('message'); ?></textarea>
+                                            <textarea class="form-control text-gray-800" name="message" placeholder="Enter your message"><?php echo getValue('message'); ?></textarea>
                                         </div>
                                         <?php if (showError('message')) : ?>
                                             <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('message'); ?></p>
@@ -72,10 +72,11 @@ redirectNotLogin();
                                         </div>
                                     </div>
                                     <div class="card-body py-2 forum-message">
-                                        <div class="message mb-2"><?php echo $post['message']; ?></div>
+                                        <div class="message mb-2 text-gray-800"><?php echo $post['message']; ?></div>
                                         <div class="feedback">
                                             <div class="d-flex">
                                                 <span><i class="fas fa-thumbs-up m-1"></i><sup>1</sup></span>
+                                                <span><i class="fas fa-thumbs-down m-1"></i><sup>1</sup></span>
                                                 <span><i class="fas fa-comment m-1"></i><sup>5</sup></span>
                                             </div>
                                             <div class="comment-section">
@@ -106,10 +107,11 @@ redirectNotLogin();
                                                                                         endforeach; ?> - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?></span>
                                             <h5 class="topic text-primary"><?php echo $post['topic']; ?></h5>
                                         </div>
-                                        <div class="message mb-2"><?php echo $post['message']; ?></div>
+                                        <div class="message mb-2 text-gray-800"><?php echo $post['message']; ?></div>
                                         <div class="feedback mb-4">
                                             <div class="d-flex">
                                                 <span><i class="fas fa-thumbs-up m-1"></i><sup>1</sup></span>
+                                                <span><i class="fas fa-thumbs-down m-1"></i><sup>1</sup></span>
                                                 <span><i class="fas fa-comment m-1"></i><sup>5</sup></span>
                                             </div>
                                         </div>
@@ -131,10 +133,11 @@ redirectNotLogin();
                                                                                         endforeach; ?> - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?></span>
                                             <h5 class="topic text-primary"><?php echo $post['topic']; ?></h5>
                                         </div>
-                                        <div class="message mb-2"><?php echo $post['message']; ?></div>
+                                        <div class="message mb-2 text-gray-800"><?php echo $post['message']; ?></div>
                                         <div class="feedback mb-4">
                                             <div class="d-flex">
                                                 <span><i class="fas fa-thumbs-up m-1"></i><sup>1</sup></span>
+                                                <span><i class="fas fa-thumbs-down m-1"></i><sup>1</sup></span>
                                                 <span><i class="fas fa-comment m-1"></i><sup>5</sup></span>
                                             </div>
                                         </div>

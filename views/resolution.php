@@ -44,10 +44,10 @@ redirectNotLogin();
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Resolution 1</td>
-                                        <td>Category 1</td>
-                                        <td>Tag 1</td>
-                                        <td>2011/04/25</td>
+                                        <td class="text-gray-800">Resolution 1</td>
+                                        <td class="text-gray-800">Category 1</td>
+                                        <td class="text-gray-800">Tag 1</td>
+                                        <td class="text-gray-800">2011/04/25</td>
                                         <td>
                                             <a href="#" class="btn btn-secondary px-2 py-1 m-1">View</a>
                                             <a href="#" class="btn btn-primary px-2 py-1 m-1">Update</a>
