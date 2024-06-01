@@ -1,7 +1,6 @@
 <?php
 @include('header.php');
 redirectNotLogin();
-
 ?>
 
 <!-- Content Wrapper -->
@@ -28,32 +27,35 @@ redirectNotLogin();
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <!-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> -->
-                        <a href="add_resolution.php" class="btn btn-primary px-2 py-1">Add Resolution</a>
+                        <a href="admin_add_resolution.php" class="btn btn-primary px-2 py-1">Add Resolution</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Resolution Name</th>
-                                        <th>Category</th>
-                                        <th>Tag</th>
-                                        <th>Dated Added</th>
-                                        <th>Action</th>
+                                        <th style="width: 5%;">No.</th>
+                                        <th style="width: 40%;">Resolution Name</th>
+                                        <th style="width: 15%;">Tag</th>
+                                        <th style="width: 20%;">Dated Added</th>
+                                        <th style="width: 20%;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="text-gray-800">Resolution 1</td>
-                                        <td class="text-gray-800">Category 1</td>
-                                        <td class="text-gray-800">Tag 1</td>
-                                        <td class="text-gray-800">2011/04/25</td>
-                                        <td>
-                                            <a href="#" class="btn btn-secondary px-2 py-1 m-1">View</a>
-                                            <a href="#" class="btn btn-primary px-2 py-1 m-1">Update</a>
-                                            <a href="#" class="btn btn-danger px-2 py-1 m-1">Delete</a>
-                                        </td>
-                                    </tr>
+                                    <?php $count = 1; ?>
+                                    <?php foreach (getAllResolutionsDesc(null) as $resolution) :  ?>
+                                        <tr>
+                                            <td><?php echo $count++; ?></td>
+                                            <td class="text-gray-800"><?php echo $resolution['title']; ?></td>
+                                            <td class="text-gray-800"><?php echo $resolution['tag']; ?></td>
+                                            <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($resolution['date_added'])); ?></td>
+                                            <td>
+                                                <a href="view_resolution.php?resolution_id=<?php echo $resolution['resolution_id']; ?>" class="btn btn-secondary px-2 py-1 my-1">View</a>
+                                                <a href="admin_update_resolution.php?resolution_id=<?php echo $resolution['resolution_id']; ?>" class="btn btn-primary px-2 py-1 my-1">Update</a>
+                                                <a href="../actions/admin_delete.php?delete_resolution=delete&resolution_id=<?php echo $resolution['resolution_id']; ?>" class="btn btn-danger px-2 py-1 my-1">Delete</a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>

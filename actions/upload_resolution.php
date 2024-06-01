@@ -1,4 +1,3 @@
-
 <?php
 require_once '../config/config.php';
 require '../vendor/autoload.php';
@@ -33,7 +32,7 @@ function extractTextFromImage($imagePath)
     return (new TesseractOCR($imagePath))->run();
 }
 
-function extractTextFromPdf($pdfPath)
+function extractTextFromPdf($pdfPath, &$pdftoimageUrls)
 {
     $outputDir = '../uploads/temp_images';
 
@@ -45,6 +44,7 @@ function extractTextFromPdf($pdfPath)
     $fullText = '';
     $files = glob($outputDir . '/*.png');
     foreach ($files as $file) {
+        $pdftoimageUrls[] = $file; // Collect the URL of the generated image
         $fullText .= extractTextFromImage($file) . "\n";
     }
     array_map('unlink', glob("$outputDir/*.*"));
@@ -57,13 +57,13 @@ function parseResolutionText($text)
         'resolutionNo' => '',
         'title' => '',
         'whereasClauses' => '',
-        'resolvingClause' => '',
+        'resolvingClauses' => '',
         'optionalClauses' => '',
         'approvalDetails' => ''
     ];
 
     if (preg_match('/Resolution No.(.+?)\n/', $text, $matches)) {
-        $resolutionData['resolutionNo'] = $matches[0];
+        $resolutionData['resolutionNo'] = trim($matches[0]);
     }
 
     if (preg_match('/A RESOLUTION(.+?)\n\n/s', $text, $matches)) {
@@ -75,14 +75,14 @@ function parseResolutionText($text)
     }
 
     if (preg_match('/RESOLVED(.+?)(?:UNANIMOUSLY|APPROVED)/s', $text, $matches)) {
-        $resolutionData['resolvingClause'] = trim($matches[0]);
+        $resolutionData['resolvingClauses'] = trim($matches[0]);
     }
 
-    if (preg_match('/UNANIMOUSLY(.+?)(?:APPROVED)/s', $text, $matches)) {
+    if (preg_match('/APPROVED(.+?)(?:APPROVED)/s', $text, $matches)) {
         $resolutionData['optionalClauses'] = trim($matches[0]);
     }
 
-    if (preg_match('/APPROVED(.+)/s', $text, $matches)) {
+    if (preg_match('/UNANIMOUSLY(.+)/s', $text, $matches)) {
         $resolutionData['approvalDetails'] = trim($matches[0]);
     }
 
@@ -90,16 +90,23 @@ function parseResolutionText($text)
 }
 
 if (!isTesseractInstalled()) {
-    die('Error: Tesseract OCR is not installed or not found in PATH.');
+    echo json_encode([
+        'success' => false,
+        'message' => 'Tesseract OCR is not installed or not found in PATH.'
+    ]);
 }
 
 if (!isPdftoppmInstalled()) {
-    die('Error: pdftoppm is not installed or not found in PATH.');
+    echo json_encode([
+        'success' => false,
+        'message' => 'pdftoppm is not installed or not found in PATH.'
+    ]);
 }
 
 if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0])) {
     $uploadedFiles = $_FILES['uploadedFiles'];
     $uploadedFileUrls = []; // Initialize array to store uploaded file URLs
+    $pdftoimageUrls = []; // Initialize array to store URLs of images generated from PDFs
     $allExtractedText = ''; // Initialize variable to store all extracted text
     foreach ($uploadedFiles['tmp_name'] as $key => $tmp_name) {
         $fileName = $uploadedFiles['name'][$key];
@@ -117,15 +124,17 @@ if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0
                 $extractedText = ''; // Define extracted text variable
                 if ($fileExtension === 'pdf') {
                     // Extract text from PDF
-                    $extractedText = extractTextFromPdf($dest_path);
+                    $extractedText = extractTextFromPdf($dest_path, $pdftoimageUrls);
                 } else {
                     // Extract text from image
                     $extractedText = extractTextFromImage($dest_path);
                 }
+                // Clean the extracted text
+                $cleanExtractedText = $extractedText;
                 // Add a marker indicating the order of extraction
-                $extractedTextWithMarker = "<h6 class='text-primary'>Extracted Texts " . ($key + 1) . ":</h6>\n<p class ='text-gray-800'>" . $extractedText . "</p>\n";
+                $extractedTextWithMarker = "<h6 class='text-primary'>Extracted Texts " . ($key + 1) . ":</h6>\n<p class='text-gray-800'>" . $cleanExtractedText . "</p>\n";
                 // Concatenate extracted text from each image
-                $allExtractedText .= $extractedTextWithMarker;
+                $allExtractedText .= htmlspecialchars(trim(strip_tags($extractedTextWithMarker)));
             } else {
                 echo json_encode([
                     'success' => false,
@@ -143,12 +152,12 @@ if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0
     }
     // After looping through all images, parse the combined extracted text
     $resolutionData = parseResolutionText($allExtractedText);
-    
+
     echo json_encode([
         'success' => true,
         'resolutionData' => $resolutionData,
         'extractedText' => $allExtractedText, // Include combined extracted text in the response
-        'uploadedFileUrls' => $uploadedFileUrls // Include URLs of uploaded files
+        'uploadedFileUrls' => $uploadedFileUrls, // Include URLs of uploaded files
     ]);
 } else {
     echo json_encode([
@@ -156,5 +165,3 @@ if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0
         'message' => 'Please select at least one file to upload.'
     ]);
 }
-
-?>

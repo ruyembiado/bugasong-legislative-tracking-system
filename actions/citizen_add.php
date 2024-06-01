@@ -3,15 +3,11 @@ require_once '../config/config.php';
 
 if (isset($_POST['create_post'])) :
     if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check if the method is post
-        // get the value POST
-        $topic = $_POST['topic'];
-        $message = $_POST['message'];
-        $user_id = $_POST['user_id'];
 
         //Input the fields
         $fields = [
-            'topic'          => $topic, //or 'name =>$_POST['name'],'
-            'message'          => $message,
+            'topic'          => $_POST['topic'], //or 'name =>$_POST['name'],'
+            'message'          => $_POST['message'],
         ];
         //Create Validation if you want to see the choices ..go to database.php
         $validations = [
@@ -27,9 +23,9 @@ if (isset($_POST['create_post'])) :
 
         if (empty($errors)) { //check if the errors is empty
             $data = [
-                'topic'       => $topic, //or $_POST['name']
-                'message'       => $message,
-                'user_id'       => $user_id
+                'topic'       => $_POST['topic'], //or $_POST['name']
+                'message'       => $_POST['message'],
+                'user_id'       => $_POST['user_id']
             ]; //put it in array before saving
 
             $save = save('posts', $data); // $save = save('table_name', ['colum_name'=>$username]); if there is one data to save use this

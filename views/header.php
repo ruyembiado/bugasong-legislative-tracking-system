@@ -2,6 +2,9 @@
 include('../config/config.php');
 
 ob_start(); // Start output buffering
+
+clearFormSession();
+
 ?>
 
 <!DOCTYPE html>
@@ -29,10 +32,8 @@ ob_start(); // Start output buffering
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <?php if (isLogin()) : ?>
             <!-- Sidebar -->
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -63,19 +64,19 @@ ob_start(); // Start output buffering
                         </a>
                         <div id="DocumentManagePage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="resolution.php">Resolution</a>
-                                <a class="collapse-item" href="ordinance.php">Ordinance</a>
+                                <a class="collapse-item" href="../views/admin_resolution.php">Resolution</a>
+                                <a class="collapse-item" href="../views/admin_ordinance.php">Ordinance</a>
                             </div>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link Links" id="publishDocumentLink" href="publish_document.php" data-title="BLTS - Publish Documents">
+                        <a class="nav-link Links" id="publishDocumentLink" href="../views/publish_document.php" data-title="BLTS - Publish Documents">
                             <i class="fas fa-fw fa-upload"></i>
                             <span>Publish Documents</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link Links" id="adminPanelLink" href="admin_panel.php" data-title="BLTS - Admin Panel">
+                        <a class="nav-link Links" id="adminPanelLink" href="../views/admin_panel.php" data-title="BLTS - Admin Panel">
                             <i class="fas fa-fw fa-user"></i>
                             <span>Admin Panel</span>
                         </a>
@@ -88,9 +89,9 @@ ob_start(); // Start output buffering
                         </a>
                         <div id="CitizenPortalPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="citizen_resolution.php">Resolutions</a>
-                                <a class="collapse-item" href="citizen_ordinance.php">Ordinances</a>
-                                <a class="collapse-item" href="citizen_forum.php">Feedback Forum</a>
+                                <a class="collapse-item" href="../views/citizen_resolution.php">Resolutions</a>
+                                <a class="collapse-item" href="../views/citizen_ordinance.php">Ordinances</a>
+                                <a class="collapse-item" href="../views/citizen_forum.php">Feedback Forum</a>
                             </div>
                         </div>
                     </li>

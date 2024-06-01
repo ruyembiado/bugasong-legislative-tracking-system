@@ -92,22 +92,47 @@ function logUsertype()
     return $_SESSION['user_type'];
 }
 
-function user_id(){
+function user_id()
+{
     return $_SESSION['user_id'];
 }
 
-function getAllPostDesc($limit){
+function getAllPostDesc($limit)
+{
     return findAll('posts', 'post_id', 'DESC', $limit);
 }
 
-function getAllPostAsc($limit){
+function getAllPostAsc($limit)
+{
     return findAll('posts', 'post_id', 'ASC', $limit);
 }
 
-function getAllPostRand(){
+function getAllPostRand()
+{
     return findAll('posts', 'RAND()');
 }
 
-function getPostUser($post_id) {
+function getPostUser($post_id)
+{
     return joinTable("users", [["posts", "users.user_id", "posts.user_id"]], ["posts.post_id" => $post_id]);
+}
+
+function getAllResolutionsDesc($limit)
+{
+    return findAll('resolutions', 'resolution_id', 'DESC', $limit);
+}
+
+function getAllResolutionsAsc($limit)
+{
+    return findAll('resolutions', 'resolution_id', 'ASC', $limit);
+}
+
+function getResolutionByID($id)
+{
+    return find('resolutions', ['resolution_id' => $id]);
+}
+
+function clearFormSession()
+{
+    strpos($_SERVER['REQUEST_URI'], '/blts/views/admin_add_resolution.php') !== false ? null : removeValue();
 }

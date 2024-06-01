@@ -127,7 +127,7 @@ redirectNotLogin();
                                     <h6 class="m-0 font-weight-bold text-primary">Top Likes</h6>
                                 </div>
                                 <div class="card-body py-2 forum-message">
-                                    <?php foreach (getAllPostDesc( 3) as $post) : ?>
+                                    <?php foreach (getAllPostDesc(3) as $post) : ?>
                                         <div class="d-flex flex-column">
                                             <span class="user" style="font-size: 13px;"><?php foreach (getPostUser($post['post_id']) as $user) : echo $user['name'];
                                                                                         endforeach; ?> - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?></span>
