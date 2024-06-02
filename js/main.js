@@ -47,8 +47,6 @@ $(document).ready(function () {
         }
     });
 
-    console.log("Loaded");
-
     $(".logout").on("click", function (e) {
         e.preventDefault();
         const href = $(this).attr("href");
@@ -62,6 +60,58 @@ $(document).ready(function () {
             confirmButtonColor: "#d33",
             cancelButtonColor: "#3085d6",
             confirmButtonText: "Logout",
+            customClass: {
+                actions: "my-actions",
+                cancelButton: "order-1 right-gap",
+                confirmButton: "order-2",
+                container: "my-swal",
+            },
+        }).then((result) => {
+            if (result.value) {
+                document.location.href = href;
+            }
+        });
+    });
+
+    $(".delete").on("click", function (e) {
+        e.preventDefault();
+        const href = $(this).attr("href");
+
+        Swal.fire({
+            type: "warning",
+            icon: "warning",
+            title: "Are You Sure?",
+            text: "This will be deleted",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Delete",
+            customClass: {
+                actions: "my-actions",
+                cancelButton: "order-1 right-gap",
+                confirmButton: "order-2",
+                container: "my-swal",
+            },
+        }).then((result) => {
+            if (result.value) {
+                document.location.href = href;
+            }
+        });
+    });
+
+    $(".unpublish").on("click", function (e) {
+        e.preventDefault();
+        const href = $(this).attr("href");
+
+        Swal.fire({
+            type: "warning",
+            icon: "warning",
+            title: "Are You Sure?",
+            text: "This document will be Unpublished",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Unpublished",
             customClass: {
                 actions: "my-actions",
                 cancelButton: "order-1 right-gap",

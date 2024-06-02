@@ -13,3 +13,19 @@ a.portal-link {
 a.portal-link:hover {
     color: #fff !important;
 }
+
+.dataTables_length select.form-select.form-select-sm {
+    display: inline-block !important;
+    height: calc(1.5em + .75rem + 2px) !important;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    color: #6e707e !important;
+    vertical-align: middle !important;
+    border: 1px solid #d1d3e2 !important;
+    border-radius: .35rem !important;
+}
+
+a.status-button:hover {
+    text-decoration: none !important;
+}

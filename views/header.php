@@ -64,22 +64,35 @@ clearFormSession();
                         </a>
                         <div id="DocumentManagePage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="../views/admin_resolution.php">Resolution</a>
-                                <a class="collapse-item" href="../views/admin_ordinance.php">Ordinance</a>
+                                <a class="collapse-item" href="../views/admin_resolution.php?manage">Resolution</a>
+                                <a class="collapse-item" href="../views/admin_ordinance.php?manage">Ordinance</a>
                             </div>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link Links" id="publishDocumentLink" href="../views/publish_document.php" data-title="BLTS - Publish Documents">
+                        <a class="nav-link Links" id="publishDocumentLink" href="#" data-toggle="collapse" data-target="#DocumentPublishPage" aria-expanded="true" aria-controls="DocumentPublishPage" data-title="BLTS - Publish Documents">
                             <i class="fas fa-fw fa-upload"></i>
                             <span>Publish Documents</span>
                         </a>
+                        <div id="DocumentPublishPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="../views/admin_resolution.php?publish">Resolution</a>
+                                <a class="collapse-item" href="../views/admin_ordinance.php?publish">Ordinance</a>
+                            </div>
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link Links" id="adminPanelLink" href="../views/admin_panel.php" data-title="BLTS - Admin Panel">
-                            <i class="fas fa-fw fa-user"></i>
+                        <a class="nav-link Links" id="adminPanelLink" href="#" data-toggle="collapse" data-target="#adminPanelPage" aria-expanded="true" aria-controls="adminPanelPage" data-title="BLTS - Admin Panel">
+                            <i class="fas fa-fw fa-cog"></i>
                             <span>Admin Panel</span>
                         </a>
+                        <div id="adminPanelPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="../views/admin_user_management.php">User Management</a>
+                                <a class="collapse-item" href="../views/admin_system_setting.php">System Settings</a>
+                                <a class="collapse-item" href="../views/admin_tag.php">Tags</a>
+                            </div>
+                        </div>
                     </li>
                 <?php elseif (isMember()) : ?>
                     <li class="nav-item">

@@ -1,0 +1,2 @@
+1. Install Tesseract OCR from the requirements folder
+2. Paste poppler folder inside the C:\Program Files

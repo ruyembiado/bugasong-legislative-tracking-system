@@ -51,7 +51,7 @@ redirectNotLogin();
                             <div class="card-body">
                                 <div id="ocrResults">
                                     <form id="resolutionForm" action="../actions/admin_add.php" method="POST" enctype="multipart/form-data">
-                                        <label class="mt-2" for="tag">Tag/Category:</label>
+                                        <label class="mt-2" for="tag">Tag:</label>
                                         <select class="form-control text-gray-800" name="tag" id="tag">
                                             <option value="">Select option:</option>
                                             <option value="tag1" <?php if (getValue('tag') === 'tag1') echo ' selected'; ?>>Tag 1</option>

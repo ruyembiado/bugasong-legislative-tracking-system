@@ -52,7 +52,7 @@ redirectNotLogin();
                                 <div id="ocrResults">
                                     <?php $resolution = getResolutionByID($_GET['resolution_id']) ?>
                                     <form id="resolutionForm" action="../actions/admin_update.php" method="POST" enctype="multipart/form-data">
-                                        <label class="mt-2" for="tag">Tag/Category:</label>
+                                        <label class="mt-2" for="tag">Tag:</label>
                                         <select class="form-control text-gray-800" name="tag" id="tag">
                                             <option value="">Select option:</option>
                                             <option value="tag1" <?php if ($resolution['tag'] === 'tag1') echo ' selected'; ?>>Tag 1</option>

@@ -136,3 +136,18 @@ function clearFormSession()
 {
     strpos($_SERVER['REQUEST_URI'], '/blts/views/admin_add_resolution.php') !== false ? null : removeValue();
 }
+
+function formatWhereasClauses($text) {
+    return preg_replace('/(WHEREAS|WHEREFORE)/', '<br>$1', $text);
+}
+
+function formatResolvingClauses($text) {
+    $resolvedCount = 0;
+    return preg_replace_callback('/(RESOLVED)/', function($matches) use (&$resolvedCount) {
+        $resolvedCount++;
+        if ($resolvedCount === 1) {
+            return $matches[0];
+        }
+        return '<br>' . $matches[0];
+    }, $text);
+}
