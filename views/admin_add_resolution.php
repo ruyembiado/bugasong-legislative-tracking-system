@@ -137,6 +137,12 @@ redirectNotLogin();
     </div>
     <!-- End of Main Content -->
 
+    <!-- Loading screen -->
+    <div id="loadingScreen" style="display: none;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="sticky-footer bg-white">
@@ -176,9 +182,12 @@ if (isset($_SESSION['errorMessage'])) {
 ?>
 
 <script>
-    // Event listener for uploadForm
     document.getElementById('uploadForm').addEventListener('submit', function(event) {
         event.preventDefault();
+
+        // Show loading screen
+        document.getElementById('loadingScreen').style.display = 'flex';
+
         var formData = new FormData(this);
         fetch('../actions/upload_resolution.php', {
                 method: 'POST',
@@ -186,6 +195,9 @@ if (isset($_SESSION['errorMessage'])) {
             })
             .then(response => response.json())
             .then(data => {
+                // Hide loading screen
+                document.getElementById('loadingScreen').style.display = 'none';
+
                 if (data.success) {
                     // Populate Resolution Information form
                     document.getElementById('resolutionNo').value = data.resolutionData.resolutionNo;
@@ -198,7 +210,7 @@ if (isset($_SESSION['errorMessage'])) {
                     // Show Resolution Information
                     document.getElementById('ocrResults').style.display = 'block';
 
-                    // Update fileImages input with URLs
+                    // Update file input with URLs
                     var fileInput = document.getElementById('file');
                     fileInput.value = data.uploadedFileUrls;
 
@@ -213,6 +225,7 @@ if (isset($_SESSION['errorMessage'])) {
                         }
                     });
                     ocrResultsFileDiv.innerHTML = extractedImagesHtml;
+
                     // Populate Extracted Text section
                     var ocrResultsTextDiv = document.getElementById('ocrResultsText');
                     ocrResultsTextDiv.innerHTML = '<pre style="white-space: pre-wrap; word-wrap: break-word;">' + data.extractedText + '</pre>';
@@ -228,6 +241,9 @@ if (isset($_SESSION['errorMessage'])) {
                 }
             })
             .catch(error => {
+                // Hide loading screen
+                document.getElementById('loadingScreen').style.display = 'none';
+
                 console.error('Error:', error);
             });
     });
