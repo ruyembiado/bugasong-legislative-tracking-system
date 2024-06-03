@@ -24,7 +24,7 @@ redirectNotLogin();
                     <h1 class="h3 mb-0 text-gray-800">Add Resolution</h1>
                 </div>
                 <div class="back-button mb-3">
-                    <a href="admin_resolution.php" class="btn btn-primary">Back</a>
+                    <a href="admin_resolution.php?manage" class="btn btn-primary">Back</a>
                 </div>
 
                 <!-- Content Row -->
@@ -54,8 +54,9 @@ redirectNotLogin();
                                         <label class="mt-2" for="tag">Tag:</label>
                                         <select class="form-control text-gray-800" name="tag" id="tag">
                                             <option value="">Select option:</option>
-                                            <option value="tag1" <?php if (getValue('tag') === 'tag1') echo ' selected'; ?>>Tag 1</option>
-                                            <option value="tag2" <?php if (getValue('tag') === 'tag2') echo ' selected'; ?>>Tag 2</option>
+                                            <?php foreach (getAllTagAsc('tag_name', null) as $tag) : ?>
+                                                <option value="<?php echo $tag['tag_id']; ?>" <?php if (getValue('tag') === $tag['tag_id']) echo ' selected'; ?>><?php echo $tag['tag_name']; ?> </option>
+                                            <?php endforeach; ?>
                                         </select>
 
                                         <label class="mt-2" for="resolutionNo">Resolution No:</label>

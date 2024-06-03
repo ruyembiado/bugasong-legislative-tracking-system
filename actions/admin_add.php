@@ -32,8 +32,7 @@ if (isset($_POST['add_resolution'])) : //check if the button is click
             'resolvingClauses' => [
                 'required' => true,
             ],
-            'optionalClauses' => [
-            ],
+            'optionalClauses' => [],
             'approvalDetails' => [
                 'required' => true,
             ],
@@ -43,7 +42,7 @@ if (isset($_POST['add_resolution'])) : //check if the button is click
 
         if (empty($errors)) { //check if the errors is empty
             $data = [
-                'tag' => $_POST['tag'],
+                'tag_id' => $_POST['tag'],
                 'resolutionNo' => $_POST['resolutionNo'],
                 'title' => $_POST['title'],
                 'whereasClauses' => $_POST['whereasClauses'],
@@ -73,4 +72,43 @@ if (isset($_POST['add_resolution'])) : //check if the button is click
 
 endif;
 
+// Add Tag
+if (isset($_POST['add_tag'])) : //check if the button is click
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check if the method is post 
+
+        $fields = [
+            'tag_name' => $_POST['tag_name'],
+        ];
+
+        $validations = [
+            'tag_name' => [
+                'required' => false,
+            ]
+        ];
+
+        $errors = validate($fields, $validations); //activate the validation
+
+        if (empty($errors)) { //check if the errors is empty
+            $data = [
+                'tag_name' => $_POST['tag_name'],
+            ]; //put it in array before saving
+
+            $save = save('tags', $data); // $save = save('table_name', ['colum_name'=>$username]); if there is one data to save use this
+
+            if ($save) {
+                removeValue(); //remove the retain value in inputs
+                setFlash('success', 'Tag Added Successfully'); //set message
+                redirect('admin_add_tag'); //shortcut for header('location:index.php ');
+            } else {
+                retainValue(); //retain value even if there is errors or refresh
+                setFlash('failed', 'Add Failed'); //set message
+                redirect('admin_add_tag'); //shortcut for header('location:index.php ');
+            }
+        } else {
+            retainValue(); //retain value even if there is errors or refresh
+            redirect('admin_add_tag', $errors); //shortcut for header('location:register.php?errors=$errors');
+        }
+    }
+
+endif;

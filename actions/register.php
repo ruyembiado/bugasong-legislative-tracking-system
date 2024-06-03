@@ -32,14 +32,9 @@ if (isset($_POST['user_register'])) :
                 'max_length' => 50,
                 'unique' => [
                     [
-                    'fieldName' => 'username',
-                    'tableName' => 'users'
-                    ],
-                    [
                         'fieldName' => 'username',
                         'tableName' => 'users'
-                        ],
-
+                    ],
                 ],
             ],
             'email'    => [

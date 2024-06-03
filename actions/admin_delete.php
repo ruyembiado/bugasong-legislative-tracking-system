@@ -11,3 +11,14 @@ if (isset($_GET['delete_resolution']) && $_GET['delete_resolution'] == 'delete')
         redirect('admin_resolution', ['manage' => '']);
     }
 endif;
+
+if (isset($_GET['delete_tag']) && $_GET['delete_tag'] == 'delete') :
+    $delete = delete('tags', ['tag_id' => $_GET['tag_id']]);
+    if ($delete) {
+        setFlash('success', 'Deleted Successfuly');
+        redirect('admin_tag');
+    } else {
+        setFlash('failed', 'Delete Failed');
+        redirect('admin_tag');
+    }
+endif;

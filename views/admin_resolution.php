@@ -52,7 +52,7 @@ redirectNotLogin();
                                         <tr>
                                             <td><?php echo $count++; ?></td>
                                             <td class="text-gray-800"><?php echo $resolution['title']; ?></td>
-                                            <td class="text-gray-800"><?php echo $resolution['tag']; ?></td>
+                                            <td class="text-gray-800"><?php echo isset(getTagByID($resolution['tag_id'])['tag_name']) ? getTagByID($resolution['tag_id'])['tag_name'] : ''; ?></td>
                                             <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($resolution['date_added'])); ?></td>
                                             <td>
                                                 <?php if (isset($_GET['manage'])) : ?>

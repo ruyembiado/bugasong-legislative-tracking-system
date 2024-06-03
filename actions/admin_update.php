@@ -8,6 +8,7 @@ if (isset($_POST['update_resolution'])) : //check if the button is click
     if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check if the method is post 
 
         $fields = [
+            'tag' => $_POST['tag'],
             'resolutionNo' => $_POST['resolutionNo'],
             'title' => $_POST['title'],
             'whereasClauses' => $_POST['whereasClauses'],
@@ -42,7 +43,7 @@ if (isset($_POST['update_resolution'])) : //check if the button is click
 
         if (empty($errors)) { //check if the errors is empty
             $data = [
-                'tag' => $_POST['tag'],
+                'tag_id' => $_POST['tag'],
                 'resolutionNo' => $_POST['resolutionNo'],
                 'title' => $_POST['title'],
                 'whereasClauses' => $_POST['whereasClauses'],
@@ -63,7 +64,7 @@ if (isset($_POST['update_resolution'])) : //check if the button is click
                 redirect('admin_update_resolution', ['resolution_id' => $_POST['resolution_id']]); //shortcut for header('location:index.php ');
             }
         } else {
-            $errors = ['resolution_id' => $_POST['resolution_id']];
+            $errors['resolution_id'] =  $_POST['resolution_id'];
             retainValue(); //retain value even if there is errors or refresh
             redirect('admin_update_resolution', $errors); //shortcut for header('location:register.php?errors=$errors');
         }
@@ -96,6 +97,54 @@ if (isset($_GET['update_status'])) : //check if the button is click
             retainValue(); //retain value even if there is errors or refresh
             setFlash('failed', 'Update Failed'); //set message
             redirect('admin_resolution', ['publish' => '']); //shortcut for header('location:index.php ');
+        }
+    }
+
+endif;
+
+if (isset($_POST['update_tag'])) : //check if the button is click
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check if the method is post 
+
+        $fields = [
+            'tag_name' => $_POST['tag_name'],
+        ];
+
+        $validations = [
+            'tag_name' => [
+                'required' => false,
+                'unique' => [
+                    [
+                        'fieldName' => 'tag_name',
+                        'tableName' => 'tags'
+                    ],
+                ],
+
+            ]
+        ];
+
+        $errors = validate($fields, $validations); //activate the validation
+
+        if (empty($errors)) { //check if the errors is empty
+            $data = [
+                'tag_name' => $_POST['tag_name'],
+            ]; //put it in array before saving
+
+            $update = update('tags', ['tag_id' => $_POST['tag_id']], $data);
+
+            if ($update) {
+                removeValue(); //remove the retain value in inputs
+                setFlash('success', 'Tag Updated Successfully'); //set message
+                redirect('admin_update_tag', ['tag_id' => $_POST['tag_id']]); //shortcut for header('location:index.php ');
+            } else {
+                retainValue(); //retain value even if there is errors or refresh
+                setFlash('failed', 'Update Failed'); //set message
+                redirect('admin_update_tag', ['tag_id' => $_POST['tag_id']]); //shortcut for header('location:index.php ');
+            }
+        } else {
+            $errors['tag_id'] = $_POST['tag_id'];
+            retainValue(); //retain value even if there is errors or refresh
+            redirect('admin_update_tag', $errors); //shortcut for header('location:register.php?errors=$errors');
         }
     }
 

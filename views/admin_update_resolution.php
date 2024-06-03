@@ -24,7 +24,7 @@ redirectNotLogin();
                     <h1 class="h3 mb-0 text-gray-800">Update Resolution</h1>
                 </div>
                 <div class="back-button mb-3">
-                    <a href="admin_resolution.php" class="btn btn-primary">Back</a>
+                    <a href="admin_resolution.php?manage" class="btn btn-primary">Back</a>
                 </div>
 
                 <!-- Content Row -->
@@ -55,8 +55,11 @@ redirectNotLogin();
                                         <label class="mt-2" for="tag">Tag:</label>
                                         <select class="form-control text-gray-800" name="tag" id="tag">
                                             <option value="">Select option:</option>
-                                            <option value="tag1" <?php if ($resolution['tag'] === 'tag1') echo ' selected'; ?>>Tag 1</option>
-                                            <option value="tag2" <?php if ($resolution['tag'] === 'tag2') echo ' selected'; ?>>Tag 2</option>
+                                            <?php foreach (getAllTagAsc('tag_name', null) as $tag) : ?>
+                                                <option value="<?php echo $tag['tag_id']; ?>" <?php echo ($tag['tag_id'] == $resolution['tag_id']) ? 'selected' : ''; ?>>
+                                                    <?php echo getTagByID($tag['tag_id'])['tag_name']; ?>
+                                                </option>
+                                            <?php endforeach; ?>
                                         </select>
 
                                         <label class="mt-2" for="resolutionNo">Resolution No:</label>
@@ -96,7 +99,7 @@ redirectNotLogin();
                                         <?php endif; ?>
 
                                         <div class="mb-0 mt-2 d-flex justify-content-end">
-                                            <input type="hidden" name="resolution_id" value="<?php echo $resolution['resolution_id']; ?>"">
+                                            <input type="hidden" name="resolution_id" value="<?php echo $resolution['resolution_id']; ?>">
                                             <input type="hidden" name="user_id" value="<?php echo user_id(); ?>">
                                             <button type="submit" name="update_resolution" class="btn btn-primary" value="update_resolution">Update</button>
                                         </div>
@@ -158,21 +161,21 @@ redirectNotLogin();
 
 <?php
 // Check if there is an error message in the URL parameter
-if (isset($_GET['failed'])) {
-    // Set the error message in the session
-    $_SESSION['errorMessage'] = urldecode($_GET['failed']);
-    // Redirect to the same page without the error message in the URL parameter
-    header('Location: ' . strtok($_SERVER['REQUEST_URI'], '?'));
-    exit();
-}
+// if (isset($_GET['failed'])) {
+//     // Set the error message in the session
+//     $_SESSION['errorMessage'] = urldecode($_GET['failed']);
+//     // Redirect to the same page without the error message in the URL parameter
+//     header('Location: ' . strtok($_SERVER['REQUEST_URI'], '?'));
+//     exit();
+// }
 
-// Check if there is an error message in the session
-if (isset($_SESSION['errorMessage'])) {
-    // Display error message
-    echo '<div class="alert alert-danger">' . $_SESSION['errorMessage'] . '</div>';
-    // Clear session message
-    unset($_SESSION['errorMessage']);
-}
+// // Check if there is an error message in the session
+// if (isset($_SESSION['errorMessage'])) {
+//     // Display error message
+//     echo '<div class="alert alert-danger">' . $_SESSION['errorMessage'] . '</div>';
+//     // Clear session message
+//     unset($_SESSION['errorMessage']);
+// }
 
 ?>
 
