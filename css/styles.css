@@ -42,3 +42,8 @@ a.status-button:hover {
     align-items: center;
     z-index: 9999;
 }
+
+img.img-profile {
+    height: 52px !important;
+    width: 52px !important;
+}

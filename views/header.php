@@ -41,7 +41,8 @@ clearFormSession();
                 <!-- Sidebar - Brand -->
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" id="brandLink" data-title="BLTS - Dashboard" href="dashboard.php">
                     <div class="sidebar-brand-icon">
-                        <i class="img-profile rounded-circle fas fa-user-circle fa-2x"></i>
+                        <!-- <i class="img-profile rounded-circle fas fa-user-circle fa-2x"></i> -->
+                        <img src="../img/blts.png" class="img-profile" alt="">
                     </div>
                     <div class="sidebar-brand-text mx-3">BLTS <?php echo logUsertype(); ?></div>
                 </a>

@@ -28,7 +28,7 @@ redirectNotLogin();
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <!-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> -->
-                        <a href="#" class="btn btn-primary px-2 py-1">Add Ordinance</a>
+                        <a href="admin_add_ordinance.php" class="btn btn-primary px-2 py-1">Add Ordinance</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

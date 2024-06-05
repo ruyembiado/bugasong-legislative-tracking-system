@@ -5,8 +5,8 @@
 <?php if (!isLogin()) : ?>
     <div class="login-container">
         <div class="col-10 col-md-4 mx-auto mt-5 p-5 rounded border shadow">
-            <div class="col-7 mx-auto my-2 mb-3">
-                <img src="" alt="" class="img-fluid">
+            <div class="text-center mx-auto my-2 mb-3">
+                <img src="../img/blts.png" alt="" class="img-fluid">
             </div>
             <h4 class="">Login</h4>
             <h5 class="mb-2" style="font-size: 13px;">Please login to continue</h5>
