@@ -7,7 +7,6 @@ if (isset($_POST['add_resolution'])) : //check if the button is click
     if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check if the method is post 
 
         $fields = [
-            'tag' => $_POST['tag'],
             'resolutionNo' => $_POST['resolutionNo'],
             'title' => $_POST['title'],
             'whereasClauses' => $_POST['whereasClauses'],
@@ -108,6 +107,85 @@ if (isset($_POST['add_tag'])) : //check if the button is click
         } else {
             retainValue(); //retain value even if there is errors or refresh
             redirect('admin_add_tag', $errors); //shortcut for header('location:register.php?errors=$errors');
+        }
+    }
+
+endif;
+
+// Add Ordinance
+if (isset($_POST['add_ordinance'])): // check if the button is clicked
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') { // check if the method is post 
+
+        $fields = [
+            'ordinanceNo' => $_POST['ordinanceNo'],
+            'title' => $_POST['title'],
+            'preamble' => $_POST['preamble'],
+            'enactingClause' => $_POST['enactingClause'],
+            'body' => $_POST['body'],
+            'repealingClause' => $_POST['repealingClause'],
+            'effectivityClause' => $_POST['effectivityClause'],
+            'enactmentDetails' => $_POST['enactmentDetails'],
+        ];
+
+        $validations = [
+            'ordinanceNo' => [
+                'required' => true,
+            ],
+            'title' => [
+                'required' => true,
+            ],
+            'preamble' => [
+                'required' => true,
+            ],
+            'enactingClause' => [
+                'required' => true,
+            ],
+            'body' => [
+                'required' => true,
+            ],
+            'repealingClause' => [
+                'required' => true,
+            ],
+            'effectivityClause' => [
+                'required' => true,
+            ],
+            'enactmentDetails' => [
+                'required' => true,
+            ],
+        ];
+
+        $errors = validate($fields, $validations); // activate the validation
+
+        if (empty($errors)) { // check if the errors are empty
+            $data = [
+                'tag_id' => $_POST['tag'],
+                'ordinanceNo' => $_POST['ordinanceNo'],
+                'title' => $_POST['title'],
+                'preamble' => $_POST['preamble'],
+                'enactingClause' => $_POST['enactingClause'],
+                'body' => $_POST['body'],
+                'repealingClause' => $_POST['repealingClause'],
+                'effectivityClause' => $_POST['effectivityClause'],
+                'enactmentDetails' => $_POST['enactmentDetails'],
+                'file' => $_POST['file'],
+                'user_id' => $_POST['user_id']
+            ]; // put it in an array before saving
+
+            $save = save('ordinances', $data); // $save = save('table_name', ['column_name' => $username]); if there is one data to save use this
+
+            if ($save) {
+                removeValue(); // remove the retain value in inputs
+                setFlash('success', 'Ordinance Added Successfully'); // set message
+                redirect('admin_add_ordinance'); // shortcut for header('location:index.php');
+            } else {
+                retainValue(); // retain value even if there are errors or refresh
+                setFlash('failed', 'Add Failed'); // set message
+                redirect('admin_add_ordinance'); // shortcut for header('location:index.php');
+            }
+        } else {
+            retainValue(); // retain value even if there are errors or refresh
+            redirect('admin_add_ordinance', $errors); // shortcut for header('location:register.php?errors=$errors');
         }
     }
 

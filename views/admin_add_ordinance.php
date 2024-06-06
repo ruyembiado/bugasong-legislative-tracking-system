@@ -108,7 +108,7 @@ redirectNotLogin();
                                         <?php endif; ?>
 
                                         <div class="mb-0 mt-2 d-flex justify-content-end">
-                                            <input type="hidden" name="file" id="file">
+                                            <input type="hidden" name="file" id="file" value="<?php echo getValue('file'); ?>">
                                             <input type="hidden" name="user_id" value="<?php echo user_id(); ?>">
                                             <button type="submit" name="add_ordinance" class="btn btn-primary" value="add_ordinance">Submit</button>
                                         </div>

@@ -45,7 +45,7 @@ redirectNotLogin();
                                     <div class="mr-4">
                                         <label class="mt-2 text-primary" for="tag">Tag</label>
                                         <div class="tag">
-                                            <?php echo getTagByID($resolution['tag_id'])['tag_name']; ?>
+                                        <?php echo !empty(getTagByID($resolution['tag_id'])['tag_name']) ? getTagByID($resolution['tag_id'])['tag_name'] : ''; ?>
                                         </div>
                                     </div>
                                 </div>

@@ -1,8 +1,6 @@
 <?php
 @include('header.php');
-
 redirectNotLogin();
-
 ?>
 
 <!-- Content Wrapper -->
@@ -16,6 +14,7 @@ redirectNotLogin();
         <!-- End of Topbar -->
 
         <?php if (isAdmin()) : ?>
+
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
@@ -27,33 +26,46 @@ redirectNotLogin();
                 <!-- Content Row -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <!-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> -->
-                        <a href="admin_add_ordinance.php" class="btn btn-primary px-2 py-1">Add Ordinance</a>
+                        <?php if (isset($_GET['publish'])) : ?>
+                            <h6 class="m-0 font-weight-bold text-primary">Publish Ordinance</h6>
+                        <?php endif; ?>
+
+                        <?php if (isset($_GET['manage'])) : ?>
+                            <a href="admin_add_ordinance.php" class="btn btn-primary px-2 py-1">Add Ordinance</a>
+                        <?php endif; ?>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Ordinance Name</th>
-                                        <th>Category</th>
-                                        <th>Tag</th>
-                                        <th>Dated Added</th>
-                                        <th>Action</th>
+                                        <th style="width: 5%;">No.</th>
+                                        <th style="width: 40%;">Ordinance Name</th>
+                                        <th style="width: 15%;">Tag</th>
+                                        <th style="width: 20%;">Dated Added</th>
+                                        <th style="width: 20%;"><?php if (isset($_GET['publish'])) : ?>Status<?php endif; ?><?php if (isset($_GET['manage'])) : ?>Action<?php endif; ?></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Ordinance 1</td>
-                                        <td>Category 1</td>
-                                        <td>Tag 1</td>
-                                        <td>2011/04/25</td>
-                                        <td>
-                                            <a href="#" class="btn btn-secondary px-2 py-1 m-1">View</a>
-                                            <a href="#" class="btn btn-primary px-2 py-1 m-1">Update</a>
-                                            <a href="#" class="btn btn-danger px-2 py-1 m-1">Delete</a>
-                                        </td>
-                                    </tr>
+                                    <?php $count = 1; ?>
+                                    <?php foreach (getAllOrdinancesDesc(null) as $ordinance) :  ?>
+                                        <tr>
+                                            <td><?php echo $count++; ?></td>
+                                            <td class="text-gray-800"><?php echo $ordinance['title']; ?></td>
+                                            <td class="text-gray-800"><?php echo isset(getTagByID($ordinance['tag_id'])['tag_name']) ? getTagByID($ordinance['tag_id'])['tag_name'] : ''; ?></td>
+                                            <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($ordinance['date_added'])); ?></td>
+                                            <td>
+                                                <?php if (isset($_GET['manage'])) : ?>
+                                                    <a href="view_ordinance.php?ordinance_id=<?php echo $ordinance['ordinance_id']; ?>" class="btn btn-secondary px-2 py-1 my-1">View</a>
+                                                    <a href="admin_update_ordinance.php?ordinance_id=<?php echo $ordinance['ordinance_id']; ?>" class="btn btn-primary px-2 py-1 my-1">Update</a>
+                                                    <a href="../actions/admin_delete.php?delete_ordinance=delete&ordinance_id=<?php echo $ordinance['ordinance_id']; ?>" class="btn btn-danger px-2 py-1 my-1 delete">Delete</a>
+                                                <?php endif; ?>
+                                                <?php if (isset($_GET['publish'])) : ?>
+                                                    <a class="status-button <?php echo ($ordinance['status'] == '0') ? '' : 'unpublish'; ?>" href="../actions/admin_update.php?update_status=<?php echo $ordinance['status']; ?>&ordinance_id=<?php echo $ordinance['ordinance_id']; ?>"><?php echo ($ordinance['status'] == '0') ? '<p class="text-light btn btn-danger ">Unpublished</p>' : '<p class="text-light btn btn-success">Published</p>' ?></a>
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -69,6 +81,7 @@ redirectNotLogin();
 
     </div>
     <!-- End of Main Content -->
+
 
     <!-- Footer -->
     <footer class="sticky-footer bg-white">

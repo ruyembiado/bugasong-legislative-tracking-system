@@ -122,9 +122,19 @@ function getAllResolutionsDesc($limit)
     return findAll('resolutions', 'resolution_id', 'DESC', $limit);
 }
 
+function getAllOrdinancesDesc($limit)
+{
+    return findAll('ordinances', 'ordinance_id', 'DESC', $limit);
+}
+
 function getAllResolutionsAsc($limit)
 {
     return findAll('resolutions', 'resolution_id', 'ASC', $limit);
+}
+
+function getAllOrdinancesAsc($limit)
+{
+    return findAll('ordinances', 'ordinance_id', 'ASC', $limit);
 }
 
 function getResolutionByID($id)
@@ -132,9 +142,20 @@ function getResolutionByID($id)
     return find('resolutions', ['resolution_id' => $id]);
 }
 
+function getOrdinanceByID($id)
+{
+    return find('ordinances', ['ordinance_id' => $id]);
+}
+
 function clearFormSession()
 {
-    strpos($_SERVER['REQUEST_URI'], '/blts/views/admin_add_resolution.php') !== false ? null : removeValue();
+    $currentUri = $_SERVER['REQUEST_URI'];
+    $resolutionPage = '/blts/views/admin_add_resolution.php';
+    $ordinancePage = '/blts/views/admin_add_ordinance.php';
+
+    if (strpos($currentUri, $resolutionPage) === false && strpos($currentUri, $ordinancePage) === false) {
+        removeValue();
+    }
 }
 
 function formatWhereasClauses($text)
@@ -167,4 +188,29 @@ function getAllTagAsc($orderby, $limit)
 function getTagByID($id)
 {
     return find('tags', ['tag_id' => $id]);
+}
+
+function formatOrdinanceSection($text)
+{
+    // Split the text into sections using "Section" as delimiter
+    $sections = explode("Section", $text);
+    $formattedSections = [];
+    // Loop through each section and format it
+    foreach ($sections as $section) {
+        // Remove leading and trailing whitespaces
+        $section = trim($section);
+        // If the section is not empty
+        if (!empty($section)) {
+            // Prepend "Section" to maintain consistency
+            $section = "Section" . $section;
+            // Add a newline after "Section" for readability
+            $section = preg_replace('/(Section\d+)/', "$1\n", $section);
+            // Append the formatted section to the array
+            $formattedSections[] = $section;
+        }
+    }
+    // Join the formatted sections into a single string with newlines between each section
+    $formattedText = implode("\n", $formattedSections);
+
+    return $formattedText;
 }

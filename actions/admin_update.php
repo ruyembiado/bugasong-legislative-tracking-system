@@ -100,6 +100,23 @@ if (isset($_GET['update_status'])) : //check if the button is click
         }
     }
 
+    if (isset($_GET['ordinance_id'])) {
+        $data = [
+            'status' => $status,
+        ];
+        $update = update('ordinances',  ['ordinance_id' => $_GET['ordinance_id']], $data);
+
+        if ($update) {
+            removeValue(); //remove the retain value in inputs
+            setFlash('success', 'Status Updated Successfully'); //set message
+            redirect('admin_ordinance', ['publish' => '']); //shortcut for header('location:index.php ');
+        } else {
+            retainValue(); //retain value even if there is errors or refresh
+            setFlash('failed', 'Update Failed'); //set message
+            redirect('admin_ordinance', ['publish' => '']); //shortcut for header('location:index.php ');
+        }
+    }
+
 endif;
 
 if (isset($_POST['update_tag'])) : //check if the button is click

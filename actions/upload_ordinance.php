@@ -56,7 +56,6 @@ function parseResolutionText($text)
     $ordinanceData = [
         'ordinanceNo' => '',
         'title' => '',
-        'whereasClauses' => '',
         'preamble' => '',
         'enactingClause' => '',
         'body' => '',
@@ -73,15 +72,18 @@ function parseResolutionText($text)
         $ordinanceData['title'] = trim($matches[0]);
     }
 
-    if (preg_match('/WHEREAS\s*(.+?)\s*RESOLVED/s', $text, $matches)) {
-        $ordinanceData['preamble'] = trim($matches[0]);
+    if (preg_match_all('/WHEREAS\s*(.+?)(?=(WHEREAS|WHEREFORE|$))/s', $text, $matches)) {
+        if (!empty($matches[0]) && is_array($matches[0])) {
+            $preamble = array_map('trim', $matches[0]);
+            $ordinanceData['preamble'] = implode("\n\n", $preamble);
+        }
     }
 
-    if (preg_match('/WHEREFORE\s*(.+?)\s*Section/s', $text, $matches)) {
+    if (preg_match('/WHEREFORE\s*(.+?)\s*(?=Section)/s', $text, $matches)) {
         $ordinanceData['enactingClause'] = trim($matches[0]);
     }
 
-    if (preg_match('/Section\s*(.+?)\s*REPEALING CLAUSE/s', $text, $matches)) {
+    if (preg_match('/Section\s*(.*?)\s(?=UNANIMOUSLY)/s', $text, $matches)) {
         $ordinanceData['body'] = trim($matches[0]);
     }
 
