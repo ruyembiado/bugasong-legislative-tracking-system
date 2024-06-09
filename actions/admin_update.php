@@ -151,17 +151,97 @@ if (isset($_POST['update_tag'])) : //check if the button is click
 
             if ($update) {
                 removeValue(); //remove the retain value in inputs
-                setFlash('success', 'Tag Updated Successfully'); //set message
-                redirect('admin_update_tag', ['tag_id' => $_POST['tag_id']]); //shortcut for header('location:index.php ');
+                setFlash('success', 'Ordinance Updated Successfully'); //set message
+                redirect('admin_update_ordinance', ['ordinance_id' => $_POST['ordinance_id']]); //shortcut for header('location:index.php ');
             } else {
                 retainValue(); //retain value even if there is errors or refresh
                 setFlash('failed', 'Update Failed'); //set message
-                redirect('admin_update_tag', ['tag_id' => $_POST['tag_id']]); //shortcut for header('location:index.php ');
+                redirect('admin_update_ordinance', ['ordinance_id' => $_POST['ordinance_id']]); //shortcut for header('location:index.php ');
             }
         } else {
-            $errors['tag_id'] = $_POST['tag_id'];
+            $errors['ordinance_id'] =  $_POST['ordinance_id'];
             retainValue(); //retain value even if there is errors or refresh
-            redirect('admin_update_tag', $errors); //shortcut for header('location:register.php?errors=$errors');
+            redirect('admin_update_ordinance', $errors); //shortcut for header('location:register.php?errors=$errors');
+        }
+    }
+
+endif;
+
+// Update Ordinance
+if (isset($_POST['update_ordinance'])) : // check if the button is clicked
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') { // check if the method is post 
+
+        $fields = [
+            'ordinanceNo' => $_POST['ordinanceNo'],
+            'title' => $_POST['title'],
+            'preamble' => $_POST['preamble'],
+            'enactingClause' => $_POST['enactingClause'],
+            'body' => $_POST['body'],
+            'repealingClause' => $_POST['repealingClause'],
+            'effectivityClause' => $_POST['effectivityClause'],
+            'enactmentDetails' => $_POST['enactmentDetails'],
+        ];
+
+        $validations = [
+            'ordinanceNo' => [
+                'required' => true,
+            ],
+            'title' => [
+                'required' => true,
+            ],
+            'preamble' => [
+                'required' => true,
+            ],
+            'enactingClause' => [
+                'required' => true,
+            ],
+            'body' => [
+                'required' => true,
+            ],
+            'repealingClause' => [
+                'required' => true,
+            ],
+            'effectivityClause' => [
+                'required' => true,
+            ],
+            'enactmentDetails' => [
+                'required' => true,
+            ],
+        ];
+
+        $errors = validate($fields, $validations); // activate the validation
+
+        if (empty($errors)) { // check if the errors are empty
+            $data = [
+                'tag_id' => $_POST['tag'],
+                'ordinanceNo' => $_POST['ordinanceNo'],
+                'title' => $_POST['title'],
+                'preamble' => $_POST['preamble'],
+                'enactingClause' => $_POST['enactingClause'],
+                'body' => $_POST['body'],
+                'repealingClause' => $_POST['repealingClause'],
+                'effectivityClause' => $_POST['effectivityClause'],
+                'enactmentDetails' => $_POST['enactmentDetails'],
+                'file' => $_POST['file'],
+                'user_id' => $_POST['user_id']
+            ]; // put it in an array before saving
+
+            $update = update('ordinances', ['ordinance_id' => $_POST['ordinance_id']], $data);
+
+            if ($update) {
+                removeValue(); //remove the retain value in inputs
+                setFlash('success', 'Ordinance Updated Successfully'); //set message
+                redirect('admin_update_ordinance', ['ordinance_id' => $_POST['ordinance_id']]); //shortcut for header('location:index.php ');
+            } else {
+                retainValue(); //retain value even if there is errors or refresh
+                setFlash('failed', 'Update Failed'); //set message
+                redirect('admin_update_ordinance', ['ordinance_id' => $_POST['ordinance_id']]); //shortcut for header('location:index.php ');
+            }
+        } else {
+            $errors['ordinance_id'] =  $_POST['ordinance_id'];
+            retainValue(); //retain value even if there is errors or refresh
+            redirect('admin_update_ordinance', $errors); //shortcut for header('location:register.php?errors=$errors');
         }
     }
 

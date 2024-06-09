@@ -47,3 +47,13 @@ img.img-profile {
     height: 52px !important;
     width: 52px !important;
 }
+
+a.citizen-view-document:hover {
+    text-decoration: none;
+    color: unset;
+}
+
+a.citizen-view-document {
+    text-decoration: none;
+    color: unset;
+}

@@ -22,7 +22,10 @@ redirectNotLogin();
                 <h1 class="h3 mb-0 text-gray-800">View Resolution</h1>
             </div>
             <div class="back-button mb-3">
-            <a href="admin_resolution.php?manage" class="btn btn-primary">Back</a>
+                <?php
+                $href = isMember() ? "citizen_resolution.php?manage" : (isAdmin() ? "admin_resolution.php?manage" : redirect('dashboard', ''));
+                ?>
+                <a href="<?php echo $href; ?>" class="btn btn-primary">Back</a>
             </div>
 
             <!-- Content Row -->
@@ -45,7 +48,7 @@ redirectNotLogin();
                                     <div class="mr-4">
                                         <label class="mt-2 text-primary" for="tag">Tag</label>
                                         <div class="tag">
-                                        <?php echo !empty(getTagByID($resolution['tag_id'])['tag_name']) ? getTagByID($resolution['tag_id'])['tag_name'] : ''; ?>
+                                            <?php echo !empty(getTagByID($resolution['tag_id'])['tag_name']) ? getTagByID($resolution['tag_id'])['tag_name'] : ''; ?>
                                         </div>
                                     </div>
                                 </div>

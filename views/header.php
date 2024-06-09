@@ -65,8 +65,8 @@ clearFormSession();
                         </a>
                         <div id="DocumentManagePage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="../views/admin_resolution.php?manage">Resolution</a>
-                                <a class="collapse-item" href="../views/admin_ordinance.php?manage">Ordinance</a>
+                                <a class="collapse-item" href="../views/admin_resolution.php?manage">Resolutions</a>
+                                <a class="collapse-item" href="../views/admin_ordinance.php?manage">Ordinances</a>
                             </div>
                         </div>
                     </li>
@@ -77,8 +77,8 @@ clearFormSession();
                         </a>
                         <div id="DocumentPublishPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="../views/admin_resolution.php?publish">Resolution</a>
-                                <a class="collapse-item" href="../views/admin_ordinance.php?publish">Ordinance</a>
+                                <a class="collapse-item" href="../views/admin_resolution.php?publish">Resolutions</a>
+                                <a class="collapse-item" href="../views/admin_ordinance.php?publish">Ordinances</a>
                             </div>
                         </div>
                     </li>

@@ -152,6 +152,7 @@ function clearFormSession()
     $currentUri = $_SERVER['REQUEST_URI'];
     $resolutionPage = '/blts/views/admin_add_resolution.php';
     $ordinancePage = '/blts/views/admin_add_ordinance.php';
+    $ordinancePage = '/blts/views/citizen_resolution.php';
 
     if (strpos($currentUri, $resolutionPage) === false && strpos($currentUri, $ordinancePage) === false) {
         removeValue();
@@ -192,25 +193,111 @@ function getTagByID($id)
 
 function formatOrdinanceSection($text)
 {
-    // Split the text into sections using "Section" as delimiter
-    $sections = explode("Section", $text);
-    $formattedSections = [];
-    // Loop through each section and format it
-    foreach ($sections as $section) {
-        // Remove leading and trailing whitespaces
-        $section = trim($section);
-        // If the section is not empty
-        if (!empty($section)) {
-            // Prepend "Section" to maintain consistency
-            $section = "Section" . $section;
-            // Add a newline after "Section" for readability
-            $section = preg_replace('/(Section\d+)/', "$1\n", $section);
-            // Append the formatted section to the array
-            $formattedSections[] = $section;
+    // Use a regular expression to find "Section" followed by numbers and ensure it is followed by a newline
+    $formattedText = preg_replace('/(Section\s*\d+\.)/', "\n$1\n", $text);
+
+    // Remove any extra newlines that might be added before the first section
+    $formattedText = preg_replace('/^\s+/', '', $formattedText);
+
+    // Ensure there are no double newlines by replacing them with a single newline
+    $formattedText = preg_replace('/\n+/', "\n", $formattedText);
+
+    return nl2br($formattedText);
+}
+
+function getAllUsers()
+{
+    return find_where('users', ['user_type' => 'citizen']);
+}
+
+function searchResolutions($keyword, $tag, $date_start, $date_end)
+{
+    global $conn;
+
+    $query = "SELECT * FROM resolutions WHERE 1=1";
+    $params = [];
+    $types = "";
+
+    if (!empty($keyword)) {
+        $query .= " AND (title LIKE ? OR resolutionNo LIKE ? OR whereasClauses LIKE ? OR resolvingClauses LIKE ? OR optionalClauses LIKE ? OR approvalDetails LIKE ?)";
+        $keywordParam = '%' . $keyword . '%';
+        for ($i = 0; $i < 6; $i++) {
+            $params[] = $keywordParam;
+            $types .= "s";
         }
     }
-    // Join the formatted sections into a single string with newlines between each section
-    $formattedText = implode("\n", $formattedSections);
 
-    return $formattedText;
+    if (!empty($tag)) {
+        $query .= " AND tag_id = ?";
+        $params[] = $tag;
+        $types .= "s";
+    }
+
+    if (!empty($date_start)) {
+        $query .= " AND date_added >= ?";
+        $params[] = $date_start;
+        $types .= "s";
+    }
+
+    if (!empty($date_end)) {
+        $query .= " AND date_added <= ?";
+        $params[] = $date_end;
+        $types .= "s";
+    }
+
+    $stmt = mysqli_prepare($conn, $query);
+    if ($params) {
+        $stmt->bind_param($types, ...$params);
+    }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+function searchOrdinances($keyword, $tag, $date_start, $date_end)
+{
+    global $conn;
+
+    $query = "SELECT * FROM ordinances WHERE 1=1";
+    $params = [];
+    $types = "";
+
+    if (!empty($keyword)) {
+        $query .= " AND (title LIKE ? OR ordinanceNo LIKE ? OR preamble LIKE ? OR enactingClause LIKE ? OR body LIKE ? OR repealingClause LIKE ? OR effectivityClause LIKE ? OR enactmentDetails LIKE ?)";
+        $keywordParam = '%' . $keyword . '%';
+        for ($i = 0; $i < 8; $i++) {
+            $params[] = $keywordParam;
+            $types .= "s";
+        }
+    }
+
+    if (!empty($tag)) {
+        $query .= " AND tag_id = ?";
+        $params[] = $tag;
+        $types .= "s";
+    }
+
+    if (!empty($date_start)) {
+        $query .= " AND date_added >= ?";
+        $params[] = $date_start;
+        $types .= "s";
+    }
+
+    if (!empty($date_end)) {
+        $query .= " AND date_added <= ?";
+        $params[] = $date_end;
+        $types .= "s";
+    }
+
+    $stmt = mysqli_prepare($conn, $query);
+    if ($params) {
+        $stmt->bind_param($types, ...$params);
+    }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }

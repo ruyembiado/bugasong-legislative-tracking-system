@@ -22,7 +22,10 @@ redirectNotLogin();
                 <h1 class="h3 mb-0 text-gray-800">View Ordinance</h1>
             </div>
             <div class="back-button mb-3">
-            <a href="admin_ordinance.php?manage" class="btn btn-primary">Back</a>
+                <?php
+                $href = isMember() ? "citizen_ordinance.php?manage" : (isAdmin() ? "admin_ordinance.php?manage" : redirect('dashboard', '') );
+                ?>
+                <a href="<?php echo $href; ?>" class="btn btn-primary">Back</a>
             </div>
 
             <!-- Content Row -->
@@ -65,9 +68,17 @@ redirectNotLogin();
                                 <div class="body mt-2">
                                     <?php echo formatOrdinanceSection($ordinance['body']); ?>
                                 </div>
-                                <!-- <label class="mt-0 text-primary" for="approvalDetails"></label> -->
-                                <div class="approvalDetails mt-2">
-                                    <?php echo $ordinance['approvalDetails']; ?>
+                                <!-- <label class="mt-0 text-primary" for="repealingClause"></label> -->
+                                <div class="repealingClause mt-2">
+                                    <?php echo $ordinance['repealingClause']; ?>
+                                </div>
+                                <!-- <label class="mt-0 text-primary" for="effectivityClause"></label> -->
+                                <div class="effectivityClause mt-2">
+                                    <?php echo $ordinance['effectivityClause']; ?>
+                                </div>
+                                <!-- <label class="mt-0 text-primary" for="enactmentDetails"></label> -->
+                                <div class="enactmentDetails mt-2">
+                                    <?php echo $ordinance['enactmentDetails']; ?>
                                 </div>
                             </div>
                         </div>
