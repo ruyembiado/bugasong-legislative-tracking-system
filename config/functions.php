@@ -147,69 +147,6 @@ function getOrdinanceByID($id)
     return find('ordinances', ['ordinance_id' => $id]);
 }
 
-function clearFormSession()
-{
-    $currentUri = $_SERVER['REQUEST_URI'];
-    $resolutionPage = '/blts/views/admin_add_resolution.php';
-    $ordinancePage = '/blts/views/admin_add_ordinance.php';
-    $ordinancePage = '/blts/views/citizen_resolution.php';
-
-    if (strpos($currentUri, $resolutionPage) === false && strpos($currentUri, $ordinancePage) === false) {
-        removeValue();
-    }
-}
-
-function formatWhereasClauses($text)
-{
-    return preg_replace('/(WHEREAS|WHEREFORE)/', '<br>$1', $text);
-}
-
-function formatResolvingClauses($text)
-{
-    $resolvedCount = 0;
-    return preg_replace_callback('/(RESOLVED)/', function ($matches) use (&$resolvedCount) {
-        $resolvedCount++;
-        if ($resolvedCount === 1) {
-            return $matches[0];
-        }
-        return '<br>' . $matches[0];
-    }, $text);
-}
-
-function getAllTagDesc($orderby, $limit)
-{
-    return findAll('tags', $orderby, 'DESC', $limit);
-}
-
-function getAllTagAsc($orderby, $limit)
-{
-    return findAll('tags', $orderby, 'ASC', $limit);
-}
-
-function getTagByID($id)
-{
-    return find('tags', ['tag_id' => $id]);
-}
-
-function formatOrdinanceSection($text)
-{
-    // Use a regular expression to find "Section" followed by numbers and ensure it is followed by a newline
-    $formattedText = preg_replace('/(Section\s*\d+\.)/', "\n$1\n", $text);
-
-    // Remove any extra newlines that might be added before the first section
-    $formattedText = preg_replace('/^\s+/', '', $formattedText);
-
-    // Ensure there are no double newlines by replacing them with a single newline
-    $formattedText = preg_replace('/\n+/', "\n", $formattedText);
-
-    return nl2br($formattedText);
-}
-
-function getAllUsers()
-{
-    return find_where('users', ['user_type' => 'citizen']);
-}
-
 function searchResolutions($keyword, $tag, $date_start, $date_end)
 {
     global $conn;
@@ -300,4 +237,168 @@ function searchOrdinances($keyword, $tag, $date_start, $date_end)
     $result = $stmt->get_result();
 
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+function countReaction($post_id, $reaction_type)
+{
+    global $conn;
+
+    $query = "SELECT COUNT(*) AS reaction_count FROM post_reactions WHERE post_id = ? AND post_reaction = ?";
+    $stmt = mysqli_prepare($conn, $query);
+    $stmt->bind_param("is", $post_id, $reaction_type);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+
+    return $row['reaction_count'];
+}
+
+function userLikedPost($post_id, $user_id)
+{
+    global $conn;
+
+    $stmt = $conn->prepare("SELECT * FROM post_reactions WHERE post_id = ? AND user_id = ? AND post_reaction = 'liked'");
+    $stmt->bind_param('ii', $post_id, $user_id);
+    $stmt->execute();
+    $stmt->store_result();
+    return $stmt->num_rows > 0;
+}
+
+function userDislikedPost($post_id, $user_id)
+{
+    global $conn;
+
+    $stmt = $conn->prepare("SELECT * FROM post_reactions WHERE post_id = ? AND user_id = ? AND post_reaction = 'disliked'");
+    $stmt->bind_param('ii', $post_id, $user_id);
+    $stmt->execute();
+    $stmt->store_result();
+    return $stmt->num_rows > 0;
+}
+
+function clearFormSession()
+{
+    $currentUri = $_SERVER['REQUEST_URI'];
+    $resolutionPage = '/blts/views/admin_add_resolution.php';
+    $ordinancePage = '/blts/views/admin_add_ordinance.php';
+    $ordinancePage = '/blts/views/citizen_resolution.php';
+
+    if (strpos($currentUri, $resolutionPage) === false && strpos($currentUri, $ordinancePage) === false) {
+        removeValue();
+    }
+}
+
+function isForumPage()
+{
+    $forum_page = '/blts/views/citizen_forum.php';
+    $currentUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+    return $forum_page === $currentUri;
+}
+
+
+function formatWhereasClauses($text)
+{
+    return preg_replace('/(WHEREAS|WHEREFORE)/', '<br>$1', $text);
+}
+
+function formatResolvingClauses($text)
+{
+    $resolvedCount = 0;
+    return preg_replace_callback('/(RESOLVED)/', function ($matches) use (&$resolvedCount) {
+        $resolvedCount++;
+        if ($resolvedCount === 1) {
+            return $matches[0];
+        }
+        return '<br>' . $matches[0];
+    }, $text);
+}
+
+function getAllTagDesc($orderby, $limit)
+{
+    return findAll('tags', $orderby, 'DESC', $limit);
+}
+
+function getAllTagAsc($orderby, $limit)
+{
+    return findAll('tags', $orderby, 'ASC', $limit);
+}
+
+function getTagByID($id)
+{
+    return find('tags', ['tag_id' => $id]);
+}
+
+function formatOrdinanceSection($text)
+{
+    // Use a regular expression to find "Section" followed by numbers and ensure it is followed by a newline
+    $formattedText = preg_replace('/(Section\s*\d+\.)/', "\n$1\n", $text);
+
+    // Remove any extra newlines that might be added before the first section
+    $formattedText = preg_replace('/^\s+/', '', $formattedText);
+
+    // Ensure there are no double newlines by replacing them with a single newline
+    $formattedText = preg_replace('/\n+/', "\n", $formattedText);
+
+    return nl2br($formattedText);
+}
+
+function getAllUsers()
+{
+    return find_where('users', ['user_type' => 'citizen']);
+}
+
+function getTopLikes($limit)
+{
+    global $conn;
+    $sql = "
+        SELECT p.post_id, p.topic, p.date_added, p.message, COUNT(pr.post_reaction) as like_count
+        FROM posts p
+        LEFT JOIN post_reactions pr ON p.post_id = pr.post_id AND pr.post_reaction = 'liked'
+        GROUP BY p.post_id, p.topic
+        HAVING like_count > 0
+        ORDER BY like_count DESC
+        LIMIT ?
+    ";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $limit);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $topLikedPosts = [];
+    while ($row = $result->fetch_assoc()) {
+        $topLikedPosts[] = $row;
+    }
+
+    return $topLikedPosts;
+}
+
+function searchPost($keyword)
+{
+    global $conn;
+
+    $keyword = '%' . $keyword . '%';
+    $sql = "SELECT * FROM posts WHERE topic LIKE ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $keyword);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $posts = [];
+    while ($row = $result->fetch_assoc()) {
+        $posts[] = $row;
+    }
+    $stmt->close();
+    return $posts;
+}
+
+function countPostComments($post_id)
+{
+    global $conn;
+    $sql = "SELECT COUNT(*) AS comment_count FROM post_comments WHERE post_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $post_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    return $row['comment_count'];
 }

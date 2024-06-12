@@ -70,20 +70,28 @@ redirectNotLogin();
                     $resolutions = getAllResolutionsDesc(null);
                 }
                 ?>
-                <?php foreach ($resolutions as $resolution) : ?>
-                    <div class="col-3 citizen-document-list">
-                        <a href="view_resolution.php?resolution_id=<?php echo $resolution['resolution_id']; ?>" class="citizen-view-document">
-                            <div class="card shadow mb-3">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary"><?php echo $resolution['resolutionNo']; ?></h6>
-                                </div>
-                                <div class="card-body">
-                                    <?php echo substr($resolution['title'], 0, 100) . '...'; ?>
-                                </div>
-                            </div>
-                        </a>
+                <?php if (empty($resolutions)) : ?>
+                    <div class="row mx-auto">
+                        <div class="alert alert-warning" role="alert">
+                            No results found.
+                        </div>
                     </div>
-                <?php endforeach; ?>
+                <?php else : ?>
+                    <?php foreach ($resolutions as $resolution) : ?>
+                        <div class="col-3 citizen-document-list">
+                            <a href="view_resolution.php?resolution_id=<?php echo $resolution['resolution_id']; ?>" class="citizen-view-document">
+                                <div class="card shadow mb-3">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary"><?php echo $resolution['resolutionNo']; ?></h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <?php echo substr($resolution['title'], 0, 100) . '...'; ?>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
             <!-- Content Row -->
 

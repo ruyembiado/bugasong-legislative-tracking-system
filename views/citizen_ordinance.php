@@ -70,20 +70,28 @@ redirectNotLogin();
                     $ordinances = getAllOrdinancesDesc(null);
                 }
                 ?>
-                <?php foreach ($ordinances as $ordinance) : ?>
-                    <div class="col-3 citizen-document-list">
-                        <a href="view_ordinance.php?ordinance_id=<?php echo $ordinance['ordinance_id']; ?>" class="citizen-view-document">
-                            <div class="card shadow mb-3">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary"><?php echo $ordinance['ordinanceNo']; ?></h6>
-                                </div>
-                                <div class="card-body">
-                                    <?php echo substr($ordinance['title'], 0, 100) . '...'; ?>
-                                </div>
-                            </div>
-                        </a>
+                <?php if (empty($ordinances)) : ?>
+                    <div class="row mx-auto">
+                        <div class="alert alert-warning" role="alert">
+                            No results found.
+                        </div>
                     </div>
-                <?php endforeach; ?>
+                <?php else : ?>
+                    <?php foreach ($ordinances as $ordinance) : ?>
+                        <div class="col-3 citizen-document-list">
+                            <a href="view_ordinance.php?ordinance_id=<?php echo $ordinance['ordinance_id']; ?>" class="citizen-view-document">
+                                <div class="card shadow mb-3">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary"><?php echo $ordinance['ordinanceNo']; ?></h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <?php echo substr($ordinance['title'], 0, 100) . '...'; ?>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
             <!-- Content Row -->
 

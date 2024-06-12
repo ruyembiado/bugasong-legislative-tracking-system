@@ -124,4 +124,30 @@ $(document).ready(function () {
             }
         });
     });
+
+    $(".deactivate").on("click", function (e) {
+        e.preventDefault();
+        const href = $(this).attr("href");
+
+        Swal.fire({
+            type: "warning",
+            icon: "warning",
+            title: "Are You Sure?",
+            text: "This user will be deactivated",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Deactivated",
+            customClass: {
+                actions: "my-actions",
+                cancelButton: "order-1 right-gap",
+                confirmButton: "order-2",
+                container: "my-swal",
+            },
+        }).then((result) => {
+            if (result.value) {
+                document.location.href = href;
+            }
+        });
+    });
 });

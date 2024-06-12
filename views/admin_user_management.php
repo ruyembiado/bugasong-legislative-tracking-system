@@ -54,6 +54,7 @@ redirectNotLogin();
                                                 <!-- <a href="view_user.php?user_id=<?php echo $user['user_id']; ?>" class="btn btn-secondary px-2 py-1 my-1">View</a> -->
                                                 <a href="admin_update_user.php?user_id=<?php echo $user['user_id']; ?>" class="btn btn-primary px-2 py-1 my-1">Update</a>
                                                 <a href="../actions/admin_delete.php?delete_user=delete&user_id=<?php echo $user['user_id']; ?>" class="btn btn-danger px-2 py-1 my-1 delete">Delete</a>
+                                                <a class="status-button px-2 py-1 my-1 <?php echo ($user['status'] == '1') ? 'deactivate' : ''; ?>" href="../actions/admin_update.php?update_status=<?php echo $user['status']; ?>&user_id=<?php echo $user['user_id']; ?>"><?php echo ($user['status'] == '1') ? '<p class="text-light btn btn-danger ">Deactivated</p>' : '<p class="text-light btn btn-success">Active</p>' ?></a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

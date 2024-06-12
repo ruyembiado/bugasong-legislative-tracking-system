@@ -48,12 +48,17 @@ img.img-profile {
     width: 52px !important;
 }
 
-a.citizen-view-document:hover {
+a.citizen-view-document:hover, a.citizen-view-post:hover {
     text-decoration: none;
     color: unset;
 }
 
-a.citizen-view-document {
+a.citizen-view-document, a.citizen-view-post {
     text-decoration: none;
     color: unset;
+}
+
+button.react-button {
+    background-color: transparent;
+    border: none;
 }
