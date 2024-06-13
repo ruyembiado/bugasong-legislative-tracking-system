@@ -26,12 +26,12 @@ redirectNotLogin();
             <div class="row mb-3">
                 <div class="col-12">
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get">
-                        <div class="d-flex align-items-end search-container">
-                            <div class="keyword-input col-4 p-0 mr-2">
+                        <div class="d-flex align-items-end flex-wrap search-container">
+                            <div class="keyword-input p-0 mr-2">
                                 <label for="keyword-input">Keyword(s):</label>
                                 <input type="text" name="keyword" placeholder="Keyword(s)" class="form-control" value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>">
                             </div>
-                            <div class="type-selection col-2 p-0 mr-2">
+                            <div class="type-selection p-0 mr-2">
                                 <label for="type-selection">Type:</label>
                                 <select name="tag" id="tag" class="form-control">
                                     <option value="">Select option:</option>
@@ -78,7 +78,7 @@ redirectNotLogin();
                     </div>
                 <?php else : ?>
                     <?php foreach ($ordinances as $ordinance) : ?>
-                        <div class="col-3 citizen-document-list">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 citizen-document-list">
                             <a href="view_ordinance.php?ordinance_id=<?php echo $ordinance['ordinance_id']; ?>" class="citizen-view-document">
                                 <div class="card shadow mb-3">
                                     <div class="card-header py-3">

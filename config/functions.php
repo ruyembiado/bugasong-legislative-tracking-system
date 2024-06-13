@@ -402,3 +402,40 @@ function countPostComments($post_id)
     $row = $result->fetch_assoc();
     return $row['comment_count'];
 }
+
+function viewTopic($postId)
+{
+    global $conn;
+
+    $sql = "SELECT * FROM posts WHERE post_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $postId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $post = $result->fetch_assoc();
+    return $post;
+}
+
+function viewPostComments($post_id)
+{
+    global $conn;
+
+    $sql = "
+        SELECT *
+        FROM post_comments
+        WHERE post_id = ?
+        ORDER BY date_added ASC
+    ";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $post_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $comments = [];
+    while ($row = $result->fetch_assoc()) {
+        $comments[] = $row;
+    }
+
+    return $comments;
+}

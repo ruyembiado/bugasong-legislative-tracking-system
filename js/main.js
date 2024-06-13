@@ -1,4 +1,16 @@
 $(document).ready(function () {
+    function toggleSidebar() {
+        if ($(window).width() <= 767) {
+            $("#accordionSidebar").addClass("toggled");
+        } else {
+            $("#accordionSidebar").removeClass("toggled");
+        }
+    }
+    toggleSidebar();
+    $(window).resize(function () {
+        toggleSidebar();
+    });
+
     $("#dataTable1").DataTable();
 
     // Highlight the active link based on localStorage value

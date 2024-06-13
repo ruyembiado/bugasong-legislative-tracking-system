@@ -18,98 +18,64 @@ redirectNotLogin();
 
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">Feedback Forum</h1>
+                <h1 class="h3 mb-0 text-gray-800">View Topic</h1>
             </div>
 
             <!-- Content Row -->
             <div class="container-fluid p-0 d-flex flex-row">
                 <div class="col-12 col-sm-8 p-0">
-                    <!-- Post Form -->
-                    <div class="create-forum col-12 p-0">
-                        <div class="card shadow mb-3">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Create Post</h6>
+                    <?php $post = viewTopic($_GET['post_id']); ?>
+                    <div class="card shadow mb-3">
+                        <div class="card-header py-3">
+                            <span class="user" style="font-size: 13px;">
+                                <?php foreach (getPostUser($post['post_id']) as $user) : echo $user['name'];
+                                endforeach; ?> - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
+                            </span>
+                            <h6 class="m-0 font-weight-bold text-primary"><?php echo $post['topic']; ?></h6>
+                        </div>
+                        <div class="card-body py-2 forum-message">
+                            <div class="message mb-3 text-gray-800"><?php echo $post['message']; ?></div>
+                            <div class="comment-section">
+                                <?php if (empty(viewPostComments($post['post_id']))) : ?>
+                                    <div class="alert alert-warning m-0 text-center" role="alert">
+                                        No comment found.
+                                    </div>
+                                <?php endif; ?>
+                                <?php foreach (viewPostComments($post['post_id']) as $comment) : ?>
+                                    <?php $position = ($comment['user_id'] === user_id()) ? 'right' : 'left' ?>
+                                    <?php $color = ($comment['user_id'] === user_id()) ? 'dark' : 'secondary' ?>
+                                    <div class="col-8 comments card border-left-<?php echo $color; ?> p-1 mb-2 float-<?php echo $position; ?> p-0">
+                                        <div class="user-container d-flex flex-column">
+                                            <span class="user" style="font-size: 13px;">
+                                                <?php foreach (getPostUser($comment['post_id']) as $user) : echo $user['name'];
+                                                endforeach; ?> - <?php echo date('M d Y h:i:s a', strtotime($comment['date_added'])); ?>
+                                            </span>
+                                            <span class="comment text-gray-800 ml-3">
+                                                <?php echo $comment['post_comment']; ?>
+                                            </span>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
-                            <form action="../actions/citizen_add.php" method="POST" class="p-2">
-                                <div class="d-flex flex-column">
-                                    <div class="m-1">
-                                        <label class="label" style="font-size: 13px;">Topic</label>
-                                        <div class="d-flex align-items-center">
-                                            <input class="form-control text-gray-800" type="text" name="topic" value="<?php echo getValue('topic'); ?>" placeholder="Enter your topic">
-                                        </div>
-                                        <?php if (showError('topic')) : ?>
-                                            <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('topic'); ?></p>
-                                        <?php endif; ?>
+                        </div>
+                        <form action="../actions/citizen_add.php" method="POST" class="py-2 px-3">
+                            <div class="d-flex flex-column">
+                                <div class="m-1">
+                                    <label class="label" style="font-size: 13px;">Comment</label>
+                                    <div class="d-flex align-items-center">
+                                        <textarea class="form-control text-gray-800" name="comment" placeholder="Enter your comment"><?php echo getValue('comment'); ?></textarea>
                                     </div>
-                                    <div class="m-1">
-                                        <label class="label" style="font-size: 13px;">Message</label>
-                                        <div class="d-flex align-items-center">
-                                            <textarea class="form-control text-gray-800" name="message" placeholder="Enter your message"><?php echo getValue('message'); ?></textarea>
-                                        </div>
-                                        <?php if (showError('message')) : ?>
-                                            <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('message'); ?></p>
-                                        <?php endif; ?>
-                                    </div>
+                                    <?php if (showError('comment')) : ?>
+                                        <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('comment'); ?></p>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="m-1 mb-2 d-flex justify-content-end">
                                     <input type="hidden" name="user_id" id="" value="<?php echo user_id(); ?>">
-                                    <button type="submit" name="create_post" value="create_post" class="button-size form-control btn-primary rounded col-4 col-lg-2 col-md-3 col-sm-4" style="font-size: 14px;">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- Post Lists -->
-                    <?php
-                    $keyword = isset($_GET['search']) ? $_GET['search'] : '';
-                    $posts = !empty($keyword) ? searchPost($keyword) : getAllPostRand();
-                    ?>
-                    <div class="forum-post col-12 p-0">
-                        <?php if (empty($posts)) : ?>
-                            <div class="d-flex justify-content-center">
-                                <div class="alert alert-warning" role="alert">
-                                    No post found.
+                                    <input type="hidden" name="post_id" id="" value="<?php echo $post['post_id']; ?>">
+                                    <button type="submit" name="create_comment" value="create_comment" class="button-size form-control btn-primary rounded col-4 col-lg-2 col-md-3 col-sm-4" style="font-size: 14px;">Submit</button>
                                 </div>
                             </div>
-                        <?php else : ?>
-                            <?php foreach ($posts as $post) : ?>
-                                <div class="forum">
-                                    <div class="card shadow mb-3">
-                                        <div class="card-header pt-2 pb-0 forum-topic">
-                                            <div class="d-flex flex-column">
-                                                <span class="user" style="font-size: 13px;">
-                                                    <?php foreach (getPostUser($post['post_id']) as $user) : echo $user['name'];
-                                                    endforeach; ?> - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
-                                                </span>
-                                                <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>" class="citizen-view-post">
-                                                    <h5 class="topic text-primary"><?php echo $post['topic']; ?></h5>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="card-body py-2 forum-message">
-                                            <div class="message mb-2 text-gray-800"><?php echo $post['message']; ?></div>
-                                            <div class="feedback">
-                                                <div class="d-flex">
-                                                    <?php
-                                                    $likeClass = userLikedPost($post['post_id'], user_id()) ? 'text-primary' : 'text-secondary';
-                                                    $dislikeClass = userDislikedPost($post['post_id'], user_id()) ? 'text-danger' : 'text-secondary';
-                                                    ?>
-                                                    <button class="react-button <?php echo $likeClass; ?>" type="button" onclick="submitReaction(<?php echo $post['post_id']; ?>, <?php echo user_id(); ?>, 'liked')">
-                                                        <span><i class="fas fa-thumbs-up m-1"></i><sup class="like-count-<?php echo $post['post_id']; ?>"><?php echo countReaction($post['post_id'], 'liked') ?></sup></span>
-                                                    </button>
-                                                    <button class="react-button <?php echo $dislikeClass; ?>" type="button" onclick="submitReaction(<?php echo $post['post_id']; ?>, <?php echo user_id(); ?>, 'disliked')">
-                                                        <span><i class="fas fa-thumbs-down m-1"></i><sup class="dislike-count-<?php echo $post['post_id']; ?>"><?php echo countReaction($post['post_id'], 'disliked') ?></sup></span>
-                                                    </button>
-                                                    <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>" class="citizen-view-post">
-                                                        <span><i class="fas fa-comment m-1"></i><sup class="count-comment"><?php echo countPostComments($post['post_id']); ?></sup></span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
+                        </form>
                     </div>
                 </div>
 
@@ -174,34 +140,36 @@ redirectNotLogin();
                                         </div>
                                     <?php endif; ?>
                                     <?php foreach (getTopLikes(5) as $post) : ?>
-                                        <div class="d-flex flex-column">
-                                            <span class="user" style="font-size: 13px;">
-                                                <?php foreach (getPostUser($post['post_id']) as $user) : echo $user['name'];
-                                                endforeach; ?>
-                                                - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
-                                            </span>
-                                            <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>" class="citizen-view-post">
-                                                <h5 class="topic text-primary"><?php echo $post['topic']; ?></h5>
-                                            </a>
-                                        </div>
-                                        <div class="message mb-2 text-gray-800"><?php echo $post['message']; ?></div>
-                                        <div class="feedback mb-4">
-                                            <div class="d-flex">
-                                                <?php
-                                                $likeClass = userLikedPost($post['post_id'], user_id()) ? 'text-primary' : 'text-secondary';
-                                                $dislikeClass = userDislikedPost($post['post_id'], user_id()) ? 'text-danger' : 'text-secondary';
-                                                ?>
-                                                <button class="react-button <?php echo $likeClass; ?>" type="button" onclick="submitReaction(<?php echo $post['post_id']; ?>, <?php echo user_id(); ?>, 'liked')">
-                                                    <span><i class="fas fa-thumbs-up m-1"></i><sup class="like-count-<?php echo $post['post_id']; ?>"><?php echo countReaction($post['post_id'], 'liked') ?></sup></span>
-                                                </button>
-                                                <button class="react-button <?php echo $dislikeClass; ?>" type="button" onclick="submitReaction(<?php echo $post['post_id']; ?>, <?php echo user_id(); ?>, 'disliked')">
-                                                    <span><i class="fas fa-thumbs-down m-1"></i><sup class="dislike-count-<?php echo $post['post_id']; ?>"><?php echo countReaction($post['post_id'], 'disliked') ?></sup></span>
-                                                </button>
+                                        <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>" class="citizen-view-post">
+                                            <div class="d-flex flex-column">
+                                                <span class="user" style="font-size: 13px;">
+                                                    <?php foreach (getPostUser($post['post_id']) as $user) : echo $user['name'];
+                                                    endforeach; ?>
+                                                    - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
+                                                </span>
                                                 <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>" class="citizen-view-post">
-                                                    <span><i class="fas fa-comment m-1"></i><sup class="count-comment"><?php echo countPostComments($post['post_id']); ?></sup></span>
+                                                    <h5 class="topic text-primary"><?php echo $post['topic']; ?></h5>
                                                 </a>
                                             </div>
-                                        </div>
+                                            <div class="message mb-2 text-gray-800"><?php echo $post['message']; ?></div>
+                                            <div class="feedback mb-4">
+                                                <div class="d-flex">
+                                                    <?php
+                                                    $likeClass = userLikedPost($post['post_id'], user_id()) ? 'text-primary' : 'text-secondary';
+                                                    $dislikeClass = userDislikedPost($post['post_id'], user_id()) ? 'text-danger' : 'text-secondary';
+                                                    ?>
+                                                    <button class="react-button <?php echo $likeClass; ?>" type="button" onclick="submitReaction(<?php echo $post['post_id']; ?>, <?php echo user_id(); ?>, 'liked')">
+                                                        <span><i class="fas fa-thumbs-up m-1"></i><sup class="like-count-<?php echo $post['post_id']; ?>"><?php echo countReaction($post['post_id'], 'liked') ?></sup></span>
+                                                    </button>
+                                                    <button class="react-button <?php echo $dislikeClass; ?>" type="button" onclick="submitReaction(<?php echo $post['post_id']; ?>, <?php echo user_id(); ?>, 'disliked')">
+                                                        <span><i class="fas fa-thumbs-down m-1"></i><sup class="dislike-count-<?php echo $post['post_id']; ?>"><?php echo countReaction($post['post_id'], 'disliked') ?></sup></span>
+                                                    </button>
+                                                    <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>" class="citizen-view-post">
+                                                        <span><i class="fas fa-comment m-1"></i><sup class="count-comment"><?php echo countPostComments($post['post_id']); ?></sup></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </a>
                                     <?php endforeach; ?>
                                 </div>
                             </div>

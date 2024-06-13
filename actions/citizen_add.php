@@ -45,3 +45,45 @@ if (isset($_POST['create_post'])) :
         }
     }
 endif;
+
+if (isset($_POST['create_comment'])) :
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check if the method is post
+
+        //Input the fields
+        $fields = [
+            'comment'          => $_POST['comment'],
+        ];
+        //Create Validation if you want to see the choices ..go to database.php
+        $validations = [
+            'comment' => [
+                'required' => true,
+            ],
+        ];
+
+        $errors = validate($fields, $validations); //activate the validation
+
+        if (empty($errors)) { //check if the errors is empty
+            $data = [
+                'post_id'       => $_POST['post_id'], //or $_POST['name']
+                'user_id'       => $_POST['user_id'], //or $_POST['name']
+                'post_comment'       => $_POST['comment'],
+            ]; //put it in array before saving
+
+            $save = save('post_comments', $data);
+
+            if ($save) {
+                removeValue(); //remove the retain value in inputs
+                setFlash('success', 'Comment Added Successfully'); //set message
+                redirect('view_post', ['post_id' => $_POST['post_id']]); //shortcut for header('location:index.php ');
+            } else {
+                retainValue(); //retain value even if there is errors or refresh
+                setFlash('failed', 'Add Failed'); //set message
+                redirect('view_post', ['post_id' => $_POST['post_id']]); //shortcut for header('location:index.php ');
+            }
+        } else {
+            $errors['post_id'] =  $_POST['post_id'];
+            retainValue(); //retain value even if there is errors or refresh
+            redirect('view_post', $errors); //shortcut for header('location:register.php?errors=$errors');
+        }
+    }
+endif;
