@@ -27,11 +27,11 @@ redirectNotLogin();
                 <div class="col-12">
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get">
                         <div class="d-flex align-items-end flex-wrap search-container">
-                            <div class="keyword-input p-0 mr-2">
+                            <div class="keyword-input p-0 mr-2 mt-2">
                                 <label for="keyword-input">Keyword(s):</label>
                                 <input type="text" name="keyword" placeholder="Keyword(s)" class="form-control" value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>">
                             </div>
-                            <div class="type-selection p-0 mr-2">
+                            <div class="type-selection p-0 mr-2 mt-2">
                                 <label for="type-selection">Type:</label>
                                 <select name="tag" id="tag" class="form-control">
                                     <option value="">Select option:</option>
@@ -42,7 +42,7 @@ redirectNotLogin();
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            <div class="date-input mr-2">
+                            <div class="date-input mr-2 mt-2">
                                 <div class="d-flex p-0">
                                     <div class="start-date mr-2">
                                         <label for="start-date">Date Start:</label>
@@ -54,7 +54,7 @@ redirectNotLogin();
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-submit">
+                            <div class="form-submit mt-2">
                                 <button type="submit" name="search_ordinance" value="search_ordinance" class="btn btn-primary">Search</button>
                                 <a class="btn btn-danger" href="citizen_ordinance.php">Reset</a>
                             </div>

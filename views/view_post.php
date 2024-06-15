@@ -1,6 +1,7 @@
 <?php
 @include('header.php');
 redirectNotLogin();
+
 ?>
 
 <!-- Content Wrapper -->
@@ -34,7 +35,21 @@ redirectNotLogin();
                             <h6 class="m-0 font-weight-bold text-primary"><?php echo $post['topic']; ?></h6>
                         </div>
                         <div class="card-body py-2 forum-message">
-                            <div class="message mb-3 text-gray-800"><?php echo $post['message']; ?></div>
+                            <div class="message mb-2 text-gray-800"><?php echo $post['message']; ?></div>
+                            <div class="feedback mb-2">
+                                <div class="d-flex">
+                                    <?php
+                                    $likeClass = userLikedPost($post['post_id'], user_id()) ? 'text-primary' : 'text-secondary';
+                                    $dislikeClass = userDislikedPost($post['post_id'], user_id()) ? 'text-danger' : 'text-secondary';
+                                    ?>
+                                    <button class="react-button <?php echo $likeClass; ?>" type="button" onclick="submitReaction(<?php echo $post['post_id']; ?>, <?php echo user_id(); ?>, 'liked')">
+                                        <span><i class="fas fa-thumbs-up m-1"></i><sup class="like-count-<?php echo $post['post_id']; ?>"><?php echo countReaction($post['post_id'], 'liked') ?></sup></span>
+                                    </button>
+                                    <button class="react-button <?php echo $dislikeClass; ?>" type="button" onclick="submitReaction(<?php echo $post['post_id']; ?>, <?php echo user_id(); ?>, 'disliked')">
+                                        <span><i class="fas fa-thumbs-down m-1"></i><sup class="dislike-count-<?php echo $post['post_id']; ?>"><?php echo countReaction($post['post_id'], 'disliked') ?></sup></span>
+                                    </button>
+                                </div>
+                            </div>
                             <div class="comment-section">
                                 <?php if (empty(viewPostComments($post['post_id']))) : ?>
                                     <div class="alert alert-warning m-0 text-center" role="alert">
@@ -46,13 +61,28 @@ redirectNotLogin();
                                     <?php $color = ($comment['user_id'] === user_id()) ? 'dark' : 'secondary' ?>
                                     <div class="col-8 comments card border-left-<?php echo $color; ?> p-1 mb-2 float-<?php echo $position; ?> p-0">
                                         <div class="user-container d-flex flex-column">
-                                            <span class="user" style="font-size: 13px;">
-                                                <?php foreach (getPostUser($comment['post_id']) as $user) : echo $user['name'];
-                                                endforeach; ?> - <?php echo date('M d Y h:i:s a', strtotime($comment['date_added'])); ?>
-                                            </span>
-                                            <span class="comment text-gray-800 ml-3">
-                                                <?php echo $comment['post_comment']; ?>
-                                            </span>
+                                            <div class="comment">
+                                                <div class="d-flex justify-content-between">
+                                                    <span class="user" style="font-size: 13px;">
+                                                        <?php echo getUserData($comment['user_id'])['name']; ?> - <?php echo date('M d Y h:i:s a', strtotime($comment['date_added'])); ?>
+                                                    </span>
+                                                    <div class="comment-action">
+                                                        <?php if ($comment['user_id'] === user_id()) : ?>
+                                                            <a href="#" class="edit-comment" data-comment-id="<?php echo $comment['post_comment_id']; ?>"><i class="fas fa-edit text-primary" style="font-size: 13px;"></i></a>
+                                                            <a class="delete" href="../actions/citizen_delete.php?delete_comment=delete&post_id=<?php echo $_GET['post_id']; ?>&comment_id=<?php echo $comment['post_comment_id']; ?>"><i class="fas fa-trash text-danger" style="font-size: 13px;"></i></a>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+                                                <span class="comment-content text-gray-800 ml-3" data-comment-id="<?php echo $comment['post_comment_id']; ?>"><?php echo $comment['post_comment']; ?></span>
+                                                <div class="">
+                                                    <form action="../actions/citizen_update.php" method="post">
+                                                        <input type="hidden" name="post_id" value="<?php echo $_GET['post_id']; ?>">
+                                                        <input type="hidden" name="post_comment_id" value="<?php echo $comment['post_comment_id']; ?>">
+                                                        <textarea rows="4" name="post_comment" class="edit-comment-textarea form-control text-gray-800" style="display: none;" data-comment-id="<?php echo $comment['post_comment_id']; ?>"></textarea>
+                                                        <button type="submit" name="update_comment" value="update_comment" class="btn btn-primary update-comment-btn px-2 py-1 my-1 float-right" style="display: none; font-size: 14px;" data-comment-id="<?php echo $comment['post_comment_id']; ?>">Update</button>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
@@ -72,7 +102,7 @@ redirectNotLogin();
                                 <div class="m-1 mb-2 d-flex justify-content-end">
                                     <input type="hidden" name="user_id" id="" value="<?php echo user_id(); ?>">
                                     <input type="hidden" name="post_id" id="" value="<?php echo $post['post_id']; ?>">
-                                    <button type="submit" name="create_comment" value="create_comment" class="button-size form-control btn-primary rounded col-4 col-lg-2 col-md-3 col-sm-4" style="font-size: 14px;">Submit</button>
+                                    <button type="submit" name="create_comment" value="create_comment" class="button-size form-control btn-primary rounded col-4 col-lg-2 col-md-3 col-sm-4">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -81,6 +111,52 @@ redirectNotLogin();
 
                 <!-- Sidebar Topics -->
                 <div class="sidebar-container column col-12 col-sm-4 p-0 d-none d-sm-block">
+                    <div class="col-12 p-0">
+                        <div class="sidebar-forum col-12 pr-0">
+                            <div class="card shadow mb-3">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">My Topics</h6>
+                                </div>
+                                <div class="card-body py-2 forum-message">
+                                    <?php if (empty(getMyPosts(user_id(), 5))) : ?>
+                                        <div class="alert alert-warning m-0 text-center" role="alert">
+                                            No post found.
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php foreach (getMyPosts(user_id(), 5) as $post) : ?>
+                                        <div class="d-flex flex-column">
+                                            <span class="user" style="font-size: 13px;">
+                                                <?php foreach (getPostUser($post['post_id']) as $user) : echo $user['name'];
+                                                endforeach; ?>
+                                                - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
+                                            </span>
+                                            <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>" class="citizen-view-post">
+                                                <h5 class="topic text-primary"><?php echo $post['topic']; ?></h5>
+                                            </a>
+                                        </div>
+                                        <div class="message mb-2 text-gray-800"><?php echo $post['message']; ?></div>
+                                        <div class="feedback mb-4">
+                                            <div class="d-flex">
+                                                <?php
+                                                $likeClass = userLikedPost($post['post_id'], user_id()) ? 'text-primary' : 'text-secondary';
+                                                $dislikeClass = userDislikedPost($post['post_id'], user_id()) ? 'text-danger' : 'text-secondary';
+                                                ?>
+                                                <button class="react-button <?php echo $likeClass; ?>" type="button" onclick="submitReaction(<?php echo $post['post_id']; ?>, <?php echo user_id(); ?>, 'liked')">
+                                                    <span><i class="fas fa-thumbs-up m-1"></i><sup class="like-count-<?php echo $post['post_id']; ?>"><?php echo countReaction($post['post_id'], 'liked') ?></sup></span>
+                                                </button>
+                                                <button class="react-button <?php echo $dislikeClass; ?>" type="button" onclick="submitReaction(<?php echo $post['post_id']; ?>, <?php echo user_id(); ?>, 'disliked')">
+                                                    <span><i class="fas fa-thumbs-down m-1"></i><sup class="dislike-count-<?php echo $post['post_id']; ?>"><?php echo countReaction($post['post_id'], 'disliked') ?></sup></span>
+                                                </button>
+                                                <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>" class="citizen-view-post">
+                                                    <span><i class="fas fa-comment m-1"></i><sup class="count-comment"><?php echo countPostComments($post['post_id']); ?></sup></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-12 p-0">
                         <div class="sidebar-forum col-12 pr-0">
                             <div class="card shadow mb-3">
@@ -263,4 +339,30 @@ redirectNotLogin();
                 console.error('Error:', error);
             });
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const editButtons = document.querySelectorAll('.edit-comment');
+
+        editButtons.forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                const commentId = button.getAttribute('data-comment-id');
+                const commentContentElement = document.querySelector(`.comment-content[data-comment-id="${commentId}"]`);
+                const textareaElement = document.querySelector(`.edit-comment-textarea[data-comment-id="${commentId}"]`);
+                const updateButton = document.querySelector(`.update-comment-btn[data-comment-id="${commentId}"]`);
+                console.log(commentId);
+                console.log(commentContentElement);
+                console.log(textareaElement);
+                console.log(updateButton);
+                // Hide comment content, show textarea and update button
+                commentContentElement.style.display = 'none';
+                textareaElement.style.display = 'block';
+                updateButton.style.display = 'block';
+
+                // Populate textarea with current comment content
+                textareaElement.value = commentContentElement.textContent.trim();
+            });
+        });
+    });
 </script>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 12, 2024 at 03:44 PM
+-- Generation Time: Jun 15, 2024 at 04:37 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -74,18 +74,20 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`post_id`, `user_id`, `topic`, `message`, `date_added`) VALUES
-(3, 5, 'Mollitia molestiae s', 'Pariatur Et recusan', '2024-05-28 19:43:48.126449'),
-(4, 5, 'Voluptas aute molest', 'Consectetur quam nos', '2024-05-28 19:51:07.296005'),
-(5, 5, 'Provident dignissim', 'Veritatis ut laudant', '2024-05-28 19:51:14.945918'),
-(6, 6, 'Id nisi laboriosam ', 'Blanditiis facere se', '2024-05-28 21:23:12.302401'),
-(7, 6, 'Eiusmod accusantium ', 'Nisi doloribus quo l', '2024-05-28 21:23:17.102569'),
-(8, 6, 'Dolores dolor quidem', 'Velit hic qui et qui', '2024-05-28 21:44:15.764784'),
-(9, 6, 'Cum in ipsam tempori', 'Ipsam dolores conseq', '2024-05-28 21:44:18.766810'),
-(10, 6, 'Mollit a sit exceptu', 'Cumque quia voluptas', '2024-05-28 21:44:21.446784'),
-(11, 6, 'Temporibus veniam a', 'Excepteur autem dese', '2024-05-28 21:44:24.298344'),
-(12, 6, 'Cum molestiae suscip', 'Fugiat aliqua Simil', '2024-05-28 21:44:32.931344'),
-(13, 6, 'Exercitationem ducim', 'Nostrud neque conseq', '2024-05-28 21:44:35.732554'),
-(14, 6, 'Enim reprehenderit ', 'Nam et eius tenetur ', '2024-05-28 21:44:50.899885');
+(20, 6, 'Illum quod et proid', 'Anim dolor assumenda', '2024-06-15 08:52:30.453409'),
+(21, 6, 'Rerum et ex sit com', 'Officia magna quo la', '2024-06-15 08:52:48.818858'),
+(22, 6, 'Unde ea ut qui in et', 'Harum aperiam porro ', '2024-06-15 08:53:00.952328'),
+(23, 6, 'Consequat Labore mo', 'Excepturi tenetur no', '2024-06-15 08:53:12.758055'),
+(24, 6, 'Quisquam ex neque al', 'Ipsum voluptate lau', '2024-06-15 08:53:30.727286'),
+(25, 6, 'Voluptatum in debiti', 'Magni debitis commod', '2024-06-15 08:53:37.920805'),
+(26, 6, 'Ex in suscipit qui r', 'Ipsa illum vero oc', '2024-06-15 08:54:37.387420'),
+(27, 6, 'Magni elit est do ', 'Labore irure non exc', '2024-06-15 08:55:10.388629'),
+(28, 6, 'Ut in id rerum exerc', 'Velit a unde eos aut', '2024-06-15 08:55:26.703030'),
+(29, 6, 'Commodo facilis alia', 'Aliquid lorem expedi', '2024-06-15 08:55:32.548749'),
+(30, 6, 'Consectetur earum c', 'Mollit amet ea temp', '2024-06-15 08:55:52.924220'),
+(31, 6, 'A dolores autem cons', 'Ea impedit qui cons', '2024-06-15 08:57:20.004460'),
+(32, 6, 'Cumque accusantium s', 'Repudiandae velit s', '2024-06-15 08:57:43.313221'),
+(33, 5, 'asasasa', 'asas', '2024-06-15 09:43:10.251913');
 
 -- --------------------------------------------------------
 
@@ -100,6 +102,30 @@ CREATE TABLE `post_comments` (
   `post_comment` longtext NOT NULL,
   `date_added` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `post_comments`
+--
+
+INSERT INTO `post_comments` (`post_comment_id`, `post_id`, `user_id`, `post_comment`, `date_added`) VALUES
+(6, 31, 5, 'wdaasasas', '2024-06-15 09:42:22'),
+(7, 31, 5, 'asasasaa', '2024-06-15 09:42:29'),
+(8, 32, 5, 'sasas', '2024-06-15 09:42:46'),
+(9, 31, 5, 'sssssss', '2024-06-15 09:44:58'),
+(11, 33, 5, 'aasas', '2024-06-15 09:46:01'),
+(13, 33, 5, 'sasasa', '2024-06-15 09:47:27'),
+(14, 33, 6, 'asasa', '2024-06-15 09:48:38'),
+(15, 33, 5, 'sasas', '2024-06-15 09:55:47'),
+(16, 33, 6, 'asasasa', '2024-06-15 09:56:10'),
+(17, 32, 5, 'asasa', '2024-06-15 10:06:22'),
+(18, 32, 5, 'SASA', '2024-06-15 10:24:53'),
+(19, 33, 5, 'SSSS', '2024-06-15 10:25:11'),
+(20, 33, 6, 'SAASAS', '2024-06-15 10:25:23'),
+(21, 33, 5, 'dddd', '2024-06-15 10:47:54'),
+(22, 33, 6, 'sasa', '2024-06-15 10:48:03'),
+(23, 32, 6, 'asaasa', '2024-06-15 10:49:13'),
+(24, 20, 6, 'Optio voluptates es', '2024-06-15 17:22:39'),
+(26, 30, 6, 'Voluptatum est qui q', '2024-06-15 17:54:51');
 
 -- --------------------------------------------------------
 
@@ -120,19 +146,11 @@ CREATE TABLE `post_reactions` (
 --
 
 INSERT INTO `post_reactions` (`post_reaction_id`, `post_id`, `user_id`, `post_reaction`, `date_added`) VALUES
-(126, 10, 5, 'disliked', '2024-06-11 21:52:03'),
-(128, 5, 5, 'disliked', '2024-06-11 22:07:39'),
-(141, 9, 5, 'liked', '2024-06-11 22:19:26'),
-(145, 6, 5, 'liked', '2024-06-11 22:21:38'),
-(146, 7, 5, 'disliked', '2024-06-11 22:22:03'),
-(148, 12, 5, 'liked', '2024-06-11 22:24:53'),
-(150, 3, 5, 'disliked', '2024-06-12 19:18:55'),
-(152, 14, 5, 'disliked', '2024-06-12 19:26:54'),
-(154, 13, 5, 'liked', '2024-06-12 19:27:01'),
-(155, 11, 5, 'disliked', '2024-06-12 19:41:47'),
-(156, 4, 5, 'disliked', '2024-06-12 19:44:51'),
-(157, 9, 6, 'liked', '2024-06-12 21:34:13'),
-(158, 4, 6, 'disliked', '2024-06-12 21:34:20');
+(169, 20, 6, 'liked', '2024-06-15 08:59:58'),
+(170, 33, 6, 'disliked', '2024-06-15 10:49:02'),
+(171, 33, 6, 'disliked', '2024-06-15 17:21:14'),
+(172, 21, 6, 'liked', '2024-06-15 17:21:17'),
+(173, 23, 6, 'liked', '2024-06-15 17:21:19');
 
 -- --------------------------------------------------------
 
@@ -226,19 +244,24 @@ ALTER TABLE `ordinances`
 -- Indexes for table `posts`
 --
 ALTER TABLE `posts`
-  ADD PRIMARY KEY (`post_id`);
+  ADD PRIMARY KEY (`post_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `post_comments`
 --
 ALTER TABLE `post_comments`
-  ADD PRIMARY KEY (`post_comment_id`);
+  ADD PRIMARY KEY (`post_comment_id`),
+  ADD KEY `post_id` (`post_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `post_reactions`
 --
 ALTER TABLE `post_reactions`
-  ADD PRIMARY KEY (`post_reaction_id`);
+  ADD PRIMARY KEY (`post_reaction_id`),
+  ADD KEY `post_id` (`post_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `resolutions`
@@ -272,19 +295,19 @@ ALTER TABLE `ordinances`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `post_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `post_comments`
 --
 ALTER TABLE `post_comments`
-  MODIFY `post_comment_id` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `post_comment_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `post_reactions`
 --
 ALTER TABLE `post_reactions`
-  MODIFY `post_reaction_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
+  MODIFY `post_reaction_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
 
 --
 -- AUTO_INCREMENT for table `resolutions`
@@ -303,6 +326,30 @@ ALTER TABLE `tags`
 --
 ALTER TABLE `users`
   MODIFY `user_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `posts`
+--
+ALTER TABLE `posts`
+  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `post_comments`
+--
+ALTER TABLE `post_comments`
+  ADD CONSTRAINT `post_comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `post_comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `post_reactions`
+--
+ALTER TABLE `post_reactions`
+  ADD CONSTRAINT `post_reactions_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `post_reactions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

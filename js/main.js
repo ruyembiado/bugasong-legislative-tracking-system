@@ -162,4 +162,8 @@ $(document).ready(function () {
             }
         });
     });
+
+    setTimeout(function () {
+        $('#page-top').css('visibility', 'visible');
+    }, 50);
 });

@@ -347,6 +347,29 @@ function getAllUsers()
     return find_where('users', ['user_type' => 'citizen']);
 }
 
+function getMyPosts($user_id, $limit = null)
+{
+    global $conn;
+    $sql = "SELECT * 
+            FROM posts p
+            INNER JOIN users u ON p.user_id = u.user_id
+            WHERE u.user_id = ?";
+    if ($limit !== null) {
+        $sql .= " LIMIT ?";
+    }
+    $stmt = $conn->prepare($sql);
+    if ($limit !== null) {
+        $stmt->bind_param("ii", $user_id, $limit);
+    } else {
+        $stmt->bind_param("i", $user_id);
+    }
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $posts = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+    return $posts;
+}
+
 function getTopLikes($limit)
 {
     global $conn;
@@ -438,4 +461,22 @@ function viewPostComments($post_id)
     }
 
     return $comments;
+}
+
+function getUserData($user_id)
+{
+    global $conn;
+
+    $sql = "
+    SELECT *
+    FROM users
+    WHERE user_id = ?
+    ";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    return $row;
 }
