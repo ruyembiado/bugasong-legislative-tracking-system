@@ -52,13 +52,13 @@ clearFormSession();
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link Links" id="dashboardLink" href="dashboard.php" data-title="BLTS - Dashboard">
+                    <a class="nav-link Links" id="dashboardLink" href="../views/dashboard.php" data-title="BLTS - Dashboard">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <?php if (isAdmin()) : ?>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link Links" href="#" id="documentManagementLink" data-toggle="collapse" data-target="#DocumentManagePage" aria-expanded="true" aria-controls="DocumentManagePage" data-title="BLTS - Document Management">
                             <i class="fas fa-fw fa-file"></i>
                             <span>Document Management</span>
@@ -69,6 +69,18 @@ clearFormSession();
                                 <a class="collapse-item" href="../views/admin_ordinance.php?manage">Ordinances</a>
                             </div>
                         </div>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link Links" href="../views/admin_resolution.php?manage" id="ResolutionsLink" data-title="BLTS - Resolutions">
+                            <i class="far fa-file-alt"></i>
+                            <span>Resolutions</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link Links" href="../views/admin_ordinance.php?manage" id="OrdinancesLink" data-title="BLTS - Ordinances">
+                            <i class="far fa-file-alt"></i>
+                            <span>Ordinances</span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link Links" id="publishDocumentLink" href="#" data-toggle="collapse" data-target="#DocumentPublishPage" aria-expanded="true" aria-controls="DocumentPublishPage" data-title="BLTS - Publish Documents">
@@ -82,7 +94,7 @@ clearFormSession();
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link Links" id="adminPanelLink" href="#" data-toggle="collapse" data-target="#adminPanelPage" aria-expanded="true" aria-controls="adminPanelPage" data-title="BLTS - Admin Panel">
                             <i class="fas fa-fw fa-cog"></i>
                             <span>Admin Panel</span>
@@ -94,9 +106,27 @@ clearFormSession();
                                 <a class="collapse-item" href="../views/admin_tag.php">Tags</a>
                             </div>
                         </div>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link Links" href="../views/admin_tag.php" id="TagsLink" data-title="BLTS - Tags">
+                            <i class="fas fa-tag"></i>
+                            <span>Tags</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link Links" href="../views/admin_user_management.php" id="UserManagementLink" data-title="BLTS - User Management">
+                            <i class="fas fa-users"></i>
+                            <span>User Management</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link Links" href="../views/admin_system_setting.php" id="SystemSettingLink" data-title="BLTS - System Settings">
+                            <i class="fas fa-cog"></i>
+                            <span>System Settings</span>
+                        </a>
                     </li>
                 <?php elseif (isMember()) : ?>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link Links" href="#" id="citizenPortalLink" data-toggle="collapse" data-target="#CitizenPortalPage" aria-expanded="true" aria-controls="CitizenPortalPage" data-title="BLTS - Citizen Portal">
                             <i class="fas fa-fw fa-users"></i>
                             <span>Citizen Portal</span>
@@ -108,9 +138,32 @@ clearFormSession();
                                 <a class="collapse-item" href="../views/citizen_forum.php">Feedback Forum</a>
                             </div>
                         </div>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link Links" href="../views/citizen_resolution.php" id="ResolutionsLink" data-title="BLTS - Resolutions">
+                            <i class="far fa-file-alt"></i>
+                            <span>Resolutions</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link Links" href="../views/citizen_ordinance.php" id="OrdinancesLink" data-title="BLTS - Ordinances">
+                            <i class="far fa-file-alt"></i>
+                            <span>Ordinances</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link Links" href="../views/citizen_post.php" id="MyPostLink" data-title="BLTS - My Posts">
+                            <i class="far fa-file-alt"></i>
+                            <span>My Posts</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link Links" href="../views/citizen_forum.php" id="FeedbackForumLink" data-title="BLTS - Feedback Forum">
+                            <i class="far fa-file-alt"></i>
+                            <span>Feedback Forum</span>
+                        </a>
                     </li>
                 <?php endif; ?>
-
 
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">

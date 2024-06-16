@@ -480,3 +480,8 @@ function getUserData($user_id)
     $row = $result->fetch_assoc();
     return $row;
 }
+
+function getAllUserPostDesc($user_id)
+{
+    return find_where('posts', ['user_id' => $user_id]);
+}
