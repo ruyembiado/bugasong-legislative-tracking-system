@@ -5,8 +5,7 @@
     <div class="login-container">
         <div class="col-10 col-md-4 mx-auto my-4 p-5 rounded border shadow">
             <div class="col-12 text-center my-2 mb-3">
-                <!-- <img src="" alt="" class="img-fluid"> -->
-                <i class="fas fa-user-circle text-primary" style="font-size: 100px;"></i>
+                <img src="../img/blts.png" alt="" class="img-fluid">
             </div>
             <h4 class="">Register</h4>
             <!-- <h5 class="mb-2" style="font-size: 13px;"></h5> -->

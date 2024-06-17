@@ -67,7 +67,7 @@ redirectNotLogin();
                 if (isset($_GET['search_ordinance'])) {
                     $ordinances = searchOrdinances($_GET['keyword'], $_GET['tag'], $_GET['date_start'], $_GET['date_end']);
                 } else {
-                    $ordinances = getAllOrdinancesDesc(null);
+                    $ordinances = getAllOrdinancesDescPublic(null);
                 }
                 ?>
                 <?php if (empty($ordinances)) : ?>

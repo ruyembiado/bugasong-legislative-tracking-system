@@ -35,7 +35,7 @@ redirectNotLogin();
                                     <th style="">No. of Dislike</th>
                                     <th style="">No. of Comment</th>
                                     <th style="">Dated Added</th>
-                                    <th style="">Action</th>
+                                    <th style="width: 19%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,7 +51,7 @@ redirectNotLogin();
                                         <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?></td>
                                         <td>
                                             <a href="../views/view_post.php?post_id=<?php echo $post['post_id']; ?>" class="btn btn-secondary px-2 py-1 my-1">View</a>
-                                            <a href="../views/citizen_update_post.php?post_id=<?php echo $post['post_id']; ?>" class="btn btn-primary px-2 py-1 my-1">Update</a>
+                                            <a href="../views/citizen_post_update.php?post_id=<?php echo $post['post_id']; ?>" class="btn btn-primary px-2 py-1 my-1">Update</a>
                                             <a href="../actions/citizen_delete.php?delete_post=delete&post_id=<?php echo $post['post_id']; ?>" class="btn btn-danger px-2 py-1 my-1 delete">Delete</a>
                                         </td>
                                     </tr>

@@ -123,7 +123,7 @@ $(document).ready(function () {
             showCancelButton: true,
             confirmButtonColor: "#d33",
             cancelButtonColor: "#3085d6",
-            confirmButtonText: "Unpublished",
+            confirmButtonText: "Unpublish",
             customClass: {
                 actions: "my-actions",
                 cancelButton: "order-1 right-gap",
@@ -149,7 +149,7 @@ $(document).ready(function () {
             showCancelButton: true,
             confirmButtonColor: "#d33",
             cancelButtonColor: "#3085d6",
-            confirmButtonText: "Deactivated",
+            confirmButtonText: "Deactivate",
             customClass: {
                 actions: "my-actions",
                 cancelButton: "order-1 right-gap",

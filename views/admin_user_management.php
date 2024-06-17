@@ -38,7 +38,8 @@ redirectNotLogin();
                                         <th style="">Email</th>
                                         <th style="">Type</th>
                                         <th style="">Dated Added</th>
-                                        <th style="width: 25%;">Action</th>
+                                        <th style="">Status</th>
+                                        <th style="width: 14%;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -51,10 +52,11 @@ redirectNotLogin();
                                             <td class="text-gray-800"><?php echo ucfirst($user['user_type']); ?></td>
                                             <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($user['date_added'])); ?></td>
                                             <td>
-                                                <!-- <a href="view_user.php?user_id=<?php echo $user['user_id']; ?>" class="btn btn-secondary px-2 py-1 my-1">View</a> -->
-                                                <a href="admin_update_user.php?user_id=<?php echo $user['user_id']; ?>" class="btn btn-primary px-2 py-1 my-1">Update</a>
+                                                <a class="status-button py-1 my-1 <?php echo ($user['status'] == '1') ? '' : 'deactivate'; ?>" href="../actions/admin_update.php?update_status=<?php echo $user['status']; ?>&user_id=<?php echo $user['user_id']; ?>"><?php echo ($user['status'] == '1') ? '<span class="text-light py-1 btn btn-danger">Deactivated</span>' : '<span class="text-light py-1 btn btn-success">Active</span>' ?></a>
+                                            </td>
+                                            <td>
+                                                <a href="../views/admin_update_user.php?user_id=<?php echo $user['user_id']; ?>" class="btn btn-primary px-2 py-1 my-1">Update</a>
                                                 <a href="../actions/admin_delete.php?delete_user=delete&user_id=<?php echo $user['user_id']; ?>" class="btn btn-danger px-2 py-1 my-1 delete">Delete</a>
-                                                <a class="status-button py-1 my-1 <?php echo ($user['status'] == '1') ? 'deactivate' : ''; ?>" href="../actions/admin_update.php?update_status=<?php echo $user['status']; ?>&user_id=<?php echo $user['user_id']; ?>"><?php echo ($user['status'] == '1') ? '<span class="text-light py-1 btn btn-danger">Deactivated</span>' : '<span class="text-light py-1 btn btn-success">Active</span>' ?></a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

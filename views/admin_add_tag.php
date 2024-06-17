@@ -28,7 +28,7 @@ redirectNotLogin();
                 </div>
 
                 <!-- Content Row -->
-                <div class="card shadow mb-4 col-4">
+                <div class="card shadow mb-4 col-12 col-lg-6 col-md-12 col-xl-4 p-0">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Tag Information</h6>
                     </div>

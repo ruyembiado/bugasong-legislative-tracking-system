@@ -33,3 +33,14 @@ if (isset($_GET['delete_tag']) && $_GET['delete_tag'] == 'delete') :
         redirect('admin_tag');
     }
 endif;
+
+if (isset($_GET['delete_user']) && $_GET['delete_user'] == 'delete') :
+    $delete = delete('users', ['user_id' => $_GET['user_id']]);
+    if ($delete) {
+        setFlash('success', 'Deleted Successfuly');
+        redirect('admin_user_management');
+    } else {
+        setFlash('failed', 'Delete Failed');
+        redirect('admin_user_management');
+    }
+endif;

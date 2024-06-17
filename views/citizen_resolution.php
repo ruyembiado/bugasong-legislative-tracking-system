@@ -67,7 +67,7 @@ redirectNotLogin();
                 if (isset($_GET['search_resolution'])) {
                     $resolutions = searchResolutions($_GET['keyword'], $_GET['tag'], $_GET['date_start'], $_GET['date_end']);
                 } else {
-                    $resolutions = getAllResolutionsDesc(null);
+                    $resolutions = getAllResolutionsDescPublic(null);
                 }
                 ?>
                 <?php if (empty($resolutions)) : ?>

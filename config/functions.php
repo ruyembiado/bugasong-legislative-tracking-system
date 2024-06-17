@@ -280,9 +280,18 @@ function clearFormSession()
     $currentUri = $_SERVER['REQUEST_URI'];
     $resolutionPage = '/blts/views/admin_add_resolution.php';
     $ordinancePage = '/blts/views/admin_add_ordinance.php';
-    $ordinancePage = '/blts/views/citizen_resolution.php';
+    $registerPages = ['/blts/views/admin_add_user.php', '/blts/views/register.php'];
+    $loginPage = '/blts/views/index.php';
 
-    if (strpos($currentUri, $resolutionPage) === false && strpos($currentUri, $ordinancePage) === false) {
+    $isRegisterPage = false;
+    foreach ($registerPages as $page) {
+        if (strpos($currentUri, $page) !== false) {
+            $isRegisterPage = true;
+            break;
+        }
+    }
+
+    if (strpos($currentUri, $resolutionPage) === false && strpos($currentUri, $ordinancePage) === false && !$isRegisterPage && strpos($currentUri, $loginPage) === false) {
         removeValue();
     }
 }
@@ -484,4 +493,62 @@ function getUserData($user_id)
 function getAllUserPostDesc($user_id)
 {
     return find_where('posts', ['user_id' => $user_id]);
+}
+
+function findAllWhere($table, $where, $orderBy = null, $direction = 'ASC', $limit = null)
+{
+    global $conn;
+    $sql = "SELECT * FROM $table WHERE ";
+
+    // Handle where clause
+    $conditions = [];
+    $params = [];
+    $types = "";
+    foreach ($where as $column => $value) {
+        $conditions[] = "$column = ?";
+        $params[] = $value;
+        $types .= "s"; // Assuming all values are strings; adjust if needed
+    }
+    $sql .= implode(' AND ', $conditions);
+
+    // Handle sorting
+    if ($orderBy) {
+        $sql .= " ORDER BY $orderBy $direction";
+    }
+
+    // Handle limit
+    if ($limit) {
+        $sql .= " LIMIT $limit";
+    }
+
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, $types, ...$params);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if (!$result) {
+        die('Error: ' . mysqli_error($conn));
+    }
+
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+function getAllResolutionsDescPublic($limit)
+{
+    return findAllWhere('resolutions', ['status' => 1], 'resolution_id', 'DESC', $limit);
+}
+
+function getAllOrdinancesDescPublic($limit)
+{
+    return findAllWhere('ordinances', ['status' => 1], 'ordinance_id', 'DESC', $limit);
+}
+
+function getAllResolutionsAscPublic($limit)
+{
+    return findAllWhere('resolutions', ['status' => 1], 'resolution_id', 'ASC', $limit);
+}
+
+function getAllOrdinancesAscPublic($limit)
+{
+    return findAllWhere('ordinances', ['status' => 1], 'ordinance_id', 'ASC', $limit);
 }

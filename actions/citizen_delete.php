@@ -11,3 +11,14 @@ if (isset($_GET['delete_comment']) && $_GET['delete_comment'] == 'delete') :
         redirect('view_post', ['post_id' => $_GET['post_id']]);
     }
 endif;
+
+if (isset($_GET['delete_post']) && $_GET['delete_post'] == 'delete') :
+    $delete = delete('posts', ['post_id' => $_GET['post_id']]);
+    if ($delete) {
+        setFlash('success', 'Deleted Successfuly');
+        redirect('citizen_post');
+    } else {
+        setFlash('failed', 'Delete Failed');
+        redirect('citizen_post');
+    }
+endif;

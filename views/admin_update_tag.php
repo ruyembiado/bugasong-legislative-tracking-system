@@ -21,14 +21,14 @@ redirectNotLogin();
             <div class="container-fluid">
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Add Tag</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Update Tag</h1>
                 </div>
                 <div class="back-button mb-3">
                     <a href="admin_tag.php" class="btn btn-primary">Back</a>
                 </div>
 
                 <!-- Content Row -->
-                <div class="card shadow mb-4 col-4">
+                <div class="card shadow mb-4 col-12 col-lg-6 col-md-12 col-xl-4 p-0">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Tag Information</h6>
                     </div>
