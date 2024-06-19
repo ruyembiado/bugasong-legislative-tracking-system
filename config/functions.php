@@ -552,3 +552,125 @@ function getAllOrdinancesAscPublic($limit)
 {
     return findAllWhere('ordinances', ['status' => 1], 'ordinance_id', 'ASC', $limit);
 }
+
+function getAllDocumentsDesc($limit)
+{
+    global $conn;
+
+    // Prepare the SQL query
+    $sql = "
+        SELECT 
+            ordinance_id AS id,
+            user_id,
+            tag_id,
+            title,
+            ordinanceNo AS documentNo,
+            preamble,
+            enactingClause,
+            body,
+            repealingClause,
+            effectivityClause,
+            enactmentDetails,
+            file,
+            date_added,
+            status,
+            'ordinance' AS document_type
+        FROM ordinances
+        WHERE status = 1
+        UNION ALL
+        SELECT 
+            resolution_id AS id,
+            user_id,
+            tag_id,
+            title,
+            resolutionNo AS documentNo,
+            whereasClauses AS preamble,
+            resolvingClauses AS enactingClause,
+            optionalClauses AS body,
+            '' AS repealingClause,
+            '' AS effectivityClause,
+            approvalDetails AS enactmentDetails,
+            file,
+            date_added,
+            status,
+            'resolution' AS document_type
+        FROM resolutions
+        WHERE status = 1
+        ORDER BY date_added DESC
+        LIMIT ?
+    ";
+    $stmt = $conn->prepare($sql);
+    if ($stmt === false) {
+        die('Prepare failed: ' . $conn->error);
+    }
+    $stmt->bind_param('i', $limit);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $documents = $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $documents = [];
+    }
+    return $documents;
+}
+
+function getAllDocumentsByName($limit)
+{
+    global $conn;
+
+    // Prepare the SQL query
+    $sql = "
+        SELECT 
+            ordinance_id AS id,
+            user_id,
+            tag_id,
+            title,
+            ordinanceNo AS documentNo,
+            preamble,
+            enactingClause,
+            body,
+            repealingClause,
+            effectivityClause,
+            enactmentDetails,
+            file,
+            date_added,
+            status,
+            'ordinance' AS document_type
+        FROM ordinances
+        WHERE status = 1
+        UNION ALL
+        SELECT 
+            resolution_id AS id,
+            user_id,
+            tag_id,
+            title,
+            resolutionNo AS documentNo,
+            whereasClauses AS preamble,
+            resolvingClauses AS enactingClause,
+            optionalClauses AS body,
+            '' AS repealingClause,
+            '' AS effectivityClause,
+            approvalDetails AS enactmentDetails,
+            file,
+            date_added,
+            status,
+            'resolution' AS document_type
+        FROM resolutions
+        WHERE status = 1
+        ORDER BY documentNo ASC
+        LIMIT ?
+    ";
+    $stmt = $conn->prepare($sql);
+    if ($stmt === false) {
+        die('Prepare failed: ' . $conn->error);
+    }
+    $stmt->bind_param('i', $limit);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $documents = $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $documents = [];
+    }
+    return $documents;
+}
