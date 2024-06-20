@@ -1,0 +1,140 @@
+<?php
+@include('citizen_header.php');
+redirectNotLogin();
+?>
+
+<div class="col-12" id="content">
+    <div class="links-section d-flex justify-content-center mb-4">
+        <!-- <a class="mx-2 btn btn-secondary">View Recent</a> -->
+        <!-- <a class="mx-2 btn btn-primary">Masterlist</a> -->
+    </div>
+    <div class="legislative-container d-flex justify-content-around">
+        <div class="municipal-legislative col-3 p-2">
+            <div class="document-list">
+                <h6 class="m-0 font-weight-bold text-primary text-start">Municipal Legislative</h6>
+                <?php foreach (getAllDocumentsDesc(5) as $document) : ?>
+                    <div class="list border-bottom my-3">
+                        <a class="document-link" target="_blank" href="<?php echo $document['file']; ?>">
+                            <?php echo $document['documentNo']; ?>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+                <a class="btn btn-primary Links" href="../views/citizen_legislative.php" id="LegislativeLink" data-title="BLTS - Legislative Documents">More</a>
+            </div>
+        </div>
+        <div class="list-legislative col-3 p-2">
+            <div class="document-list">
+                <h6 class="m-0 font-weight-bold text-primary text-start">List of Legislative</h6>
+                <?php foreach (getAllDocumentsById(5) as $document) : ?>
+                    <div class="list border-bottom my-3">
+                        <a class="document-link" target="_blank" href="<?php echo $document['file']; ?>">
+                            <?php echo $document['documentNo']; ?>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+                <a class="btn btn-primary Links" href="../views/citizen_legislative.php" id="LegislativeLink" data-title="BLTS - Legislative Documents">More</a>
+            </div>
+        </div>
+        <div class="list-legislative col-3 p-2">
+            <div class="document-list">
+                <h6 class="m-0 font-weight-bold text-primary text-start">Create Post</h6>
+                <form action="../actions/citizen_add.php" method="POST" class="">
+                    <div class="d-flex flex-column">
+                        <div class="m-1">
+                            <label class="label" style="font-size: 13px;">Topic</label>
+                            <div class="d-flex align-items-center">
+                                <input class="form-control text-gray-800" type="text" name="topic" value="<?php echo getValue('topic'); ?>" placeholder="Enter your topic">
+                            </div>
+                            <?php if (showError('topic')) : ?>
+                                <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('topic'); ?></p>
+                            <?php endif; ?>
+                        </div>
+                        <div class="m-1">
+                            <label class="label" style="font-size: 13px;">Message</label>
+                            <div class="d-flex align-items-center">
+                                <textarea class="form-control text-gray-800" name="message" placeholder="Enter your message"><?php echo getValue('message'); ?></textarea>
+                            </div>
+                            <?php if (showError('message')) : ?>
+                                <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('message'); ?></p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="m-1 mb-2 d-flex justify-content-end">
+                        <input type="hidden" name="user_id" id="" value="<?php echo user_id(); ?>">
+                        <button type="submit" name="create_post" value="create_post" class="button-size form-control btn-primary rounded col-4">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="forum-container col-3 p-2">
+            <div class="forum-list">
+                <h6 class="m-0 font-weight-bold text-primary text-start">Forum Topics</h6>
+                <div class="forum-content mt-3 mb-1">
+                    <?php if (empty(getAllPostDesc(5))) : ?>
+                        <div class="alert alert-warning m-0 text-center" role="alert">
+                            No post found.
+                        </div>
+                    <?php endif; ?>
+                    <?php foreach (getAllPostDesc(5) as $post) : ?>
+                        <div class="d-flex flex-column">
+                            <span class="user" style="font-size: 13px;">
+                                <?php foreach (getPostUser($post['post_id']) as $user) : echo $user['name'];
+                                endforeach; ?>
+                                - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
+                            </span>
+                            <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>" class="citizen-view-post">
+                                <h5 class="topic text-primary"><?php echo $post['topic']; ?></h5>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <a class="btn btn-primary" href="">More</a>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="masterlist-container col-12 mt-4">
+        <h6 class="m-0 font-weight-bold text-primary text-start">Masterlist</h6>
+        <div class="col-12">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="GET" class="">
+                <div class="d-flex align-items-end flex-wrap search-container justify-content-center">
+                    <div class="keyword-input p-0 mr-2 mt-2 col-4">
+                        <label for="keyword-input">Keyword(s):</label>
+                        <input type="text" name="keyword" placeholder="Keyword(s)" class="form-control" value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>">
+                    </div>
+                    <div class="type-selection p-0 mr-2 mt-2 col-3">
+                        <label for="type-selection">Type:</label>
+                        <select name="tag" id="tag" class="form-control">
+                            <option value="">Select option:</option>
+                            <?php foreach (getAllTagAsc('tag_name', null) as $tag) : ?>
+                                <option value="<?php echo $tag['tag_id']; ?>" <?php echo (isset($_GET['tag']) && $_GET['tag'] == $tag['tag_id']) ? 'selected' : ''; ?>>
+                                    <?php echo $tag['tag_name']; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="date-input mr-2 mt-2">
+                        <div class="d-flex p-0">
+                            <div class="start-date mr-2">
+                                <label for="start-date">Date Start:</label>
+                                <input type="date" name="date_start" class="form-control" value="<?php echo isset($_GET['date_start']) ? htmlspecialchars($_GET['date_start']) : ''; ?>">
+                            </div>
+                            <div class="end-date mr-2">
+                                <label for="end-date">Date End:</label>
+                                <input type="date" name="date_end" class="form-control" value="<?php echo isset($_GET['date_end']) ? htmlspecialchars($_GET['date_end']) : ''; ?>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-submit mt-2">
+                        <button type="submit" name="search_ordinance" value="search_ordinance" class="btn btn-primary">Search</button>
+                        <a class="btn btn-danger" href="citizen_legislative.php">Reset</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div> -->
+</div>
+
+
+<?php
+@include('citizen_footer.php');
+?>
