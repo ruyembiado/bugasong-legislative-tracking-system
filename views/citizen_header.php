@@ -39,13 +39,13 @@ clearFormSession();
         <h1 class="text-dark text-center">Bugasong Legislative Tracking System</h1>
     </div>
 
-    <?php if (isHomePage()) : ?>
+    <?php if (isHomePage()) : ?>    
         <div class="search-section my-4">
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" class="form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <form action="../views/citizen_legislative.php?search" method="get" class="form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                 <div class="col-12 col-md-10 col-lg-4 input-group m-auto">
-                    <input type="text" name="search" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <input type="text" name="keyword" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">
+                        <button class="btn btn-primary" name="search_document" value="search_document" type="submit">
                             <i class="fas fa-search fa-sm"></i>
                         </button>
                     </div>

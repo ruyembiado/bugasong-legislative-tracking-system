@@ -1,18 +1,12 @@
 <?php
-@include('header.php');
+@include('citizen_header.php');
 redirectNotLogin();
-
 ?>
-
 <!-- Content Wrapper -->
-<div id="content-wrapper" class="d-flex flex-column">
+<div class="d-flex flex-column mt-4 mx-auto col-10" style="width: 100%;">
 
     <!-- Main Content -->
     <div id="content">
-
-        <!-- Topbar -->
-        <?php @include('top_navbar.php'); ?>
-        <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -261,23 +255,8 @@ redirectNotLogin();
 
     </div>
     <!-- End of Main Content -->
-
-    <!-- Footer -->
-    <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Copyright &copy; Bugasong Legislative Tracking System 2024</span>
-            </div>
-        </div>
-    </footer>
-    <!-- End of Footer -->
-
 </div>
 <!-- End of Content Wrapper -->
-
-<?php
-@include('footer.php');
-?>
 
 <script>
     function submitReaction(postId, userId, reaction) {
@@ -366,3 +345,7 @@ redirectNotLogin();
         });
     });
 </script>
+
+<?php
+@include('citizen_footer.php');
+?>

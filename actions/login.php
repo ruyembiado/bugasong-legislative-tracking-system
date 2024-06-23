@@ -23,7 +23,11 @@ if (isset($_POST['user_login'])) : // Check if the button is clicked
                     $session = setSession($session); // Set the $session array
                     // var_dump($_SESSION); // Use to test the session variables
                     setFlash('success', 'Welcome ' . $user['name']); // Set message
-                    redirect('dashboard'); // Shortcut for header('location:index.php'); // Uncomment to use if you have a page to redirect to
+                    if ($user['user_type'] == 'admin') {
+                        redirect('admin_home'); // Shortcut for header('location:index.php'); // Uncomment to use if you have a page to redirect to
+                    }
+
+                    redirect('citizen_home');
                 } else {
                     retainValue();
                     $errors['password'] = 'Incorrect password';

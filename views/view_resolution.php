@@ -23,7 +23,7 @@ redirectNotLogin();
             </div>
             <div class="back-button mb-3">
                 <?php
-                $href = isMember() ? "citizen_resolution.php?manage" : (isAdmin() ? "admin_resolution.php?manage" : redirect('dashboard', ''));
+                $href = isMember() ? "citizen_resolution.php" : (isAdmin() ? "admin_resolution.php?manage" : redirect('dashboard', ''));
                 ?>
                 <a href="<?php echo $href; ?>" class="btn btn-primary">Back</a>
             </div>

@@ -1,10 +1,4 @@
 <?php
-
-// Enable error reporting
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 @include('citizen_header.php');
 redirectNotLogin();
 ?>
@@ -57,19 +51,12 @@ redirectNotLogin();
             $tag = $_GET['tag'] ?? '';
             $date_start = $_GET['date_start'] ?? '';
             $date_end = $_GET['date_end'] ?? '';
-          
-            try {
+
+            if (isset($_GET['search_document'])) {
                 $documents = searchDocument($keyword, $tag, $date_start, $date_end);
-            } catch (Exception $e) {
-                  // Handle the error gracefully
-                echo '<div class="alert alert-danger" role="alert">';
-                echo 'Error occurred: ' . htmlspecialchars($e->getMessage());
-                echo '</div>';
-                  $documents = []; // Set documents to empty array or handle as needed
-              }
-            // } else {
-            //     $documents = getAllDocumentsDesc(999);
-            // }
+            } else {
+                $documents = getAllDocumentsDesc(999);
+            }
             ?>
             <?php if (empty($documents)) : ?>
                 <div class="row mx-auto">
@@ -80,7 +67,7 @@ redirectNotLogin();
             <?php else : ?>
                 <?php foreach ($documents as $document) : ?>
                     <div class="list border-bottom my-4">
-                        <a class="document-link" target="_blank" href="<?php echo $document['file']; ?>">
+                        <a class="document-link" onclick="addDocumentView('<?php echo user_id(); ?>', '<?php echo $document['document_type']; ?>', <?php echo $document['id']; ?>)" href="<?php echo ($document['document_type'] === 'resolution') ? '../views/citizen_view_resolution.php?resolution_id=' . $document['id'] : '../views/citizen_view_ordinance.php?ordinance_id=' . $document['id']; ?>">
                             <h1 class="h4 m-0 font-weight-bold text-primary">
                                 <?php echo $document['documentNo']; ?>
                             </h1>
@@ -93,6 +80,37 @@ redirectNotLogin();
         <div class="col-6"></div>
     </div>
 </div>
+
+<script>
+    function addDocumentView(user_id, document_type, document_id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "../actions/document_view.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        var data = "user_id=" + encodeURIComponent(user_id) +
+            "&document_type=" + encodeURIComponent(document_type) +
+            "&document_id=" + encodeURIComponent(document_id);
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    console.log("Document view added successfully");
+                    console.log(xhr.responseText); // Log the response from the server
+                } else {
+                    console.error("Failed to add document view", xhr.statusText);
+                }
+            }
+        };
+
+        xhr.onerror = function() {
+            console.error("Request error");
+        };
+
+        xhr.send(data);
+        console.log("Request sent: " + data); // Log the data being sent
+    }
+</script>
+
 <?php
 @include('citizen_footer.php');
 ?>

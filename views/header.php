@@ -39,7 +39,7 @@ clearFormSession();
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
                 <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-between" id="brandLink" data-title="BLTS - Dashboard" href="dashboard.php">
+                <a class="sidebar-brand d-flex align-items-center justify-content-between" id="brandLink" data-title="BLTS - Dashboard" href="admin_home.php">
                     <div class="sidebar-brand-icon">
                         <!-- <i class="img-profile rounded-circle fas fa-user-circle fa-2x"></i> -->
                         <img src="../img/blts.png" class="img-profile" alt="">
@@ -52,7 +52,7 @@ clearFormSession();
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link Links" id="dashboardLink" href="../views/dashboard.php" data-title="BLTS - Dashboard">
+                    <a class="nav-link Links" id="dashboardLink" href="../views/admin_home.php" data-title="BLTS - Dashboard">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </a>
@@ -108,6 +108,12 @@ clearFormSession();
                         </div>
                     </li> -->
                     <li class="nav-item">
+                        <a class="nav-link Links" href="../views/admin_forum.php" id="ForumManagementLink" data-title="BLTS - Forum Management">
+                            <i class="fas fa-comments"></i>
+                            <span>Forum Management</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link Links" href="../views/admin_tag.php" id="TagsLink" data-title="BLTS - Tags">
                             <i class="fas fa-tag"></i>
                             <span>Tags</span>
@@ -125,20 +131,8 @@ clearFormSession();
                             <span>System Settings</span>
                         </a>
                     </li>
-                <?php elseif (isMember()) : ?>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link Links" href="#" id="citizenPortalLink" data-toggle="collapse" data-target="#CitizenPortalPage" aria-expanded="true" aria-controls="CitizenPortalPage" data-title="BLTS - Citizen Portal">
-                            <i class="fas fa-fw fa-users"></i>
-                            <span>Citizen Portal</span>
-                        </a>
-                        <div id="CitizenPortalPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                            <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="../views/citizen_resolution.php">Resolutions</a>
-                                <a class="collapse-item" href="../views/citizen_ordinance.php">Ordinances</a>
-                                <a class="collapse-item" href="../views/citizen_forum.php">Feedback Forum</a>
-                            </div>
-                        </div>
-                    </li> -->
+                    <?php endif; ?>
+                <!-- <php elseif (isMember()) : ?>
                     <li class="nav-item">
                         <a class="nav-link Links" href="../views/citizen_resolution.php" id="ResolutionsLink" data-title="BLTS - Resolutions">
                             <i class="far fa-file-alt"></i>
@@ -163,7 +157,7 @@ clearFormSession();
                             <span>Feedback Forum</span>
                         </a>
                     </li>
-                <?php endif; ?>
+                <php endif; ?> -->
 
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">

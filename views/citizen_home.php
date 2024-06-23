@@ -14,7 +14,7 @@ redirectNotLogin();
                 <h6 class="m-0 font-weight-bold text-primary text-start">Municipal Legislative</h6>
                 <?php foreach (getAllDocumentsDesc(5) as $document) : ?>
                     <div class="list border-bottom my-3">
-                        <a class="document-link" target="_blank" href="<?php echo $document['file']; ?>">
+                        <a class="document-link" onclick="addDocumentView('<?php echo user_id(); ?>', '<?php echo $document['document_type']; ?>', <?php echo $document['id']; ?>)" href="<?php echo ($document['document_type'] === 'resolution') ? '../views/citizen_view_resolution.php?resolution_id=' . $document['id'] : '../views/citizen_view_ordinance.php?ordinance_id=' . $document['id'] ?>">
                             <?php echo $document['documentNo']; ?>
                         </a>
                     </div>
@@ -27,7 +27,7 @@ redirectNotLogin();
                 <h6 class="m-0 font-weight-bold text-primary text-start">List of Legislative</h6>
                 <?php foreach (getAllDocumentsById(5) as $document) : ?>
                     <div class="list border-bottom my-3">
-                        <a class="document-link" target="_blank" href="<?php echo $document['file']; ?>">
+                        <a class="document-link" onclick="addDocumentView('<?php echo user_id(); ?>', '<?php echo $document['document_type']; ?>', <?php echo $document['id']; ?>)" href="<?php echo ($document['document_type'] === 'resolution') ? '../views/citizen_view_resolution.php?resolution_id=' . $document['id'] : '../views/citizen_view_ordinance.php?ordinance_id=' . $document['id'] ?>">
                             <?php echo $document['documentNo']; ?>
                         </a>
                     </div>
@@ -88,7 +88,7 @@ redirectNotLogin();
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <a class="btn btn-primary" href="">More</a>
+                <a class="btn btn-primary" href="../views/citizen_forum.php">More</a>
             </div>
         </div>
     </div>
@@ -134,6 +134,35 @@ redirectNotLogin();
     </div> -->
 </div>
 
+<script>
+    function addDocumentView(user_id, document_type, document_id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "../actions/document_view.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        var data = "user_id=" + encodeURIComponent(user_id) +
+            "&document_type=" + encodeURIComponent(document_type) +
+            "&document_id=" + encodeURIComponent(document_id);
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    console.log("Document view added successfully");
+                    console.log(xhr.responseText); // Log the response from the server
+                } else {
+                    console.error("Failed to add document view", xhr.statusText);
+                }
+            }
+        };
+
+        xhr.onerror = function() {
+            console.error("Request error");
+        };
+
+        xhr.send(data);
+        console.log("Request sent: " + data); // Log the data being sent
+    }
+</script>
 
 <?php
 @include('citizen_footer.php');

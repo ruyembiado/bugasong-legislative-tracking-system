@@ -99,18 +99,130 @@ function user_id()
 
 function getAllPostDesc($limit)
 {
-    return findAll('posts', 'post_id', 'DESC', $limit);
+    global $conn;
+
+    $query = "
+        SELECT 
+            post_id,
+            user_id,
+            topic,
+            message,
+            status,
+            date_added
+        FROM posts
+        WHERE status = 0
+        ORDER BY date_added DESC
+        LIMIT ?
+    ";
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('i', $limit);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Fetch all rows as associative array
+        $posts = $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $posts = [];
+    }
+
+    return $posts;
+}
+
+function getAllPostDescAdmin()
+{
+    global $conn;
+
+    $query = "
+        SELECT 
+            post_id,
+            user_id,
+            topic,
+            message,
+            status,
+            date_added
+        FROM posts
+        ORDER BY date_added DESC
+    ";
+
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Fetch all rows as associative array
+        $posts = $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $posts = [];
+    }
+
+    return $posts;
 }
 
 function getAllPostAsc($limit)
 {
-    return findAll('posts', 'post_id', 'ASC', $limit);
+    global $conn;
+
+    $query = "
+        SELECT 
+            post_id,
+            user_id,
+            topic,
+            message,
+            status,
+            date_added
+        FROM posts
+        WHERE status = 0
+        ORDER BY date_added ASC
+        LIMIT ?
+    ";
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('i', $limit);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Fetch all rows as associative array
+        $posts = $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $posts = [];
+    }
+
+    return $posts;
 }
 
 function getAllPostRand()
 {
-    return findAll('posts', 'RAND()');
+    global $conn;
+
+    $query = "
+        SELECT 
+            post_id,
+            user_id,
+            topic,
+            message,
+            status,
+            date_added
+        FROM posts
+        WHERE status = 0
+        ORDER BY RAND()
+    ";
+
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Fetch all rows as associative array
+        $posts = $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $posts = [];
+    }
+    return $posts;
 }
+
 
 function getPostUser($post_id)
 {
@@ -362,7 +474,7 @@ function getMyPosts($user_id, $limit = null)
     $sql = "SELECT * 
             FROM posts p
             INNER JOIN users u ON p.user_id = u.user_id
-            WHERE u.user_id = ?";
+            WHERE u.user_id = ? AND p.status='0'";
     if ($limit !== null) {
         $sql .= " LIMIT ?";
     }
@@ -385,7 +497,7 @@ function getTopLikes($limit)
     $sql = "
         SELECT p.post_id, p.topic, p.date_added, p.message, COUNT(pr.post_reaction) as like_count
         FROM posts p
-        LEFT JOIN post_reactions pr ON p.post_id = pr.post_id AND pr.post_reaction = 'liked'
+        LEFT JOIN post_reactions pr ON p.post_id = pr.post_id AND pr.post_reaction = 'liked' AND p.status = 0
         GROUP BY p.post_id, p.topic
         HAVING like_count > 0
         ORDER BY like_count DESC
@@ -410,7 +522,7 @@ function searchPost($keyword)
     global $conn;
 
     $keyword = '%' . $keyword . '%';
-    $sql = "SELECT * FROM posts WHERE topic LIKE ?";
+    $sql = "SELECT * FROM posts WHERE topic LIKE ? AND status='0'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('s', $keyword);
     $stmt->execute();
@@ -674,7 +786,7 @@ function getAllDocumentsById($limit)
 function isHomePage()
 {
     $home_page = '/blts/views/citizen_home.php';
-    $currentUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); 
+    $currentUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
     return $home_page === $currentUri;
 }
@@ -841,4 +953,78 @@ function searchDocument($keyword, $tag, $date_start, $date_end)
     }
 
     return $documents;
+}
+
+function getOrdinanceViewCount($ordinance_id)
+{
+    global $conn;
+    // SQL query to count the views for a specific ordinance
+    $query = "
+        SELECT 
+            o.ordinance_id, 
+            COUNT(dv.document_id) AS view_count
+        FROM 
+            ordinances o
+        LEFT JOIN 
+            document_views dv 
+        ON 
+            o.ordinance_id = dv.document_id
+        WHERE 
+            o.ordinance_id = ?
+        GROUP BY 
+            o.ordinance_id;
+    ";
+
+    // Prepare and execute the query
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, "i", $ordinance_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    // Fetch the result
+    $row = mysqli_fetch_assoc($result);
+
+    // Return the view count for the specified ordinance
+    if ($row) {
+        return $row['view_count'];
+    } else {
+        return 0; // Return 0 if no views found (optional handling)
+    }
+}
+
+function getResolutionViewCount($resolution_id)
+{
+    global $conn;
+    // SQL query to count the views for a specific resolution
+    $query = "
+        SELECT 
+            o.resolution_id, 
+            COUNT(dv.document_id) AS view_count
+        FROM 
+            resolutions o
+        LEFT JOIN 
+            document_views dv 
+        ON 
+            o.resolution_id = dv.document_id
+        WHERE 
+            o.resolution_id = ?
+        GROUP BY 
+            o.resolution_id;
+    ";
+
+    // Prepare and execute the query
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, "i", $resolution_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    // Fetch the result
+    $row = mysqli_fetch_assoc($result);
+
+    // Return the view count for the specified resolution
+    if ($row) {
+        return $row['view_count'];
+    } else {
+        return 0; // Return 0 if no views found (optional handling)
+    }
 }

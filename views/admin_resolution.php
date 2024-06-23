@@ -42,6 +42,7 @@ redirectNotLogin();
                                         <th style="width: 5%;">No.</th>
                                         <th style="width: 40%;">Resolution Name</th>
                                         <th style="width: 15%;">Tag</th>
+                                        <th>No. of Views</th>
                                         <th style="width: 20%;">Dated Added</th>
                                         <th style="width: 20%;"><?php if (isset($_GET['publish'])) : ?>Status<?php endif; ?><?php if (isset($_GET['manage'])) : ?>Action<?php endif; ?></th>
                                     </tr>
@@ -53,6 +54,9 @@ redirectNotLogin();
                                             <td><?php echo $count++; ?></td>
                                             <td class="text-gray-800"><?php echo $resolution['title']; ?></td>
                                             <td class="text-gray-800"><?php echo isset(getTagByID($resolution['tag_id'])['tag_name']) ? getTagByID($resolution['tag_id'])['tag_name'] : ''; ?></td>
+                                            <td>
+                                                <?php echo getResolutionViewCount($resolution['resolution_id']); ?>
+                                            </td>
                                             <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($resolution['date_added'])); ?></td>
                                             <td>
                                                 <?php if (isset($_GET['manage'])) : ?>
