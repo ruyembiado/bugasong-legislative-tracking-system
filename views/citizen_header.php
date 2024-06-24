@@ -41,7 +41,7 @@ clearFormSession();
 
     <?php if (isHomePage()) : ?>    
         <div class="search-section my-4">
-            <form action="../views/citizen_legislative.php?search" method="get" class="form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <form action="citizen_legislative.php?search" method="get" class="form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                 <div class="col-12 col-md-10 col-lg-4 input-group m-auto">
                     <input type="text" name="keyword" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">

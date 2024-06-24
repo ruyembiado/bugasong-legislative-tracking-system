@@ -14,12 +14,12 @@ redirectNotLogin();
                 <h6 class="m-0 font-weight-bold text-primary text-start">Municipal Legislative</h6>
                 <?php foreach (getAllDocumentsDesc(5) as $document) : ?>
                     <div class="list border-bottom my-3">
-                        <a class="document-link" onclick="addDocumentView('<?php echo user_id(); ?>', '<?php echo $document['document_type']; ?>', <?php echo $document['id']; ?>)" href="<?php echo ($document['document_type'] === 'resolution') ? '../views/citizen_view_resolution.php?resolution_id=' . $document['id'] : '../views/citizen_view_ordinance.php?ordinance_id=' . $document['id'] ?>">
+                        <a class="document-link" onclick="addDocumentView('<?php echo user_id(); ?>', '<?php echo $document['document_type']; ?>', <?php echo $document['id']; ?>)" href="<?php echo ($document['document_type'] === 'resolution') ? 'citizen_view_resolution.php?resolution_id=' . $document['id'] : 'citizen_view_ordinance.php?ordinance_id=' . $document['id'] ?>">
                             <?php echo $document['documentNo']; ?>
                         </a>
                     </div>
                 <?php endforeach; ?>
-                <a class="btn btn-primary Links" href="../views/citizen_legislative.php" id="LegislativeLink" data-title="BLTS - Legislative Documents">More</a>
+                <a class="btn btn-primary Links" href="citizen_legislative.php" id="LegislativeLink" data-title="BLTS - Legislative Documents">More</a>
             </div>
         </div>
         <div class="list-legislative col-3 p-2">
@@ -27,12 +27,12 @@ redirectNotLogin();
                 <h6 class="m-0 font-weight-bold text-primary text-start">List of Legislative</h6>
                 <?php foreach (getAllDocumentsById(5) as $document) : ?>
                     <div class="list border-bottom my-3">
-                        <a class="document-link" onclick="addDocumentView('<?php echo user_id(); ?>', '<?php echo $document['document_type']; ?>', <?php echo $document['id']; ?>)" href="<?php echo ($document['document_type'] === 'resolution') ? '../views/citizen_view_resolution.php?resolution_id=' . $document['id'] : '../views/citizen_view_ordinance.php?ordinance_id=' . $document['id'] ?>">
+                        <a class="document-link" onclick="addDocumentView('<?php echo user_id(); ?>', '<?php echo $document['document_type']; ?>', <?php echo $document['id']; ?>)" href="<?php echo ($document['document_type'] === 'resolution') ? 'citizen_view_resolution.php?resolution_id=' . $document['id'] : 'citizen_view_ordinance.php?ordinance_id=' . $document['id'] ?>">
                             <?php echo $document['documentNo']; ?>
                         </a>
                     </div>
                 <?php endforeach; ?>
-                <a class="btn btn-primary Links" href="../views/citizen_legislative.php" id="LegislativeLink" data-title="BLTS - Legislative Documents">More</a>
+                <a class="btn btn-primary Links" href="citizen_legislative.php" id="LegislativeLink" data-title="BLTS - Legislative Documents">More</a>
             </div>
         </div>
         <div class="list-legislative col-3 p-2">
@@ -88,7 +88,7 @@ redirectNotLogin();
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <a class="btn btn-primary" href="../views/citizen_forum.php">More</a>
+                <a class="btn btn-primary" href="citizen_forum.php">More</a>
             </div>
         </div>
     </div>

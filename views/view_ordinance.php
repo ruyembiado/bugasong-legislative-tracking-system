@@ -23,7 +23,7 @@ redirectNotLogin();
             </div>
             <div class="back-button mb-3">
                 <?php
-                $href = isMember() ? "citizen_ordinance.php" : (isAdmin() ? "admin_ordinance.php?manage" : redirect('dashboard', '') );
+                $href = isMember() ? "citizen_ordinance.php" : (isAdmin() ? "admin_ordinance.php?manage" : redirect('dashboard', ''));
                 ?>
                 <a href="<?php echo $href; ?>" class="btn btn-primary">Back</a>
             </div>
@@ -38,7 +38,7 @@ redirectNotLogin();
                         <div class="card-body">
                             <div id="ocrResults">
                                 <?php $ordinance = getOrdinanceByID($_GET['ordinance_id']) ?>
-                                <div class="d-flex">
+                                <div class="d-flex text-center flex-column">
                                     <div class="mr-4">
                                         <label class="mt-2 text-primary" for="ordinanceNo">Ordinance No.</label>
                                         <div class="ordinanceNo">
@@ -51,35 +51,41 @@ redirectNotLogin();
                                             <?php echo !empty(getTagByID($ordinance['tag_id'])['tag_name']) ? getTagByID($ordinance['tag_id'])['tag_name'] : ''; ?>
                                         </div>
                                     </div>
+                                    <div class="mr-4">
+                                        <label class="mt-2 text-primary" for="title">Title</label>
+                                        <div class="title">
+                                            <?php echo $ordinance['title']; ?>
+                                        </div>
+                                    </div>
                                 </div>
-                                <label class="mt-2 text-primary" for="title">Title</label>
-                                <div class="title">
-                                    <?php echo $ordinance['title']; ?>
+                                <div class="document-view mt-2">
+                                    <embed src="<?php echo $ordinance['file']; ?>" type="application/pdf" width="100%" height="800px" />
                                 </div>
+
                                 <!-- <label class="mt-0 text-primary" for="preamble"></label> -->
-                                <div class="preamble">
+                                <!-- <div class="preamble">
                                     <?php echo formatWhereasClauses($ordinance['preamble']); ?>
-                                </div>
+                                </div> -->
                                 <!-- <label class="mt-0 text-primary" for="enactingClause"></label> -->
-                                <div class="enactingClause mt-2">
+                                <!-- <div class="enactingClause mt-2">
                                     <?php echo $ordinance['enactingClause']; ?>
-                                </div>
+                                </div> -->
                                 <!-- <label class="mt-0 text-primary" for="body"></label> -->
-                                <div class="body mt-2">
+                                <!-- <div class="body mt-2">
                                     <?php echo formatOrdinanceSection($ordinance['body']); ?>
-                                </div>
+                                </div> -->
                                 <!-- <label class="mt-0 text-primary" for="repealingClause"></label> -->
-                                <div class="repealingClause mt-2">
+                                <!-- <div class="repealingClause mt-2">
                                     <?php echo $ordinance['repealingClause']; ?>
-                                </div>
+                                </div> -->
                                 <!-- <label class="mt-0 text-primary" for="effectivityClause"></label> -->
-                                <div class="effectivityClause mt-2">
+                                <!-- <div class="effectivityClause mt-2">
                                     <?php echo $ordinance['effectivityClause']; ?>
-                                </div>
+                                </div> -->
                                 <!-- <label class="mt-0 text-primary" for="enactmentDetails"></label> -->
-                                <div class="enactmentDetails mt-2">
+                                <!-- <div class="enactmentDetails mt-2">
                                     <?php echo $ordinance['enactmentDetails']; ?>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>

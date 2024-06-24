@@ -52,7 +52,7 @@ clearFormSession();
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link Links" id="dashboardLink" href="../views/admin_home.php" data-title="BLTS - Dashboard">
+                    <a class="nav-link Links" id="dashboardLink" href="admin_home.php" data-title="BLTS - Dashboard">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </a>
@@ -65,19 +65,19 @@ clearFormSession();
                         </a>
                         <div id="DocumentManagePage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="../views/admin_resolution.php?manage">Resolutions</a>
-                                <a class="collapse-item" href="../views/admin_ordinance.php?manage">Ordinances</a>
+                                <a class="collapse-item" href="admin_resolution.php?manage">Resolutions</a>
+                                <a class="collapse-item" href="admin_ordinance.php?manage">Ordinances</a>
                             </div>
                         </div>
                     </li> -->
                     <li class="nav-item">
-                        <a class="nav-link Links" href="../views/admin_resolution.php?manage" id="ResolutionsLink" data-title="BLTS - Resolutions">
+                        <a class="nav-link Links" href="admin_resolution.php?manage" id="ResolutionsLink" data-title="BLTS - Resolutions">
                             <i class="far fa-file-alt"></i>
                             <span>Resolutions</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link Links" href="../views/admin_ordinance.php?manage" id="OrdinancesLink" data-title="BLTS - Ordinances">
+                        <a class="nav-link Links" href="admin_ordinance.php?manage" id="OrdinancesLink" data-title="BLTS - Ordinances">
                             <i class="far fa-file-alt"></i>
                             <span>Ordinances</span>
                         </a>
@@ -89,8 +89,8 @@ clearFormSession();
                         </a>
                         <div id="DocumentPublishPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="../views/admin_resolution.php?publish">Resolutions</a>
-                                <a class="collapse-item" href="../views/admin_ordinance.php?publish">Ordinances</a>
+                                <a class="collapse-item" href="admin_resolution.php?publish">Resolutions</a>
+                                <a class="collapse-item" href="admin_ordinance.php?publish">Ordinances</a>
                             </div>
                         </div>
                     </li>
@@ -101,32 +101,32 @@ clearFormSession();
                         </a>
                         <div id="adminPanelPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="../views/admin_user_management.php">User Management</a>
-                                <a class="collapse-item" href="../views/admin_system_setting.php">System Settings</a>
-                                <a class="collapse-item" href="../views/admin_tag.php">Tags</a>
+                                <a class="collapse-item" href="admin_user_management.php">User Management</a>
+                                <a class="collapse-item" href="admin_system_setting.php">System Settings</a>
+                                <a class="collapse-item" href="admin_tag.php">Tags</a>
                             </div>
                         </div>
                     </li> -->
                     <li class="nav-item">
-                        <a class="nav-link Links" href="../views/admin_forum.php" id="ForumManagementLink" data-title="BLTS - Forum Management">
+                        <a class="nav-link Links" href="admin_forum.php" id="ForumManagementLink" data-title="BLTS - Forum Management">
                             <i class="fas fa-comments"></i>
                             <span>Forum Management</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link Links" href="../views/admin_tag.php" id="TagsLink" data-title="BLTS - Tags">
+                        <a class="nav-link Links" href="admin_tag.php" id="TagsLink" data-title="BLTS - Tags">
                             <i class="fas fa-tag"></i>
                             <span>Tags</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link Links" href="../views/admin_user_management.php" id="UserManagementLink" data-title="BLTS - User Management">
+                        <a class="nav-link Links" href="admin_user_management.php" id="UserManagementLink" data-title="BLTS - User Management">
                             <i class="fas fa-users"></i>
                             <span>User Management</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link Links" href="../views/admin_system_setting.php" id="SystemSettingLink" data-title="BLTS - System Settings">
+                        <a class="nav-link Links" href="admin_system_setting.php" id="SystemSettingLink" data-title="BLTS - System Settings">
                             <i class="fas fa-cog"></i>
                             <span>System Settings</span>
                         </a>
@@ -134,25 +134,25 @@ clearFormSession();
                     <?php endif; ?>
                 <!-- <php elseif (isMember()) : ?>
                     <li class="nav-item">
-                        <a class="nav-link Links" href="../views/citizen_resolution.php" id="ResolutionsLink" data-title="BLTS - Resolutions">
+                        <a class="nav-link Links" href="citizen_resolution.php" id="ResolutionsLink" data-title="BLTS - Resolutions">
                             <i class="far fa-file-alt"></i>
                             <span>Resolutions</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link Links" href="../views/citizen_ordinance.php" id="OrdinancesLink" data-title="BLTS - Ordinances">
+                        <a class="nav-link Links" href="citizen_ordinance.php" id="OrdinancesLink" data-title="BLTS - Ordinances">
                             <i class="far fa-file-alt"></i>
                             <span>Ordinances</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link Links" href="../views/citizen_post.php" id="MyPostLink" data-title="BLTS - My Posts">
+                        <a class="nav-link Links" href="citizen_post.php" id="MyPostLink" data-title="BLTS - My Posts">
                             <i class="far fa-file-alt"></i>
                             <span>My Posts</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link Links" href="../views/citizen_forum.php" id="FeedbackForumLink" data-title="BLTS - Feedback Forum">
+                        <a class="nav-link Links" href="citizen_forum.php" id="FeedbackForumLink" data-title="BLTS - Feedback Forum">
                             <i class="far fa-file-alt"></i>
                             <span>Feedback Forum</span>
                         </a>

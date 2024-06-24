@@ -38,7 +38,7 @@ redirectNotLogin();
                         <div class="card-body">
                             <div id="ocrResults">
                                 <?php $resolution = getResolutionByID($_GET['resolution_id']) ?>
-                                <div class="d-flex">
+                                <div class="d-flex flex-column text-center">
                                     <div class="mr-4">
                                         <label class="mt-2 text-primary" for="resolutionNo">Resolution No.</label>
                                         <div class="resolutionNo">
@@ -51,27 +51,33 @@ redirectNotLogin();
                                             <?php echo !empty(getTagByID($resolution['tag_id'])['tag_name']) ? getTagByID($resolution['tag_id'])['tag_name'] : ''; ?>
                                         </div>
                                     </div>
+                                    <div class="mr-4">
+                                        <label class="mt-2 text-primary" for="title">Title</label>
+                                        <div class="title">
+                                            <?php echo $resolution['title']; ?>
+                                        </div>
+                                    </div>
                                 </div>
-                                <label class="mt-2 text-primary" for="title">Title</label>
-                                <div class="title">
-                                    <?php echo $resolution['title']; ?>
+                                <div class="document-view mt-2">
+                                    <embed src="<?php echo $resolution['file']; ?>" type="application/pdf" width="100%" height="800px" />
                                 </div>
+
                                 <!-- <label class="mt-0 text-primary" for="whereasClauses"></label> -->
-                                <div class="whereasClauses">
+                                <!-- <div class="whereasClauses">
                                     <?php echo formatWhereasClauses($resolution['whereasClauses']); ?>
-                                </div>
+                                </div> -->
                                 <!-- <label class="mt-0 text-primary" for="resolvingClauses"></label> -->
-                                <div class="resolvingClauses mt-2">
+                                <!-- <div class="resolvingClauses mt-2">
                                     <?php echo formatResolvingClauses($resolution['resolvingClauses']); ?>
-                                </div>
+                                </div> -->
                                 <!-- <label class="mt-0 text-primary" for="optionalClauses"></label> -->
-                                <div class="optionalClauses mt-2">
+                                <!-- <div class="optionalClauses mt-2">
                                     <?php echo $resolution['optionalClauses']; ?>
-                                </div>
+                                </div> -->
                                 <!-- <label class="mt-0 text-primary" for="approvalDetails"></label> -->
-                                <div class="approvalDetails mt-2">
+                                <!-- <div class="approvalDetails mt-2">
                                     <?php echo $resolution['approvalDetails']; ?>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>

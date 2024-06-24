@@ -11,12 +11,20 @@ class ComposerStaticInit271a704785bfa2b151078d3427d509bf
         array (
             'thiagoalessio\\TesseractOCR\\' => 27,
         ),
+        'P' => 
+        array (
+            'PHPMailer\\PHPMailer\\' => 20,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'thiagoalessio\\TesseractOCR\\' => 
         array (
             0 => __DIR__ . '/..' . '/thiagoalessio/tesseract_ocr/src',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
     );
 

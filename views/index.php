@@ -38,7 +38,7 @@
                     <span>Don't have an account? </span><a href="register.php">Register here</a>
                 </div>
                 <div class="forgot-container">
-                    <a href="#">Forgot password?</a>
+                    <a href="reset_form.php">Forgot password?</a>
                 </div>
             </form>
         </div>

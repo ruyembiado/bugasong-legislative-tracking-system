@@ -39,7 +39,7 @@ redirectNotLogin();
                 </div>
                 <div class="form-submit mt-2">
                     <button type="submit" name="search_document" value="search_document" class="btn btn-primary">Search</button>
-                    <a class="btn btn-danger" href="../views/citizen_legislative.php">Reset</a>
+                    <a class="btn btn-danger" href="citizen_legislative.php">Reset</a>
                 </div>
             </div>
         </form>
@@ -67,7 +67,7 @@ redirectNotLogin();
             <?php else : ?>
                 <?php foreach ($documents as $document) : ?>
                     <div class="list border-bottom my-4">
-                        <a class="document-link" onclick="addDocumentView('<?php echo user_id(); ?>', '<?php echo $document['document_type']; ?>', <?php echo $document['id']; ?>)" href="<?php echo ($document['document_type'] === 'resolution') ? '../views/citizen_view_resolution.php?resolution_id=' . $document['id'] : '../views/citizen_view_ordinance.php?ordinance_id=' . $document['id']; ?>">
+                        <a class="document-link" onclick="addDocumentView('<?php echo user_id(); ?>', '<?php echo $document['document_type']; ?>', <?php echo $document['id']; ?>)" href="<?php echo ($document['document_type'] === 'resolution') ? 'citizen_view_resolution.php?resolution_id=' . $document['id'] : 'citizen_view_ordinance.php?ordinance_id=' . $document['id']; ?>">
                             <h1 class="h4 m-0 font-weight-bold text-primary">
                                 <?php echo $document['documentNo']; ?>
                             </h1>

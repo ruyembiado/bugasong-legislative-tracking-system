@@ -69,7 +69,35 @@ button.react-button {
     visibility: hidden;
 }
 
-a.document-link, a.document-link:hover {
+a.document-link,
+a.document-link:hover {
     text-decoration: none !important;
     color: unset !important;
+}
+
+/* Style for the OTP input container */
+.otp-input {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Style for each OTP input box */
+.otp-input input {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 18px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.otp-input input:focus {
+    outline: none;
+    border-color: #4E73DF;
+    box-shadow: 0 0 5px #4E73DF;
+}
+
+.otp-input input:last-child {
+    margin-right: 0;
 }

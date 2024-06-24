@@ -166,4 +166,25 @@ $(document).ready(function () {
     setTimeout(function () {
         $('#page-top').css('visibility', 'visible');
     }, 50);
+
+    const inputs = document.querySelectorAll('.otp-input input');
+    inputs.forEach((input, index) => {
+        input.addEventListener('input', () => {
+            if (input.value.length === input.maxLength) {
+                if (index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                } else {
+                    input.blur(); // Optionally, blur the last input to indicate completion
+                }
+            }
+        });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && input.value === '') {
+                if (index > 0) {
+                    inputs[index - 1].focus();
+                }
+            }
+        });
+    });
 });
