@@ -4,6 +4,8 @@ include('../config/config.php');
 ob_start(); // Start output buffering
 
 clearFormSession();
+clearOTP();
+clearPassVerification();
 
 ?>
 

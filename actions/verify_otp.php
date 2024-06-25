@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['verify_otp'])) {
         // OTP is valid and within expiry time
         unset($_SESSION['otp']); // Clear OTP from session once verified
         unset($_SESSION['otp_expiry']); // Clear OTP expiry from session
+        $_SESSION['reset_verified'] = 'verified';
         setFlash('success', 'Verified.');
         redirect('reset_password');
     } else {

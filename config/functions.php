@@ -1028,3 +1028,24 @@ function getResolutionViewCount($resolution_id)
         return 0; // Return 0 if no views found (optional handling)
     }
 }
+
+function clearOTP()
+{
+
+    $currentUri = $_SERVER['REQUEST_URI'];
+    $otp_page = '/blts/views/reset_otp.php';
+
+    if (strpos($currentUri, $otp_page) === false) {
+        unset($_SESSION['otp']);
+    }
+}
+
+function clearPassVerification()
+{
+    $currentUri = $_SERVER['REQUEST_URI'];
+    $reset_page = '/blts/views/reset_password.php';
+
+    if (strpos($currentUri, $reset_page) === false) {
+        unset($_SESSION['reset_verified']);
+    }
+}

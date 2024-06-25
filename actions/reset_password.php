@@ -29,8 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset_password'])) {
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';  // SMTP server address
             $mail->SMTPAuth   = true;                 // Enable SMTP authentication
-            $mail->Username   = 'admin.blts@gmail.com'; // SMTP username
-            $mail->Password   = 'adminblts';       // SMTP password
+            $mail->Username   = 'rosevicfortin388@gmail.com'; // SMTP username
+            $mail->Password   = 'ctpwpooyagbuzomj';       // SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
             $mail->Port       = 587;  // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
