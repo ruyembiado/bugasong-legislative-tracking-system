@@ -133,6 +133,19 @@ clearPassVerification();
                             <span>System Settings</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link Links" id="ReportLink" href="#" data-toggle="collapse" data-target="#ReportPage" aria-expanded="true" aria-controls="ReportPage" data-title="BLTS - Reports">
+                            <i class="fas fa-fw fa-chart-bar"></i>
+                            <span>Reports</span>
+                        </a>
+                        <div id="ReportPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="admin_report_document.php">Document Report</a>
+                                <a class="collapse-item" href="admin_report_forum.php">Forum Report</a>
+                                <a class="collapse-item" href="admin_report_view.php">Views Report</a>
+                            </div>
+                        </div>
+                    </li>
                     <?php endif; ?>
                 <!-- <php elseif (isMember()) : ?>
                     <li class="nav-item">

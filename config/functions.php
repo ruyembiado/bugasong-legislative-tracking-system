@@ -1,5 +1,8 @@
 <?php
 require_once 'session.php';
+
+date_default_timezone_set('Asia/Manila');
+
 function getValue($fieldName)
 {
     if (isset($_SESSION['inputs'][$fieldName])) {
@@ -471,10 +474,11 @@ function getAllUsers()
 function getMyPosts($user_id, $limit = null)
 {
     global $conn;
-    $sql = "SELECT * 
+    $sql = "SELECT p.post_id, p.topic, p.message, p.status, p.date_added
             FROM posts p
             INNER JOIN users u ON p.user_id = u.user_id
-            WHERE u.user_id = ? AND p.status='0'";
+            WHERE u.user_id = ? AND p.status='0' 
+            ORDER BY p.date_added DESC"; 
     if ($limit !== null) {
         $sql .= " LIMIT ?";
     }

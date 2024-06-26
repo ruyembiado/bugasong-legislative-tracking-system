@@ -118,7 +118,8 @@ redirectNotLogin();
                                     <h6 class="m-0 font-weight-bold text-primary">My Topics</h6>
                                 </div>
                                 <div class="card-body py-2 forum-message">
-                                    <?php if (empty(getMyPosts(user_id(), 5))) : ?>
+                                    <?php 
+                                    if (empty(getMyPosts(user_id(), 5))) : ?>
                                         <div class="alert alert-warning m-0 text-center" role="alert">
                                             No post found.
                                         </div>

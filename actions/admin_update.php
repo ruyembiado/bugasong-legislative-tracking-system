@@ -86,6 +86,7 @@ if (isset($_GET['update_status'])) : //check if the button is click
 
         $data = [
             'status' => $status,
+            'date_publish' => date('Y-m-d H:i:s'),
         ];
         $update = update('resolutions',  ['resolution_id' => $_GET['resolution_id']], $data);
 
@@ -101,8 +102,11 @@ if (isset($_GET['update_status'])) : //check if the button is click
     }
 
     if (isset($_GET['ordinance_id'])) {
+
+
         $data = [
             'status' => $status,
+            'date_publish' => date('Y-m-d H:i:s'),
         ];
         $update = update('ordinances',  ['ordinance_id' => $_GET['ordinance_id']], $data);
 

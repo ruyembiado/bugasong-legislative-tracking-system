@@ -39,11 +39,12 @@ redirectNotLogin();
                             <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th style="width: 5%;">No.</th>
-                                        <th style="width: 40%;">Resolution Name</th>
-                                        <th style="width: 15%;">Tag</th>
+                                        <th>No.</th>
+                                        <th>Resolution No.</th>
+                                        <th>Tag</th>
                                         <th>No. of Views</th>
-                                        <th style="width: 20%;">Dated Added</th>
+                                        <th>Dated Added</th>
+                                        <th>Dated Published</th>
                                         <th style="width: 20%;"><?php if (isset($_GET['publish'])) : ?>Status<?php endif; ?><?php if (isset($_GET['manage'])) : ?>Action<?php endif; ?></th>
                                     </tr>
                                 </thead>
@@ -52,12 +53,13 @@ redirectNotLogin();
                                     <?php foreach (getAllResolutionsDesc(null) as $resolution) :  ?>
                                         <tr>
                                             <td><?php echo $count++; ?></td>
-                                            <td class="text-gray-800"><?php echo $resolution['title']; ?></td>
+                                            <td class="text-gray-800"><?php echo $resolution['resolutionNo']; ?></td>
                                             <td class="text-gray-800"><?php echo isset(getTagByID($resolution['tag_id'])['tag_name']) ? getTagByID($resolution['tag_id'])['tag_name'] : ''; ?></td>
                                             <td>
                                                 <?php echo getResolutionViewCount($resolution['resolution_id']); ?>
                                             </td>
                                             <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($resolution['date_added'])); ?></td>
+                                            <td><?php echo ($resolution['status'] == 1) ? date('M d Y h:i:s a', strtotime($resolution['date_publish'])) : ''; ?></td>
                                             <td>
                                                 <?php if (isset($_GET['manage'])) : ?>
                                                     <a href="view_resolution.php?resolution_id=<?php echo $resolution['resolution_id']; ?>" class="btn btn-secondary px-2 py-1 my-1">View</a>
