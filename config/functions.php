@@ -478,7 +478,7 @@ function getMyPosts($user_id, $limit = null)
             FROM posts p
             INNER JOIN users u ON p.user_id = u.user_id
             WHERE u.user_id = ? AND p.status='0' 
-            ORDER BY p.date_added DESC"; 
+            ORDER BY p.date_added DESC";
     if ($limit !== null) {
         $sql .= " LIMIT ?";
     }
@@ -688,7 +688,8 @@ function getAllDocumentsDesc($limit)
             file,
             date_added,
             status,
-            'ordinance' AS document_type
+            'ordinance' AS document_type,
+            date_publish
         FROM ordinances
         WHERE status = 1
         UNION ALL
@@ -707,7 +708,8 @@ function getAllDocumentsDesc($limit)
             file,
             date_added,
             status,
-            'resolution' AS document_type
+            'resolution' AS document_type,
+            date_publish
         FROM resolutions
         WHERE status = 1
         ORDER BY date_added DESC
@@ -1052,4 +1054,248 @@ function clearPassVerification()
     if (strpos($currentUri, $reset_page) === false) {
         unset($_SESSION['reset_verified']);
     }
+}
+
+function document_types()
+{
+    $types = array(
+        'resolution' => 'Resolution',
+        'ordinance' => 'Ordinance',
+    );
+
+    return $types;
+}
+
+function document_status()
+{
+    $status = array(
+        '1' => 'Published',
+        '0' => 'Unpublished',
+    );
+
+    return $status;
+}
+
+function searchDocumentReport($document_type, $_date_added_start, $_date_added_end, $_date_publish_start, $_date_publish_end, $status)
+{
+    global $conn;
+
+    // Initialize arrays for conditions, parameters, and types
+    $conditions_resolutions = [];
+    $conditions_ordinances = [];
+    $params_resolutions = [];
+    $params_ordinances = [];
+    $types_resolutions = "";
+    $types_ordinances = "";
+
+    // Query for resolutions
+    $query_resolutions = "
+        SELECT 
+            resolution_id AS id,
+            user_id,
+            tag_id,
+            title,
+            resolutionNo AS documentNo,
+            whereasClauses AS preamble,
+            resolvingClauses AS body,
+            '' AS repealingClause,
+            '' AS effectivityClause,
+            approvalDetails AS enactmentDetails,  -- Map approvalDetails to enactmentDetails
+            file,
+            date_added,
+            date_publish,
+            status,
+            'resolution' AS document_type
+        FROM resolutions
+        WHERE 1=1
+    ";
+
+    // Adding conditions for resolutions based on parameters
+    if (!empty($_date_added_start)) {
+        $conditions_resolutions[] = "date_added >= ?";
+        $params_resolutions[] = $_date_added_start;
+        $types_resolutions .= "s";
+    }
+
+    if (!empty($_date_added_end)) {
+        $conditions_resolutions[] = "date_added <= ?";
+        $params_resolutions[] = $_date_added_end;
+        $types_resolutions .= "s";
+    }
+
+    if (!empty($_date_publish_start)) {
+        $conditions_resolutions[] = "date_publish >= ?";
+        $params_resolutions[] = $_date_publish_start;
+        $types_resolutions .= "s";
+    }
+
+    if (!empty($_date_publish_end)) {
+        $conditions_resolutions[] = "date_publish <= ?";
+        $params_resolutions[] = $_date_publish_end;
+        $types_resolutions .= "s";
+    }
+
+    if ($status !== '') {
+        $conditions_resolutions[] = "status = ?";
+        $params_resolutions[] = $status;
+        $types_resolutions .= "i";
+    }
+
+    // Constructing the WHERE clause for resolutions
+    if (!empty($conditions_resolutions)) {
+        $query_resolutions .= " AND (" . implode(") AND (", $conditions_resolutions) . ")";
+    }
+
+    // Query for ordinances
+    $query_ordinances = "
+        SELECT 
+            ordinance_id AS id,
+            user_id,
+            tag_id,
+            title,
+            ordinanceNo AS documentNo,
+            preamble,
+            enactingClause AS body,
+            repealingClause,
+            effectivityClause,
+            enactmentDetails,  -- Keep as is assuming this is correct for ordinances
+            file,
+            date_added,
+            date_publish,
+            status,
+            'ordinance' AS document_type
+        FROM ordinances
+        WHERE 1=1
+    ";
+
+    // Adding conditions for ordinances based on parameters
+    if (!empty($_date_added_start)) {
+        $conditions_ordinances[] = "date_added >= ?";
+        $params_ordinances[] = $_date_added_start;
+        $types_ordinances .= "s";
+    }
+
+    if (!empty($_date_added_end)) {
+        $conditions_ordinances[] = "date_added <= ?";
+        $params_ordinances[] = $_date_added_end;
+        $types_ordinances .= "s";
+    }
+
+    if (!empty($_date_publish_start)) {
+        $conditions_ordinances[] = "date_publish >= ?";
+        $params_ordinances[] = $_date_publish_start;
+        $types_ordinances .= "s";
+    }
+
+    if (!empty($_date_publish_end)) {
+        $conditions_ordinances[] = "date_publish <= ?";
+        $params_ordinances[] = $_date_publish_end;
+        $types_ordinances .= "s";
+    }
+
+    if ($status !== '') {
+        $conditions_ordinances[] = "status = ?";
+        $params_ordinances[] = $status;
+        $types_ordinances .= "i";
+    }
+
+    // Constructing the WHERE clause for ordinances
+    if (!empty($conditions_ordinances)) {
+        $query_ordinances .= " AND (" . implode(") AND (", $conditions_ordinances) . ")";
+    }
+
+    // Combine resolutions and ordinances queries using UNION ALL if no specific document type is provided
+    if ($document_type === 'resolution') {
+        $query = $query_resolutions;
+    } elseif ($document_type === 'ordinance') {
+        $query = $query_ordinances;
+    } else {
+        $query = "($query_resolutions) UNION ALL ($query_ordinances)";
+    }
+
+    // Adding ORDER BY clause
+    $query .= " ORDER BY date_added DESC";
+
+    // Prepare and execute the query
+    $stmt = mysqli_prepare($conn, $query);
+    if ($stmt) {
+        if (!empty($params_resolutions) && !empty($params_ordinances)) {
+            $params = array_merge($params_resolutions, $params_ordinances);
+            $types = $types_resolutions . $types_ordinances;
+            $stmt->bind_param($types, ...$params);
+        } elseif (!empty($params_resolutions)) {
+            $stmt->bind_param($types_resolutions, ...$params_resolutions);
+        } elseif (!empty($params_ordinances)) {
+            $stmt->bind_param($types_ordinances, ...$params_ordinances);
+        }
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Fetch all rows as associative array
+        $documents = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        // Handle query preparation error
+        die('MySQL Error: ' . mysqli_error($conn));
+    }
+
+    return $documents;
+}
+
+function getAllDocumentsReport($limit)
+{
+    global $conn;
+    $sql = "
+        SELECT 
+            ordinance_id AS id,
+            user_id,
+            tag_id,
+            title,
+            ordinanceNo AS documentNo,
+            preamble,
+            enactingClause,
+            body,
+            repealingClause,
+            effectivityClause,
+            enactmentDetails,
+            file,
+            date_added,
+            status,
+            'ordinance' AS document_type,
+            date_publish
+        FROM ordinances
+        UNION ALL
+        SELECT 
+            resolution_id AS id,
+            user_id,
+            tag_id,
+            title,
+            resolutionNo AS documentNo,
+            whereasClauses AS preamble,
+            resolvingClauses AS enactingClause,
+            optionalClauses AS body,
+            '' AS repealingClause,
+            '' AS effectivityClause,
+            approvalDetails AS enactmentDetails,
+            file,
+            date_added,
+            status,
+            'resolution' AS document_type,
+            date_publish
+        FROM resolutions
+        ORDER BY date_added DESC
+        LIMIT ?
+    ";
+    $stmt = $conn->prepare($sql);
+    if ($stmt === false) {
+        die('Prepare failed: ' . $conn->error);
+    }
+    $stmt->bind_param('i', $limit);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $documents = $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $documents = [];
+    }
+    return $documents;
 }
