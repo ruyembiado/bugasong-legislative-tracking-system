@@ -1214,7 +1214,7 @@ function searchDocumentReport($document_type, $_date_added_start, $_date_added_e
     }
 
     // Adding ORDER BY clause
-    $query .= " ORDER BY date_added DESC";
+    $query .= " ORDER BY date_added ASC";
 
     // Prepare and execute the query
     $stmt = mysqli_prepare($conn, $query);
@@ -1282,7 +1282,7 @@ function getAllDocumentsReport($limit)
             'resolution' AS document_type,
             date_publish
         FROM resolutions
-        ORDER BY date_added DESC
+        ORDER BY date_added ASC
         LIMIT ?
     ";
     $stmt = $conn->prepare($sql);
@@ -1298,4 +1298,88 @@ function getAllDocumentsReport($limit)
         $documents = [];
     }
     return $documents;
+}
+
+function searchPostReport($date_added_start, $date_added_end, $status)
+{
+    global $conn;
+    // Construct the SQL query
+    $query = "SELECT * FROM posts WHERE 1=1";
+    $params = [];
+
+    if (!empty($date_added_start)) {
+        $query .= " AND date_added >= ?";
+        $params[] = $date_added_start;
+    }
+
+    if (!empty($date_added_end)) {
+        $query .= " AND date_added <= ?";
+        $params[] = $date_added_end;
+    }
+
+    if ($status !== '') {
+        $query .= " AND status = ?";
+        $params[] = $status;
+    }
+
+    // Prepare and bind parameters
+    $stmt = $conn->prepare($query);
+    if ($stmt) {
+        // Bind parameters
+        if (!empty($params)) {
+            $types = str_repeat('s', count($params)); // Assuming all parameters are strings ('s')
+            $stmt->bind_param($types, ...$params);
+        }
+        // Execute query
+        $stmt->execute();
+        // Get result set
+        $result = $stmt->get_result();
+        // Fetch all rows as associative array
+        $posts = $result->fetch_all(MYSQLI_ASSOC);
+        // Free result set
+        $result->free();
+        return $posts;
+    } else {
+        // Handle error if prepare fails
+        return [];
+    }
+}
+
+function countViewers($document_id)
+{
+    global $conn;
+
+    $sql = "SELECT COUNT(DISTINCT document_view_id) AS viewer_count 
+            FROM document_views 
+            WHERE document_id = $document_id 
+            GROUP BY document_id";
+
+    $result = $conn->query($sql);
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['viewer_count'];
+    } else {
+        return 0; // Return 0 if no viewers found or error occurred
+    }
+}
+
+function getSystemSettings()
+{
+    global $conn; // Assuming $conn is your mysqli connection object
+
+    $query = "SELECT * FROM system_settings";
+    $settings = array();
+
+    if ($result = $conn->query($query)) {
+        while ($row = $result->fetch_assoc()) {
+            $settings = $row;
+        }
+        $result->free();
+    } else {
+        // Handle error if query fails
+        return false;
+    }
+
+    return $settings;
 }

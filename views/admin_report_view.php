@@ -20,7 +20,7 @@ redirectNotLogin();
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Summary of Uploaded Documents Report</h1>
+                    <h1 class="h3 mb-0 text-gray-800">User's Views of Documents Report</h1>
                 </div>
 
                 <!-- Content Row -->
@@ -117,13 +117,14 @@ redirectNotLogin();
                             <?php else : ?>
                                 <div id="print-area">
                                     <div id="print-container">
-                                        <h4 class="m-0 font-weight-bold text-dark mb-4 text-center">Document Report</h4>
+                                        <h4 class="m-0 font-weight-bold text-dark mb-4 text-center">Views of Documents Report</h4>
                                         <table class="table table-bordered" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>No.</th>
                                                     <th>Document</th>
                                                     <th>Tag</th>
+                                                    <th>No. of Viewers</th>
                                                     <th>Date Added</th>
                                                     <th>Date Published</th>
                                                     <th>Status</th>
@@ -136,6 +137,7 @@ redirectNotLogin();
                                                         <td><?php echo $count++; ?></td>
                                                         <td class="text-gray-800"><?php echo $document['documentNo']; ?></td>
                                                         <td class="text-gray-800"><?php echo isset(getTagByID($document['tag_id'])['tag_name']) ? getTagByID($document['tag_id'])['tag_name'] : ''; ?></td>
+                                                        <td class="text-gray-800"><?php echo countViewers($document['id']); ?></td>
                                                         <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($document['date_added'])); ?></td>
                                                         <td class="text-gray-800">
                                                             <?php echo ($document['status'] == 1) ? date('M d Y h:i:s a', strtotime($document['date_publish'])) : ''; ?>

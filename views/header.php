@@ -44,7 +44,7 @@ clearPassVerification();
                 <a class="sidebar-brand d-flex align-items-center justify-content-between" id="brandLink" data-title="BLTS - Dashboard" href="admin_home.php">
                     <div class="sidebar-brand-icon">
                         <!-- <i class="img-profile rounded-circle fas fa-user-circle fa-2x"></i> -->
-                        <img src="../img/blts.png" class="img-profile" alt="">
+                        <?php echo (!empty(getSystemSettings()['system_logo'])) ? '<img width="52px" class="img-fluid" src="' . getSystemSettings()['system_logo'] . '">' : '<img width="52px" class="img-fluid" src="../uploads/placeholder.png" alt="placeholder">'; ?>
                     </div>
                     <div class="sidebar-brand-text mx-3"><?php echo logUsertype(); ?></div>
                 </a>

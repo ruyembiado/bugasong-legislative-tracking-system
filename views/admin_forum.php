@@ -49,7 +49,7 @@ redirectNotLogin();
                                             <td><?php echo $count++; ?></td>
                                             <td class="text-gray-800"><?php echo $post['topic']; ?></td>
                                             <td class="text-gray-800"><?php echo $post['message']; ?></td>
-                                            <td class="text-gray-800"><?php echo date('M d Y h:i:s', strtotime($post['date_added'])); ?>
+                                            <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
                                             </td>
                                             <td class="text-gray-800">
                                                 <a class="status-button <?php echo ($post['status'] == '0') ? '' : 'unpublish'; ?>" href="../actions/admin_update.php?update_status=<?php echo $post['status']; ?>&post_id=<?php echo $post['post_id']; ?>"><?php echo ($post['status'] == '0') ? '<p class="text-light btn btn-danger ">Unpublished</p>' : '<p class="text-light btn btn-success">Published</p>' ?></a>

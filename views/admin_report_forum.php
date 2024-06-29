@@ -20,7 +20,7 @@ redirectNotLogin();
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Summary of Uploaded Documents Report</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Forum Reports</h1>
                 </div>
 
                 <!-- Content Row -->
@@ -28,7 +28,7 @@ redirectNotLogin();
                     <div class="card-header bg-white py-3">
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" class="mb-4">
                             <div class="d-flex align-items-end flex-wrap search-container justify-content-center">
-                                <div class="type-selection p-0 mr-2 mt-2 col-2">
+                                <!-- <div class="type-selection p-0 mr-2 mt-2 col-2">
                                     <label for="type-selection">Document Type:</label>
                                     <select name="document_type" id="document_type" class="form-control">
                                         <option value="">Select option:</option>
@@ -41,7 +41,7 @@ redirectNotLogin();
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
-                                </div>
+                                </div> -->
                                 <div class="date-input mr-2 mt-2">
                                     <div class="d-flex p-0">
                                         <div class="start-date mr-2">
@@ -54,7 +54,7 @@ redirectNotLogin();
                                         </div>
                                     </div>
                                 </div>
-                                <div class="date-input mr-2 mt-2">
+                                <!-- <div class="date-input mr-2 mt-2">
                                     <div class="d-flex p-0">
                                         <div class="start-date mr-2">
                                             <label for="start-date">Date Published Start:</label>
@@ -65,7 +65,7 @@ redirectNotLogin();
                                             <input type="date" name="date_publish_end" class="form-control" value="<?php echo isset($_GET['date_publish_end']) ? htmlspecialchars($_GET['date_publish_end']) : ''; ?>">
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="date-input mr-2 mt-2">
                                     <div class="d-flex p-0">
                                         <div class="end-date">
@@ -85,8 +85,8 @@ redirectNotLogin();
                                     </div>
                                 </div>
                                 <div class="form-submit mt-2">
-                                    <button type="submit" name="search_document_report" value="search_document_report" class="btn btn-primary">Submit</button>
-                                    <a class="btn btn-danger" href="admin_report_document.php">Reset</a>
+                                    <button type="submit" name="search_forum_report" value="search_forum_report" class="btn btn-primary">Submit</button>
+                                    <a class="btn btn-danger" href="admin_report_forum.php">Reset</a>
                                 </div>
                             </div>
                         </form>
@@ -96,52 +96,45 @@ redirectNotLogin();
                     </div>
 
                     <?php
-                    $document_type = $_GET['document_type'] ?? '';
                     $date_added_start = $_GET['date_added_start'] ?? '';
                     $date_added_end = $_GET['date_added_end'] ?? '';
-                    $date_publish_start = $_GET['date_publish_start'] ?? '';
-                    $date_publish_end = $_GET['date_publish_end'] ?? '';
                     $status = $_GET['status'] ?? '';
 
-                    if (isset($_GET['search_document_report'])) {
-                        $documents = searchDocumentReport($document_type, $date_added_start, $date_added_end, $date_publish_start, $date_publish_end, $status);
+                    if (isset($_GET['search_forum_report'])) {
+                        $posts = searchPostReport($date_added_start, $date_added_end, $status);
                     } else {
-                        $documents = getAllDocumentsReport(999);
+                        $posts = getAllPostAsc(999);
                     }
                     ?>
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <?php if (empty($documents)) : ?>
-                                <p class="text-center">No documents found.</p>
+                            <?php if (empty($posts)) : ?>
+                                <p class="text-center">No post found.</p>
                             <?php else : ?>
                                 <div id="print-area">
                                     <div id="print-container">
-                                        <h4 class="m-0 font-weight-bold text-dark mb-4 text-center">Document Report</h4>
+                                        <h4 class="m-0 font-weight-bold text-dark mb-4 text-center">Forum Report</h4>
                                         <table class="table table-bordered" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>No.</th>
-                                                    <th>Document</th>
-                                                    <th>Tag</th>
+                                                    <th>Title</th>
+                                                    <th>No. of Participant</th>
                                                     <th>Date Added</th>
-                                                    <th>Date Published</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php $count = 1; ?>
-                                                <?php foreach ($documents as $document) :  ?>
+                                                <?php foreach ($posts as $post) :  ?>
                                                     <tr>
                                                         <td><?php echo $count++; ?></td>
-                                                        <td class="text-gray-800"><?php echo $document['documentNo']; ?></td>
-                                                        <td class="text-gray-800"><?php echo isset(getTagByID($document['tag_id'])['tag_name']) ? getTagByID($document['tag_id'])['tag_name'] : ''; ?></td>
-                                                        <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($document['date_added'])); ?></td>
-                                                        <td class="text-gray-800">
-                                                            <?php echo ($document['status'] == 1) ? date('M d Y h:i:s a', strtotime($document['date_publish'])) : ''; ?>
-                                                        </td>
+                                                        <td class="text-gray-800"><?php echo $post['topic']; ?></td>
+                                                        <td class="text-gray-800">1</td>
+                                                        <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?></td>
                                                         <td>
-                                                            <?php echo ($document['status'] == '0') ? '<p>Unpublished</p>' : '<p>Published</p>' ?>
+                                                            <?php echo ($post['status'] == '0') ? '<p>Unpublished</p>' : '<p>Published</p>' ?>
                                                         </td>
                                                     </tr>
                                                 <?php endforeach; ?>
