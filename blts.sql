@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 28, 2024 at 03:22 PM
+-- Generation Time: Jun 29, 2024 at 04:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -60,7 +60,8 @@ INSERT INTO `document_views` (`document_view_id`, `document_id`, `user_id`, `doc
 (18, 6, 5, 'ordinance', '2024-06-23 10:04:30.965212'),
 (19, 9, 5, 'resolution', '2024-06-23 10:09:43.941050'),
 (20, 2, 5, 'ordinance', '2024-06-23 10:14:02.481054'),
-(21, 6, 5, 'ordinance', '2024-06-23 12:40:28.829637');
+(21, 6, 5, 'ordinance', '2024-06-23 12:40:28.829637'),
+(22, 5, 5, 'ordinance', '2024-06-29 17:40:21.985057');
 
 -- --------------------------------------------------------
 
@@ -118,7 +119,7 @@ CREATE TABLE `posts` (
 INSERT INTO `posts` (`post_id`, `user_id`, `topic`, `message`, `status`, `date_added`) VALUES
 (41, 5, 'Officia alias ipsam ', 'Recusandae Sapiente', 0, '2024-06-26 22:01:33.688950'),
 (42, 5, 'Ut magni labore eum ', 'Pariatur Non tempor', 0, '2024-06-26 22:01:40.138115'),
-(43, 5, 'ss', 'ss', 0, '2024-06-26 22:01:56.862129');
+(43, 5, 'ss', 'ss', 1, '2024-06-26 22:01:56.862129');
 
 -- --------------------------------------------------------
 
@@ -147,6 +148,13 @@ CREATE TABLE `post_reactions` (
   `post_reaction` varchar(255) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `post_reactions`
+--
+
+INSERT INTO `post_reactions` (`post_reaction_id`, `post_id`, `user_id`, `post_reaction`, `date_added`) VALUES
+(176, 41, 5, 'liked', '2024-06-29 10:40:11');
 
 -- --------------------------------------------------------
 
@@ -177,6 +185,24 @@ CREATE TABLE `resolutions` (
 INSERT INTO `resolutions` (`resolution_id`, `user_id`, `tag_id`, `title`, `resolutionNo`, `whereasClauses`, `resolvingClauses`, `optionalClauses`, `approvalDetails`, `file`, `date_added`, `date_publish`, `status`) VALUES
 (9, 1, 5, 'A RESOLUTION AUTHORIZING MUNICIPAL MAYOR JOHN LLOYD M. PACETE AS\r\na SIGNATORY TO A MEMORANDUM OF AGREEMENT WITH THE DEPARTMENT OF\r\n7 HEALTH-WESTERN VISAYAS CENTER FOR HEALTH DEVELOPMENT FOR THE\r\nGRANTING OF HEALTH EMERGENCY ALLOWANCE TO HEALTH CARE AND NON-\r\nHEALTH CARE WORKERS', 'Resolution No. 247 — 2024', 'WHEREAS, RA 11712 known as the Public Health Emergency Benefits and\nAllowances for Health Care Workers provides for the payment of health emergency\nallowance, sickness and death compensation and other benefits for public and private health\ncare workers and non-health care workers during COVID-19 pandemic;\n\nWHEREAS, the Department of Health shall transfer funds to LGU for the grant of\nhealth emergency allowance to eligible health care workers and non-health care workers;\n\nWHEREFORE, upon motion by Hon. Jennifer Rose Tatoy and duly seconded en Pa\n\nmasse, be it i\nRESOLVED', 'RESOLVED, as it is hereby RESOLVED to grant authority to Municipal Mayor John\r\nLloyd M. Pacete as signatory to a Memorandum of Agreement with the Lange =.\r\nHealth-Western Visayas Center for Health Development for the granting Health mt\r\nEmergency Allowance to health care and non-health workers.\r\ni ed to undertake the above |\r\nRESOLVED FURTHER, that both parties agre\r\nbased on the terms and conditions as stipulated in the Memorandum of Agreement. “7\r\nRESOLVED FINALLY, to furnish a copy: hereof to the oe the Municipal\r\nand the Rural Health Physician, Bugasong, Antique and the ppb Visayas |\r\nfor Health Development, Iloilo City for information and guidance k\r\n\r\nUNANIMOUSLY', '', 'UNANIMOUSLY APPROVED.\r\n| HEREBY CERTIFY to the correctness of\r\n\r\nthe foregoing resolution.', '../uploads/442650283_1280175949612730_5370110906241116354_n.jpg', '2024-06-02 12:57:21', '2024-06-26 15:47:41.000000', 1),
 (11, 1, 2, 'A RESOLUTION AUTHORIZING MUNICIPAL MAYOR JOHN LLOYD M. PACETE AS\r\na SIGNATORY TO A MEMORANDUM OF AGREEMENT WITH THE DEPARTMENT OF\r\n7 HEALTH-WESTERN VISAYAS CENTER FOR HEALTH DEVELOPMENT FOR THE\r\nGRANTING OF HEALTH EMERGENCY ALLOWANCE TO HEALTH CARE AND NON-\r\nHEALTH CARE WORKERS', 'Resolution No. 248 — 2024', 'WHEREAS, RA 11712 known as the Public Health Emergency Benefits and\r\nAllowances for Health Care Workers provides for the payment of health emergency\r\nallowance, sickness and death compensation and other benefits for public and private health\r\ncare workers and non-health care workers during COVID-19 pandemic;\r\n\r\nWHEREAS, the Department of Health shall transfer funds to LGU for the grant of\r\nhealth emergency allowance to eligible health care workers and non-health care workers;\r\n\r\nWHEREFORE, upon motion by Hon. Jennifer Rose Tatoy and duly seconded en Pa\r\n\r\nmasse, be it i\r\nRESOLVED', 'RESOLVED, as it is hereby RESOLVED to grant authority to Municipal Mayor John\r\nLloyd M. Pacete as signatory to a Memorandum of Agreement with the Lange =.\r\nHealth-Western Visayas Center for Health Development for the granting Health mt\r\nEmergency Allowance to health care and non-health workers.\r\ni ed to undertake the above |\r\nRESOLVED FURTHER, that both parties agre\r\nbased on the terms and conditions as stipulated in the Memorandum of Agreement. “7\r\nRESOLVED FINALLY, to furnish a copy: hereof to the oe the Municipal\r\nand the Rural Health Physician, Bugasong, Antique and the ppb Visayas |\r\nfor Health Development, Iloilo City for information and guidance k\r\n\r\nUNANIMOUSLY', '', 'UNANIMOUSLY APPROVED.\r\n| HEREBY CERTIFY to the correctness of\r\n\r\nthe foregoing resolution.', '../uploads/442650283_1280175949612730_5370110906241116354_n.jpg', '2024-06-02 16:31:24', '2024-06-27 19:54:01.000000', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `system_settings`
+--
+
+CREATE TABLE `system_settings` (
+  `system_setting_id` int(255) NOT NULL,
+  `system_logo` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `system_settings`
+--
+
+INSERT INTO `system_settings` (`system_setting_id`, `system_logo`) VALUES
+(1, '../uploads/blts.png');
 
 -- --------------------------------------------------------
 
@@ -224,8 +250,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `name`, `email`, `username`, `password`, `status`, `user_type`, `date_added`) VALUES
 (1, 'BLTS Admin', 'bltsadmin@blts.com', 'admin', '$2y$10$DVJ2WMU495VOjCWS5hmqaOZAtzVwb.VKBqqN//zT46tB4FUZDstdq', 0, 'admin', '2024-06-08 16:10:38'),
 (5, 'test member1', 'testmember1@gmail.com', 'testmember1', '$2y$10$H7Zva2WcyGejR7W/A13deeBmO5D2BVz.4xVZHxW2T9o84/wPv/edC', 0, 'citizen', '2024-06-08 16:10:38'),
-(6, 'test member 2', 'testmember2@gmail.com', 'testmember2', '$2y$10$A4Ysk809FjBc8.XeMTA2vuPCizmjSneKgPsSPLcsyuwshwVJOB46G', 1, 'citizen', '2024-06-08 16:10:38'),
-(9, 'Ivan Atkins', 'nenunux@mailinator.com', 'fuzabu', '$2y$10$A4Ysk809FjBc8.XeMTA2vuPCizmjSneKgPsSPLcsyuwshwVJOB46G', 0, 'citizen', '2024-06-17 21:39:14');
+(6, 'test member 2', 'testmember2@gmail.com', 'testmember2', '$2y$10$A4Ysk809FjBc8.XeMTA2vuPCizmjSneKgPsSPLcsyuwshwVJOB46G', 1, 'citizen', '2024-06-08 16:10:38');
 
 --
 -- Indexes for dumped tables
@@ -273,6 +298,12 @@ ALTER TABLE `resolutions`
   ADD PRIMARY KEY (`resolution_id`);
 
 --
+-- Indexes for table `system_settings`
+--
+ALTER TABLE `system_settings`
+  ADD PRIMARY KEY (`system_setting_id`);
+
+--
 -- Indexes for table `tags`
 --
 ALTER TABLE `tags`
@@ -292,7 +323,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `document_views`
 --
 ALTER TABLE `document_views`
-  MODIFY `document_view_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `document_view_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `ordinances`
@@ -316,13 +347,19 @@ ALTER TABLE `post_comments`
 -- AUTO_INCREMENT for table `post_reactions`
 --
 ALTER TABLE `post_reactions`
-  MODIFY `post_reaction_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;
+  MODIFY `post_reaction_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
 
 --
 -- AUTO_INCREMENT for table `resolutions`
 --
 ALTER TABLE `resolutions`
   MODIFY `resolution_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `system_settings`
+--
+ALTER TABLE `system_settings`
+  MODIFY `system_setting_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tags`
