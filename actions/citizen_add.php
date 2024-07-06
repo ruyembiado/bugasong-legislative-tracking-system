@@ -25,7 +25,8 @@ if (isset($_POST['create_post'])) :
             $data = [
                 'topic'       => $_POST['topic'], //or $_POST['name']
                 'message'       => $_POST['message'],
-                'user_id'       => $_POST['user_id']
+                'user_id'       => $_POST['user_id'],
+                'status'        => 0,
             ]; //put it in array before saving
 
             $save = save('posts', $data); // $save = save('table_name', ['colum_name'=>$username]); if there is one data to save use this

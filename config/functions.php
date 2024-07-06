@@ -113,7 +113,7 @@ function getAllPostDesc($limit)
             status,
             date_added
         FROM posts
-        WHERE status = 0
+        WHERE status = 1
         ORDER BY date_added DESC
         LIMIT ?
     ";
@@ -209,7 +209,7 @@ function getAllPostRand()
             status,
             date_added
         FROM posts
-        WHERE status = 0
+        WHERE status = 1
         ORDER BY RAND()
     ";
 
@@ -477,7 +477,7 @@ function getMyPosts($user_id, $limit = null)
     $sql = "SELECT p.post_id, p.topic, p.message, p.status, p.date_added
             FROM posts p
             INNER JOIN users u ON p.user_id = u.user_id
-            WHERE u.user_id = ? AND p.status='0' 
+            WHERE u.user_id = ? 
             ORDER BY p.date_added DESC";
     if ($limit !== null) {
         $sql .= " LIMIT ?";
@@ -501,7 +501,7 @@ function getTopLikes($limit)
     $sql = "
         SELECT p.post_id, p.topic, p.date_added, p.message, COUNT(pr.post_reaction) as like_count
         FROM posts p
-        LEFT JOIN post_reactions pr ON p.post_id = pr.post_id AND pr.post_reaction = 'liked' AND p.status = 0
+        LEFT JOIN post_reactions pr ON p.post_id = pr.post_id AND pr.post_reaction = 'liked' AND p.status = 1
         GROUP BY p.post_id, p.topic
         HAVING like_count > 0
         ORDER BY like_count DESC
