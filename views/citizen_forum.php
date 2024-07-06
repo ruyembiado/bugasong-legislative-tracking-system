@@ -13,6 +13,9 @@ redirectNotLogin();
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">Forum</h1>
+                <div class="back-button mb-3">
+                    <a href="citizen_home.php" class="btn btn-primary">Back</a>
+                </div>
             </div>
 
             <!-- Content Row -->
@@ -118,7 +121,7 @@ redirectNotLogin();
                                     <h6 class="m-0 font-weight-bold text-primary">My Topics</h6>
                                 </div>
                                 <div class="card-body py-2 forum-message">
-                                    <?php 
+                                    <?php
                                     if (empty(getMyPosts(user_id(), 5))) : ?>
                                         <div class="alert alert-warning m-0 text-center" role="alert">
                                             No post found.

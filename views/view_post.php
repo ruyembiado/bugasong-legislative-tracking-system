@@ -14,6 +14,9 @@ redirectNotLogin();
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">View Topic</h1>
+                <div class="back-button mb-3">
+                    <a href="<?php echo isAdmin() ? 'admin_forum.php' : 'citizen_home.php' ?>" class="btn btn-primary">Back</a>
+                </div>
             </div>
 
             <!-- Content Row -->

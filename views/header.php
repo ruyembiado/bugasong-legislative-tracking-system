@@ -73,17 +73,27 @@ clearPassVerification();
                         </div>
                     </li> -->
                     <li class="nav-item">
-                        <a class="nav-link Links" href="admin_resolution.php?manage" id="ResolutionsLink" data-title="BLTS - Resolutions">
+                        <a class="nav-link Links" id="ManageDocumentLink" href="#" data-toggle="collapse" data-target="#DocumentManagePage" aria-expanded="true" aria-controls="DocumentManagePage" data-title="BLTS - Manage Documents">
+                            <i class="far fa-file-alt"></i>
+                            <span>Manage Documents</span>
+                        </a>
+                        <div id="DocumentManagePage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="admin_resolution.php?manage">Resolutions</a>
+                                <a class="collapse-item" href="admin_ordinance.php?manage">Ordinances</a>
+                            </div>
+                        </div>
+                        <!-- <a class="nav-link Links" href="admin_resolution.php?manage" id="ResolutionsLink" data-title="BLTS - Resolutions">
                             <i class="far fa-file-alt"></i>
                             <span>Resolutions</span>
-                        </a>
+                        </a> -->
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link Links" href="admin_ordinance.php?manage" id="OrdinancesLink" data-title="BLTS - Ordinances">
                             <i class="far fa-file-alt"></i>
                             <span>Ordinances</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link Links" id="publishDocumentLink" href="#" data-toggle="collapse" data-target="#DocumentPublishPage" aria-expanded="true" aria-controls="DocumentPublishPage" data-title="BLTS - Publish Documents">
                             <i class="fas fa-fw fa-upload"></i>
@@ -146,7 +156,7 @@ clearPassVerification();
                             </div>
                         </div>
                     </li>
-                    <?php endif; ?>
+                <?php endif; ?>
                 <!-- <php elseif (isMember()) : ?>
                     <li class="nav-item">
                         <a class="nav-link Links" href="citizen_resolution.php" id="ResolutionsLink" data-title="BLTS - Resolutions">
