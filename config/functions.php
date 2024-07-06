@@ -176,7 +176,7 @@ function getAllPostAsc($limit)
             status,
             date_added
         FROM posts
-        WHERE status = 0
+        WHERE status = 1
         ORDER BY date_added ASC
         LIMIT ?
     ";
@@ -1382,4 +1382,83 @@ function getSystemSettings()
     }
 
     return $settings;
+}
+
+function countParticipants($post_id)
+{
+    global $conn;
+
+    // Check if the connection is valid
+    if (!$conn) {
+        echo "Database connection error: " . mysqli_connect_error();
+        return false;
+    }
+
+    // Prepare the SQL query to count distinct users who commented on a specific post_id, joining with posts table
+    $query = "SELECT COUNT(DISTINCT pc.user_id) AS participant_count
+              FROM post_comments pc
+              JOIN posts p ON pc.post_id = p.post_id
+              WHERE pc.post_id = ?";
+
+    // Prepare the statement
+    if ($stmt = $conn->prepare($query)) {
+        // Bind the parameters
+        $stmt->bind_param("i", $post_id);
+
+        // Execute the statement
+        if ($stmt->execute()) {
+            // Get the result
+            $result = $stmt->get_result();
+
+            // Fetch the count
+            $row = $result->fetch_assoc();
+            $participant_count = $row['participant_count'];
+
+            // Close the statement
+            $stmt->close();
+
+            return $participant_count;
+        } else {
+            // Handle execution error
+            echo "Execution error: " . $stmt->error;
+            return false;
+        }
+    } else {
+        // Handle preparation error
+        echo "Preparation error: " . $conn->error;
+        return false;
+    }
+}
+
+
+function ForumReport($limit)
+{
+    global $conn;
+
+    $query = "
+        SELECT 
+            post_id,
+            user_id,
+            topic,
+            message,
+            status,
+            date_added
+        FROM posts
+        ORDER BY date_added ASC
+        LIMIT ?
+    ";
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('i', $limit);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Fetch all rows as associative array
+        $posts = $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $posts = [];
+    }
+
+    return $posts;
 }

@@ -103,7 +103,7 @@ redirectNotLogin();
                     if (isset($_GET['search_forum_report'])) {
                         $posts = searchPostReport($date_added_start, $date_added_end, $status);
                     } else {
-                        $posts = getAllPostAsc(999);
+                        $posts = ForumReport(999);
                     }
                     ?>
 
@@ -131,7 +131,7 @@ redirectNotLogin();
                                                     <tr>
                                                         <td><?php echo $count++; ?></td>
                                                         <td class="text-gray-800"><?php echo $post['topic']; ?></td>
-                                                        <td class="text-gray-800">1</td>
+                                                        <td class="text-gray-800"><?php echo countParticipants($post['post_id']); ?></td>
                                                         <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?></td>
                                                         <td>
                                                             <?php echo ($post['status'] == '0') ? '<p>Unpublished</p>' : '<p>Published</p>' ?>
