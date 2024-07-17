@@ -41,7 +41,8 @@ redirectNotLogin();
                                     <tr>
                                         <th>No.</th>
                                         <th>Ordinance No.</th>
-                                        <th>Tag</th>
+                                        <th>Attachment</th>
+                                        <th style="width: 8%;">Tag</th>
                                         <th>No. of Views</th>
                                         <th>Dated Added</th>
                                         <th>Dated Published</th>
@@ -54,6 +55,7 @@ redirectNotLogin();
                                         <tr>
                                             <td><?php echo $count++; ?></td>
                                             <td class="text-gray-800"><?php echo $ordinance['ordinanceNo']; ?></td>
+                                            <td class="text-gray-800"><a href="<?php echo $ordinance['file']; ?>" target="_blanks"><?php echo get_filename($ordinance['file']); ?></a></td>
                                             <td class="text-gray-800"><?php echo isset(getTagByID($ordinance['tag_id'])['tag_name']) ? getTagByID($ordinance['tag_id'])['tag_name'] : ''; ?></td>
                                             <td>
                                                 <?php echo getOrdinanceViewCount($ordinance['ordinance_id']); ?>

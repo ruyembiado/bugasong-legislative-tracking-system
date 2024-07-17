@@ -41,7 +41,8 @@ redirectNotLogin();
                                     <tr>
                                         <th>No.</th>
                                         <th>Resolution No.</th>
-                                        <th>Tag</th>
+                                        <th>Attachment</th>
+                                        <th style="width: 8%;">Tag</th>
                                         <th>No. of Views</th>
                                         <th>Dated Added</th>
                                         <th>Dated Published</th>
@@ -54,6 +55,7 @@ redirectNotLogin();
                                         <tr>
                                             <td><?php echo $count++; ?></td>
                                             <td class="text-gray-800"><?php echo $resolution['resolutionNo']; ?></td>
+                                            <td class="text-gray-800"><a href="<?php echo $resolution['file']; ?>" target="_blanks"><?php echo get_filename($resolution['file']); ?></a></td>
                                             <td class="text-gray-800"><?php echo isset(getTagByID($resolution['tag_id'])['tag_name']) ? getTagByID($resolution['tag_id'])['tag_name'] : ''; ?></td>
                                             <td>
                                                 <?php echo getResolutionViewCount($resolution['resolution_id']); ?>

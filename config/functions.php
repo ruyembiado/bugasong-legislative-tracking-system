@@ -1462,3 +1462,8 @@ function ForumReport($limit)
 
     return $posts;
 }
+
+function get_filename($file)
+{
+    return basename($file);
+}
