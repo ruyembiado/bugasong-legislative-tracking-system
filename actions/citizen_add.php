@@ -33,7 +33,7 @@ if (isset($_POST['create_post'])) :
 
             if ($save) {
                 removeValue(); //remove the retain value in inputs
-                setFlash('success', 'Post Created Successfully'); //set message
+                setFlash('success', 'Thank you for your participation in the Bugasong Legislative Tracking System. We will first check your post before it appears in the forum to avoid misunderstanding. Any vulgar words or inappropriate language is prohibited. Thank you.'); //set message
                 redirect('citizen_forum'); //shortcut for header('location:index.php ');
             } else {
                 retainValue(); //retain value even if there is errors or refresh

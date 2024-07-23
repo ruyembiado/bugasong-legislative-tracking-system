@@ -101,3 +101,7 @@ a.document-link:hover {
 .otp-input input:last-child {
     margin-right: 0;
 }
+
+.citizen-bg {
+    background-color: #C0DFFE;
+}

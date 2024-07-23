@@ -31,7 +31,7 @@ clearFormSession();
 
 </head>
 
-<body id="page-top">
+<body id="page-top" class="citizen-bg">
 
     <!-- Header -->
     <?php @include('citizen_top_navbar.php'); ?>
@@ -55,4 +55,4 @@ clearFormSession();
     <?php endif; ?>
     <!-- End Header -->
     <!-- Page Wrapper -->
-    <div id="wrapper" class="">
+    <div id="wrapper" class="" style="min-height: 52vh">
