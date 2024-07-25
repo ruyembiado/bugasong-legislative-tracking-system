@@ -96,7 +96,7 @@ redirectNotLogin();
                                         <?php endif; ?>
 
                                         <div class="mb-0 mt-2 d-flex justify-content-end">
-                                            <input type="hidden" name="file" id="file" value="<?php echo getValue('file'); ?>>
+                                            <input type="hidden" name="file" id="file" value="<?php echo getValue('file'); ?>">
                                             <input type="hidden" name="user_id" value="<?php echo user_id(); ?>">
                                             <button type="submit" name="add_resolution" class="btn btn-primary" value="add_resolution">Submit</button>
                                         </div>
@@ -214,6 +214,7 @@ if (isset($_SESSION['errorMessage'])) {
                     // Update file input with URLs
                     var fileInput = document.getElementById('file');
                     fileInput.value = data.uploadedFileUrls;
+
 
                     // Populate Extracted File section
                     var ocrResultsFileDiv = document.getElementById('ocrResultsFile');
