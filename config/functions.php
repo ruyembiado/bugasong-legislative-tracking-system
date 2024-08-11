@@ -1100,7 +1100,7 @@ function searchDocumentReport($document_type, $_date_added_start, $_date_added_e
             resolvingClauses AS body,
             '' AS repealingClause,
             '' AS effectivityClause,
-            approvalDetails AS enactmentDetails,  -- Map approvalDetails to enactmentDetails
+            approvalDetails AS enactmentDetails,
             file,
             date_added,
             date_publish,
@@ -1158,7 +1158,7 @@ function searchDocumentReport($document_type, $_date_added_start, $_date_added_e
             enactingClause AS body,
             repealingClause,
             effectivityClause,
-            enactmentDetails,  -- Keep as is assuming this is correct for ordinances
+            enactmentDetails,
             file,
             date_added,
             date_publish,
@@ -1207,10 +1207,16 @@ function searchDocumentReport($document_type, $_date_added_start, $_date_added_e
     // Combine resolutions and ordinances queries using UNION ALL if no specific document type is provided
     if ($document_type === 'resolution') {
         $query = $query_resolutions;
+        $params = $params_resolutions;
+        $types = $types_resolutions;
     } elseif ($document_type === 'ordinance') {
         $query = $query_ordinances;
+        $params = $params_ordinances;
+        $types = $types_ordinances;
     } else {
         $query = "($query_resolutions) UNION ALL ($query_ordinances)";
+        $params = array_merge($params_resolutions, $params_ordinances);
+        $types = $types_resolutions . $types_ordinances;
     }
 
     // Adding ORDER BY clause
@@ -1219,14 +1225,8 @@ function searchDocumentReport($document_type, $_date_added_start, $_date_added_e
     // Prepare and execute the query
     $stmt = mysqli_prepare($conn, $query);
     if ($stmt) {
-        if (!empty($params_resolutions) && !empty($params_ordinances)) {
-            $params = array_merge($params_resolutions, $params_ordinances);
-            $types = $types_resolutions . $types_ordinances;
+        if (!empty($params)) {
             $stmt->bind_param($types, ...$params);
-        } elseif (!empty($params_resolutions)) {
-            $stmt->bind_param($types_resolutions, ...$params_resolutions);
-        } elseif (!empty($params_ordinances)) {
-            $stmt->bind_param($types_ordinances, ...$params_ordinances);
         }
         $stmt->execute();
         $result = $stmt->get_result();
@@ -1240,6 +1240,7 @@ function searchDocumentReport($document_type, $_date_added_start, $_date_added_e
 
     return $documents;
 }
+
 
 function getAllDocumentsReport($limit)
 {
