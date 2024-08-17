@@ -31,16 +31,16 @@ if (isset($_POST['user_login'])) : // Check if the button is clicked
                 } else {
                     retainValue();
                     $errors['password'] = 'Incorrect password';
-                    redirect('index', $errors);
+                    redirect('login', $errors);
                 }
             } else {
                 setFlash('failed', 'Your account is deactivated. Please contact the administrator.');
-                redirect('index');
+                redirect('login');
             }
         } else {
             retainValue();
             $errors['username'] = 'Username does not exist';
-            redirect('index', $errors);
+            redirect('login', $errors);
         }
     }
 endif;
