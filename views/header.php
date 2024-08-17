@@ -77,10 +77,10 @@ clearPassVerification();
                             <i class="far fa-file-alt"></i>
                             <span>Manage Documents</span>
                         </a>
-                        <div id="DocumentManagePage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div id="DocumentManagePage" class="collapse <?php echo (isActiveMenu('/admin_resolution.php?manage') || isActiveMenu('/admin_ordinance.php?manage') || isActiveMenu('/admin_add_resolution.php') || isActiveMenu('/admin_add_ordinance.php')) ? 'show' : ''; ?>" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="admin_resolution.php?manage">Resolutions</a>
-                                <a class="collapse-item" href="admin_ordinance.php?manage">Ordinances</a>
+                                <a class="collapse-item <?php echo (isActiveMenu('/admin_resolution.php?manage')) || isActiveMenu('/admin_add_resolution.php') ? 'bg-secondary text-light' : '' ?>" href="admin_resolution.php?manage">Resolutions</a>
+                                <a class="collapse-item <?php echo (isActiveMenu('/admin_ordinance.php?manage')) || isActiveMenu('/admin_add_ordinance.php') ? 'bg-secondary text-light' : '' ?>" href="admin_ordinance.php?manage">Ordinances</a>
                             </div>
                         </div>
                         <!-- <a class="nav-link Links" href="admin_resolution.php?manage" id="ResolutionsLink" data-title="BLTS - Resolutions">
@@ -99,10 +99,10 @@ clearPassVerification();
                             <i class="fas fa-fw fa-upload"></i>
                             <span>Publish Documents</span>
                         </a>
-                        <div id="DocumentPublishPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div id="DocumentPublishPage" class="collapse <?php echo (isActiveMenu('/admin_resolution.php?publish') || isActiveMenu('/admin_ordinance.php?publish')) ? 'show' : ''; ?>" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="admin_resolution.php?publish">Resolutions</a>
-                                <a class="collapse-item" href="admin_ordinance.php?publish">Ordinances</a>
+                                <a class="collapse-item <?php echo (isActiveMenu('/admin_resolution.php?publish')) ? 'bg-secondary text-light' : '' ?>" href="admin_resolution.php?publish">Resolutions</a>
+                                <a class="collapse-item <?php echo (isActiveMenu('/admin_ordinance.php?publish')) ? 'bg-secondary text-light' : '' ?>" href="admin_ordinance.php?publish">Ordinances</a>
                             </div>
                         </div>
                     </li>

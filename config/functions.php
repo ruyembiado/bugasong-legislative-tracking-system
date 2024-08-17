@@ -1468,3 +1468,10 @@ function get_filename($file)
 {
     return basename($file);
 }
+
+function isActiveMenu($page)
+{
+    $currentUri = $_SERVER['REQUEST_URI'];
+
+    return strpos($currentUri, $page) !== false;
+}

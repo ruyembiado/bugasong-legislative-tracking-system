@@ -1,7 +1,7 @@
 <?php
 @include('citizen_header.php');
 
-redirectNotLogin();
+// redirectNotLogin();
 
 ?>
 
@@ -18,7 +18,7 @@ redirectNotLogin();
                 <h1 class="h3 mb-0 text-gray-800">View Ordinance</h1>
             </div>
             <div class="back-button mb-3">
-                <a href="citizen_home.php" class="btn btn-primary">Back</a>
+                <a href="citizen_legislative_list.php" class="btn btn-primary">Back</a>
             </div>
 
             <!-- Content Row -->

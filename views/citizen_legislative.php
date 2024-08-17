@@ -10,6 +10,8 @@ redirectNotLogin();
             <div class="d-flex justify-content-between">
                 <h1 class="h3 mb-0 text-gray-800 text-start">Advanced Search:</h1>
                 <div class="back-button mb-3">
+                <a href="citizen_home.php" class="btn btn-primary mr-2">Home</a>
+                <a href="citizen_forum.php" class="btn btn-primary mr-5">Forum</a>
                     <a href="citizen_home.php" class="btn btn-primary">Back</a>
                 </div>
             </div>
