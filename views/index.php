@@ -4,6 +4,18 @@
 ?>
 
 <div class="col-12" id="content">
+    <div class="search-section my-4">
+        <form action="citizen_legislative.php?search" method="get" class="form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="col-12 col-md-10 col-lg-4 input-group m-auto">
+                <input type="text" name="keyword" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" name="search_document" value="search_document" type="submit">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
     <div class="links-section d-flex justify-content-center mb-4">
         <!-- <a class="mx-2 btn btn-secondary">View Recent</a> -->
         <!-- <a class="mx-2 btn btn-primary">Masterlist</a> -->
@@ -35,9 +47,10 @@
                 <a class="btn btn-primary Links" href="citizen_legislative.php" id="LegislativeLink" data-title="BLTS - Legislative Documents">More</a>
             </div>
         </div>
-        <div class="list-legislative col-4 p-2">
-            <div class="bg-light p-5">
-                <p>Please sign in to Bugasong Legislative Tracking System. We would like to know your thoughts and sentiments about our local laws and regulations. <a href="../views/login.php">Login here</a></p>
+        <div class="list-legislative col-4">
+            <div class="bg-light p-5" style="background: url('../uploads/blts-bg.jpg') no-repeat center center / cover; height: 300px;">
+                <div class="bg-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, .1); /* Adjust the color and opacity as needed */ z-index: 0;"></div>
+                <p class="text-light" style="font-size: 25px; z-index: 999; position: relative;">Please sign in to Bugasong Legislative Tracking System. We would like to know your thoughts and sentiments about our local laws and regulations. <a href="../views/login.php" class="btn btn-primary" style="font-size: 18px;">Login here</a></p>
             </div>
         </div>
     </div>
