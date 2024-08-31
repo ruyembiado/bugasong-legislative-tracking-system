@@ -148,11 +148,11 @@ clearPassVerification();
                             <i class="fas fa-fw fa-chart-bar"></i>
                             <span>Reports</span>
                         </a>
-                        <div id="ReportPage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div id="ReportPage" class="collapse <?php echo (isActiveMenu('/admin_report_document.php') || isActiveMenu('/admin_report_forum.php') || isActiveMenu('/admin_report_view.php')) ? 'show' : ''; ?>" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="admin_report_document.php">Document Report</a>
-                                <a class="collapse-item" href="admin_report_forum.php">Forum Report</a>
-                                <a class="collapse-item" href="admin_report_view.php">Views Report</a>
+                                <a class="collapse-item <?php echo (isActiveMenu('/admin_report_document.php')) ? 'bg-secondary text-light' : '' ?>" href="admin_report_document.php">Document Report</a>
+                                <a class="collapse-item <?php echo (isActiveMenu('/admin_report_forum.php')) ? 'bg-secondary text-light' : '' ?>" href="admin_report_forum.php">Forum Report</a>
+                                <a class="collapse-item <?php echo (isActiveMenu('/admin_report_view.php')) ? 'bg-secondary text-light' : '' ?>" href="admin_report_view.php">Views Report</a>
                             </div>
                         </div>
                     </li>
