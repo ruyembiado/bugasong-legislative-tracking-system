@@ -32,7 +32,7 @@ redirectNotLogin();
                                 <input type="text" name="keyword" placeholder="Keyword(s)" class="form-control" value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>">
                             </div>
                             <div class="type-selection p-0 mr-2 mt-2">
-                                <label for="type-selection">Type:</label>
+                                <label for="type-selection">Category:</label>
                                 <select name="tag" id="tag" class="form-control">
                                     <option value="">Select option:</option>
                                     <?php foreach (getAllTagAsc('tag_name', null) as $tag) : ?>

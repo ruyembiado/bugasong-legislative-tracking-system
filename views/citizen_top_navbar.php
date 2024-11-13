@@ -8,7 +8,7 @@
             </div>
         </a>
         <ul class="navbar-nav ml-auto">
-            <div class="d-none d-sm-block"></div>
+            <div class="topbar-divider d-none d-sm-block"></div>
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
                 <?php if (isLogin()) { ?>
@@ -24,10 +24,10 @@
                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                         Profile
                     </a>
-                    <a class="dropdown-item" href="#">
-                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Settings
-                    </a>
+                    <!-- <a class="dropdown-item" href="#">
+                        <i class="fas fa-bell fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Notifications
+                    </a> -->
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item logout" href="../actions/logout.php">
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>

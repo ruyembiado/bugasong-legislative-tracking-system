@@ -22,6 +22,16 @@ if (isset($_POST['user_login'])) : // Check if the button is clicked
 
                     $session = setSession($session); // Set the $session array
                     // var_dump($_SESSION); // Use to test the session variables
+
+                    // Log History
+                    $userData = getUserData($user['user_id']);
+                    $log_history = [
+                        'user'     => $userData['user_type'],
+                        'log_type'     => 'Login',
+                        'log_description'     => $userData['name'].' '.'logged to the system.',
+                    ];
+                    save('log_history', $log_history);
+
                     setFlash('success', 'Welcome ' . $user['name']); // Set message
                     if ($user['user_type'] == 'admin') {
                         redirect('admin_home'); // Shortcut for header('location:index.php'); // Uncomment to use if you have a page to redirect to

@@ -8,7 +8,7 @@ if (isset($_POST['update_resolution'])) : //check if the button is click
     if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check if the method is post 
 
         $fields = [
-            'tag' => $_POST['tag'],
+            'resolution_category' => $_POST['resolution_category'],
             'resolutionNo' => $_POST['resolutionNo'],
             'title' => $_POST['title'],
             'whereasClauses' => $_POST['whereasClauses'],
@@ -43,7 +43,7 @@ if (isset($_POST['update_resolution'])) : //check if the button is click
 
         if (empty($errors)) { //check if the errors is empty
             $data = [
-                'tag_id' => $_POST['tag'],
+                'resolution_cat_id' => $_POST['resolution_category'],
                 'resolutionNo' => $_POST['resolutionNo'],
                 'title' => $_POST['title'],
                 'whereasClauses' => $_POST['whereasClauses'],
@@ -142,11 +142,16 @@ if (isset($_GET['update_status'])) : //check if the button is click
         $data = [
             'status' => $status,
         ];
+
         $update = update('posts',  ['post_id' => $_GET['post_id']], $data);
 
         if ($update) {
             removeValue(); //remove the retain value in inputs
             setFlash('success', 'Status Updated Successfully'); //set message
+
+            if ($_GET['view'] === 'true') {
+                redirect('view_post.php?post_id='.$_GET['post_id']);
+            }
             redirect('admin_forum'); //shortcut for header('location:index.php ');
         } else {
             retainValue(); //retain value even if there is errors or refresh
@@ -157,21 +162,23 @@ if (isset($_GET['update_status'])) : //check if the button is click
 
 endif;
 
-if (isset($_POST['update_tag'])) : //check if the button is click
+
+// Update Resolution Category
+if (isset($_POST['update_resolution_category'])) : //check if the button is click
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check if the method is post 
 
         $fields = [
-            'tag_name' => $_POST['tag_name'],
+            'resolution_category_name' => $_POST['resolution_category_name'],
         ];
 
         $validations = [
-            'tag_name' => [
+            'resolution_category_name' => [
                 'required' => false,
                 'unique' => [
                     [
-                        'fieldName' => 'tag_name',
-                        'tableName' => 'tags'
+                        'fieldName' => 'resolution_category_name',
+                        'tableName' => 'resolution_cat'
                     ],
                 ],
 
@@ -182,24 +189,73 @@ if (isset($_POST['update_tag'])) : //check if the button is click
 
         if (empty($errors)) { //check if the errors is empty
             $data = [
-                'tag_name' => $_POST['tag_name'],
+                'resolution_category_name' => $_POST['resolution_category_name'],
             ]; //put it in array before saving
 
-            $update = update('tags', ['tag_id' => $_POST['tag_id']], $data);
+            $update = update('resolution_cat', ['resolution_cat_id' => $_POST['resolution_cat_id']], $data);
 
             if ($update) {
                 removeValue(); //remove the retain value in inputs
-                setFlash('success', 'Ordinance Updated Successfully'); //set message
-                redirect('admin_update_ordinance', ['ordinance_id' => $_POST['ordinance_id']]); //shortcut for header('location:index.php ');
+                setFlash('success', 'Resolution Category Updated Successfully'); //set message
+                redirect('admin_resolution_category'); //shortcut for header('location:index.php ');
             } else {
                 retainValue(); //retain value even if there is errors or refresh
                 setFlash('failed', 'Update Failed'); //set message
-                redirect('admin_update_ordinance', ['ordinance_id' => $_POST['ordinance_id']]); //shortcut for header('location:index.php ');
+                redirect('admin_resolution_category'); //shortcut for header('location:index.php ');
             }
         } else {
-            $errors['ordinance_id'] =  $_POST['ordinance_id'];
+            $errors['resolution_cat_id'] =  $_POST['resolution_cat_id'];
             retainValue(); //retain value even if there is errors or refresh
-            redirect('admin_update_ordinance', $errors); //shortcut for header('location:register.php?errors=$errors');
+            redirect('admin_update_resolution_cat', $errors); //shortcut for header('location:register.php?errors=$errors');
+        }
+    }
+
+endif;
+
+// Update Ordinance Category
+if (isset($_POST['update_ordinance_category'])) : //check if the button is click
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check if the method is post 
+
+        $fields = [
+            'ordinance_category_name' => $_POST['ordinance_category_name'],
+        ];
+
+        $validations = [
+            'ordinance_category_name' => [
+                'required' => false,
+                'unique' => [
+                    [
+                        'fieldName' => 'ordinance_category_name',
+                        'tableName' => 'ordinance_cat'
+                    ],
+                ],
+
+            ]
+        ];
+
+        $errors = validate($fields, $validations); //activate the validation
+
+        if (empty($errors)) { //check if the errors is empty
+            $data = [
+                'ordinance_category_name' => $_POST['ordinance_category_name'],
+            ]; //put it in array before saving
+
+            $update = update('ordinance_cat', ['ordinance_cat_id' => $_POST['ordinance_cat_id']], $data);
+
+            if ($update) {
+                removeValue(); //remove the retain value in inputs
+                setFlash('success', 'Resolution Category Updated Successfully'); //set message
+                redirect('admin_ordinance_category'); //shortcut for header('location:index.php ');
+            } else {
+                retainValue(); //retain value even if there is errors or refresh
+                setFlash('failed', 'Update Failed'); //set message
+                redirect('admin_ordinance_category'); //shortcut for header('location:index.php ');
+            }
+        } else {
+            $errors['ordinance_cat_id'] =  $_POST['ordinance_cat_id'];
+            retainValue(); //retain value even if there is errors or refresh
+            redirect('admin_update_ordinance_cat', $errors); //shortcut for header('location:register.php?errors=$errors');
         }
     }
 
@@ -252,7 +308,7 @@ if (isset($_POST['update_ordinance'])) : // check if the button is clicked
 
         if (empty($errors)) { // check if the errors are empty
             $data = [
-                'tag_id' => $_POST['tag'],
+                'ordinance_cat_id' => $_POST['ordinance_category'],
                 'ordinanceNo' => $_POST['ordinanceNo'],
                 'title' => $_POST['title'],
                 'preamble' => $_POST['preamble'],
@@ -261,7 +317,6 @@ if (isset($_POST['update_ordinance'])) : // check if the button is clicked
                 'repealingClause' => $_POST['repealingClause'],
                 'effectivityClause' => $_POST['effectivityClause'],
                 'enactmentDetails' => $_POST['enactmentDetails'],
-                'file' => $_POST['file'],
                 'user_id' => $_POST['user_id']
             ]; // put it in an array before saving
 

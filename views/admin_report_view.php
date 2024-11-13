@@ -29,7 +29,7 @@ redirectNotLogin();
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" class="mb-4">
                             <div class="d-flex align-items-end flex-wrap search-container justify-content-center">
                                 <div class="type-selection p-0 mr-2 mt-2 col-2">
-                                    <label for="type-selection">Document Type:</label>
+                                    <label for="type-selection">Document Category:</label>
                                     <select name="document_type" id="document_type" class="form-control">
                                         <option value="">Select option:</option>
                                         <?php
@@ -44,25 +44,36 @@ redirectNotLogin();
                                 </div>
                                 <div class="date-input mr-2 mt-2">
                                     <div class="d-flex p-0">
-                                        <div class="start-date mr-2">
-                                            <label for="start-date">Date Added Start:</label>
-                                            <input type="date" name="date_added_start" class="form-control" value="<?php echo isset($_GET['date_added_start']) ? htmlspecialchars($_GET['date_added_start']) : ''; ?>">
+                                        <div class="month mr-2">
+                                            <label for="month">Month:</label>
+                                            <select name="month" id="month" class="form-control">
+                                                <option value="">Select Month</option>
+                                                <option value="01" <?php echo (isset($_GET['month']) && $_GET['month'] == '01') ? 'selected' : ''; ?>>January</option>
+                                                <option value="02" <?php echo (isset($_GET['month']) && $_GET['month'] == '02') ? 'selected' : ''; ?>>February</option>
+                                                <option value="03" <?php echo (isset($_GET['month']) && $_GET['month'] == '03') ? 'selected' : ''; ?>>March</option>
+                                                <option value="04" <?php echo (isset($_GET['month']) && $_GET['month'] == '04') ? 'selected' : ''; ?>>April</option>
+                                                <option value="05" <?php echo (isset($_GET['month']) && $_GET['month'] == '05') ? 'selected' : ''; ?>>May</option>
+                                                <option value="06" <?php echo (isset($_GET['month']) && $_GET['month'] == '06') ? 'selected' : ''; ?>>June</option>
+                                                <option value="07" <?php echo (isset($_GET['month']) && $_GET['month'] == '07') ? 'selected' : ''; ?>>July</option>
+                                                <option value="08" <?php echo (isset($_GET['month']) && $_GET['month'] == '08') ? 'selected' : ''; ?>>August</option>
+                                                <option value="09" <?php echo (isset($_GET['month']) && $_GET['month'] == '09') ? 'selected' : ''; ?>>September</option>
+                                                <option value="10" <?php echo (isset($_GET['month']) && $_GET['month'] == '10') ? 'selected' : ''; ?>>October</option>
+                                                <option value="11" <?php echo (isset($_GET['month']) && $_GET['month'] == '11') ? 'selected' : ''; ?>>November</option>
+                                                <option value="12" <?php echo (isset($_GET['month']) && $_GET['month'] == '12') ? 'selected' : ''; ?>>December</option>
+                                            </select>
                                         </div>
-                                        <div class="end-date">
-                                            <label for="end-date">Date Added End:</label>
-                                            <input type="date" name="date_added_end" class="form-control" value="<?php echo isset($_GET['date_added_end']) ? htmlspecialchars($_GET['date_added_end']) : ''; ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="date-input mr-2 mt-2">
-                                    <div class="d-flex p-0">
-                                        <div class="start-date mr-2">
-                                            <label for="start-date">Date Published Start:</label>
-                                            <input type="date" name="date_publish_start" class="form-control" value="<?php echo isset($_GET['date_publish_start']) ? htmlspecialchars($_GET['date_publish_start']) : ''; ?>">
-                                        </div>
-                                        <div class="end-date">
-                                            <label for="end-date">Date Published End:</label>
-                                            <input type="date" name="date_publish_end" class="form-control" value="<?php echo isset($_GET['date_publish_end']) ? htmlspecialchars($_GET['date_publish_end']) : ''; ?>">
+                                        <div class="year">
+                                            <label for="year">Year:</label>
+                                            <select name="year" id="year" class="form-control">
+                                                <option value="">Select Year</option>
+                                                <?php
+                                                $currentYear = date("Y");
+                                                $selectedYear = $_GET['year'] ?? '';
+                                                for ($year = $currentYear; $year >= 1900; $year--) {
+                                                    echo "<option value=\"$year\"" . ($selectedYear == $year ? ' selected' : '') . ">$year</option>";
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -85,8 +96,8 @@ redirectNotLogin();
                                     </div>
                                 </div>
                                 <div class="form-submit mt-2">
-                                    <button type="submit" name="search_document_report" value="search_document_report" class="btn btn-primary">Submit</button>
-                                    <a class="btn btn-danger" href="admin_report_document.php">Reset</a>
+                                    <button type="submit" name="search_document_view" value="search_document_view" class="btn btn-primary">Submit</button>
+                                    <a class="btn btn-danger" href="admin_report_view.php">Reset</a>
                                 </div>
                             </div>
                         </form>
@@ -97,14 +108,12 @@ redirectNotLogin();
 
                     <?php
                     $document_type = $_GET['document_type'] ?? '';
-                    $date_added_start = $_GET['date_added_start'] ?? '';
-                    $date_added_end = $_GET['date_added_end'] ?? '';
-                    $date_publish_start = $_GET['date_publish_start'] ?? '';
-                    $date_publish_end = $_GET['date_publish_end'] ?? '';
+                    $_month = $_GET['month'] ?? '';
+                    $_year = $_GET['year'] ?? '';
                     $status = $_GET['status'] ?? '';
 
-                    if (isset($_GET['search_document_report'])) {
-                        $documents = searchDocumentReport($document_type, $date_added_start, $date_added_end, $date_publish_start, $date_publish_end, $status);
+                    if (isset($_GET['search_document_view'])) {
+                        $documents = searchDocumentReport($document_type, $_month, $_year, $status);;
                     } else {
                         $documents = getAllDocumentsReport(999);
                     }
@@ -131,13 +140,30 @@ redirectNotLogin();
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php $count = 1; ?>
-                                                <?php foreach ($documents as $document) :  ?>
+                                                <?php
+                                                $count = 1;
+                                                $totalViews = 0; // Initialize total views counter
+                                                ?>
+                                                <?php foreach ($documents as $document) : ?>
+                                                    <?php
+                                                    // Get the number of viewers for the current document
+                                                    $viewersCount = countViewers($document['id']);
+                                                    // Add the viewers count to the total
+                                                    $totalViews += $viewersCount;
+                                                    ?>
                                                     <tr>
                                                         <td><?php echo $count++; ?></td>
                                                         <td class="text-gray-800"><?php echo $document['documentNo']; ?></td>
-                                                        <td class="text-gray-800"><?php echo isset(getTagByID($document['tag_id'])['tag_name']) ? getTagByID($document['tag_id'])['tag_name'] : ''; ?></td>
-                                                        <td class="text-gray-800"><?php echo countViewers($document['id']); ?></td>
+                                                        <td class="text-gray-800">
+                                                            <?php
+                                                            echo $document['document_type'] === 'ordinance'
+                                                                ? getOrdinanceCatByID($document['cat_id'])['ordinance_category_name']
+                                                                : ($document['document_type'] === 'resolution'
+                                                                    ? getResolutionCatByID($document['cat_id'])['resolution_category_name']
+                                                                    : '');
+                                                            ?>
+                                                        </td>
+                                                        <td class="text-gray-800"><?php echo $viewersCount; ?></td>
                                                         <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($document['date_added'])); ?></td>
                                                         <td class="text-gray-800">
                                                             <?php echo ($document['status'] == 1) ? date('M d Y h:i:s a', strtotime($document['date_publish'])) : ''; ?>
@@ -149,6 +175,9 @@ redirectNotLogin();
                                                 <?php endforeach; ?>
                                             </tbody>
                                         </table>
+                                        <div style="text-align: right;">
+                                            <strong>Total Views: <?php echo $totalViews; ?></strong> 
+                                        </div>
                                     </div>
                                 </div>
                             <?php endif; ?>
@@ -156,10 +185,8 @@ redirectNotLogin();
                     </div>
                 </div>
                 <!-- Content Row -->
-
             </div>
             <!-- /.container-fluid -->
-
         <?php else : redirect('dashboard', ''); ?>
         <?php endif; ?>
 

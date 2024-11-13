@@ -46,9 +46,9 @@ redirectNotLogin();
                                         </div>
                                     </div>
                                     <div class="mr-4">
-                                        <label class="mt-2 text-primary" for="tag">Tag</label>
-                                        <div class="tag">
-                                            <?php echo !empty(getTagByID($ordinance['tag_id'])['tag_name']) ? getTagByID($ordinance['tag_id'])['tag_name'] : ''; ?>
+                                        <label class="mt-2 text-primary" for="tag">Category</label>
+                                        <div class="category">
+                                            <?php echo !empty(getOrdinanceCatByID($ordinance['ordinance_cat_id'])['ordinance_category_name']) ? getOrdinanceCatByID($ordinance['ordinance_cat_id'])['ordinance_category_name'] : ''; ?>
                                         </div>
                                     </div>
                                     <div class="mr-4">

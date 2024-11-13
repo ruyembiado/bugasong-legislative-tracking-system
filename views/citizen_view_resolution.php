@@ -36,9 +36,9 @@
                                         </div>
                                     </div>
                                     <div class="mr-4">
-                                        <label class="mt-2 text-primary" for="tag">Tag</label>
-                                        <div class="tag">
-                                            <h5><?php echo !empty(getTagByID($resolution['tag_id'])['tag_name']) ? getTagByID($resolution['tag_id'])['tag_name'] : ''; ?></h5>
+                                        <label class="mt-2 text-primary" for="category">Category</label>
+                                        <div class="category">
+                                            <h5><?php echo !empty(getResolutionCatByID($resolution['resolution_cat_id'])['resolution_category_name']) ? getResolutionCatByID($resolution['resolution_cat_id'])['resolution_category_name'] : ''; ?></h5>
                                         </div>
                                     </div>
                                     <div class="mr-4">

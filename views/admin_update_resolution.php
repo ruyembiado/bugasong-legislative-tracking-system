@@ -51,57 +51,78 @@ redirectNotLogin();
                             <div class="card-body">
                                 <div id="ocrResults">
                                     <?php $resolution = getResolutionByID($_GET['resolution_id']) ?>
-                                    <form id="resolutionForm" action="../actions/admin_update.php" method="POST" enctype="multipart/form-data">
-                                        <label class="mt-2" for="tag">Tag:</label>
-                                        <select class="form-control text-gray-800" name="tag" id="tag">
+                                    <div class="document-view mt-2">
+                                        <label class="" for="attachment">Attachment:</label><br>
+                                        <a href="<?php echo $resolution['file']; ?>" target="_blanks"><?php echo get_filename($resolution['file']); ?></a>
+                                    </div>
+                                    <form id="resolutionForm" action="../actions/admin_update.php" method="POST"
+                                        enctype="multipart/form-data">
+                                        <label class="mt-2" for="resolution_category">Category:</label>
+                                        <select class="form-control text-gray-800" name="resolution_category"
+                                            id="resolution_category">
                                             <option value="">Select option:</option>
-                                            <?php foreach (getAllTagAsc('tag_name', null) as $tag) : ?>
-                                                <option value="<?php echo $tag['tag_id']; ?>" <?php echo ($tag['tag_id'] == $resolution['tag_id']) ? 'selected' : ''; ?>>
-                                                    <?php echo getTagByID($tag['tag_id'])['tag_name']; ?>
+                                            <?php foreach (getAllResolutionCategoryAsc('resolution_category_name', null) as $resolution_category) : ?>
+                                                <option value="<?php echo $resolution_category['resolution_cat_id']; ?>"
+                                                    <?php echo ($resolution_category['resolution_cat_id'] == $resolution['resolution_cat_id']) ? 'selected' : ''; ?>>
+                                                    <?php echo getResolutionCatByID($resolution_category['resolution_cat_id'])['resolution_category_name']; ?>
                                                 </option>
                                             <?php endforeach; ?>
                                         </select>
 
                                         <label class="mt-2" for="resolutionNo">Resolution No:</label>
-                                        <textarea rows="1" class="form-control text-gray-800" id="resolutionNo" name="resolutionNo"><?php echo $resolution['resolutionNo']; ?></textarea>
+                                        <textarea rows="1" class="form-control text-gray-800" id="resolutionNo"
+                                            name="resolutionNo"><?php echo $resolution['resolutionNo']; ?></textarea>
                                         <?php if (showError('resolutionNo')) : ?>
-                                            <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('resolutionNo'); ?></p>
+                                            <p class="error text-danger text-start m-0" style="font-size: 12px;">
+                                                <?php echo showError('resolutionNo'); ?></p>
                                         <?php endif; ?>
 
                                         <label class="mt-2" for="title">Title:</label>
-                                        <textarea rows="3" class="form-control text-gray-800" id="title" name="title"><?php echo $resolution['title']; ?></textarea>
+                                        <textarea rows="3" class="form-control text-gray-800" id="title"
+                                            name="title"><?php echo $resolution['title']; ?></textarea>
                                         <?php if (showError('title')) : ?>
-                                            <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('title'); ?></p>
+                                            <p class="error text-danger text-start m-0" style="font-size: 12px;">
+                                                <?php echo showError('title'); ?></p>
                                         <?php endif; ?>
 
                                         <label class="mt-2" for="whereasClauses">Whereas Clauses:</label>
-                                        <textarea rows="10" class="form-control text-gray-800" id="whereasClauses" name="whereasClauses"><?php echo $resolution['whereasClauses']; ?></textarea>
+                                        <textarea rows="10" class="form-control text-gray-800" id="whereasClauses"
+                                            name="whereasClauses"><?php echo $resolution['whereasClauses']; ?></textarea>
                                         <?php if (showError('whereasClauses')) : ?>
-                                            <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('whereasClauses'); ?></p>
+                                            <p class="error text-danger text-start m-0" style="font-size: 12px;">
+                                                <?php echo showError('whereasClauses'); ?></p>
                                         <?php endif; ?>
 
                                         <label class="mt-2" for="resolvingClauses">Resolving Clause:</label>
-                                        <textarea rows="10" class="form-control text-gray-800" id="resolvingClauses" name="resolvingClauses"><?php echo $resolution['resolvingClauses']; ?></textarea>
+                                        <textarea rows="10" class="form-control text-gray-800" id="resolvingClauses"
+                                            name="resolvingClauses"><?php echo $resolution['resolvingClauses']; ?></textarea>
                                         <?php if (showError('resolvingClauses')) : ?>
-                                            <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('resolvingClauses'); ?></p>
+                                            <p class="error text-danger text-start m-0" style="font-size: 12px;">
+                                                <?php echo showError('resolvingClauses'); ?></p>
                                         <?php endif; ?>
 
                                         <label class="mt-2" for="optionalClauses">Optional Clauses:</label>
-                                        <textarea rows="10" class="form-control text-gray-800" id="optionalClauses" name="optionalClauses"><?php echo $resolution['optionalClauses']; ?></textarea>
+                                        <textarea rows="10" class="form-control text-gray-800" id="optionalClauses"
+                                            name="optionalClauses"><?php echo $resolution['optionalClauses']; ?></textarea>
                                         <?php if (showError('optionalClauses')) : ?>
-                                            <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('optionalClauses'); ?></p>
+                                            <p class="error text-danger text-start m-0" style="font-size: 12px;">
+                                                <?php echo showError('optionalClauses'); ?></p>
                                         <?php endif; ?>
 
                                         <label class="mt-2" for="approvalDetails">Approval Details:</label>
-                                        <textarea rows="10" class="form-control text-gray-800" id="approvalDetails" name="approvalDetails"><?php echo $resolution['approvalDetails']; ?></textarea>
+                                        <textarea rows="10" class="form-control text-gray-800" id="approvalDetails"
+                                            name="approvalDetails"><?php echo $resolution['approvalDetails']; ?></textarea>
                                         <?php if (showError('approvalDetails')) : ?>
-                                            <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('approvalDetails'); ?></p>
+                                            <p class="error text-danger text-start m-0" style="font-size: 12px;">
+                                                <?php echo showError('approvalDetails'); ?></p>
                                         <?php endif; ?>
 
                                         <div class="mb-0 mt-2 d-flex justify-content-end">
-                                            <input type="hidden" name="resolution_id" value="<?php echo $resolution['resolution_id']; ?>">
+                                            <input type="hidden" name="resolution_id"
+                                                value="<?php echo $resolution['resolution_id']; ?>">
                                             <input type="hidden" name="user_id" value="<?php echo user_id(); ?>">
-                                            <button type="submit" name="update_resolution" class="btn btn-primary" value="update_resolution">Update</button>
+                                            <button type="submit" name="update_resolution" class="btn btn-primary"
+                                                value="update_resolution">Update</button>
                                         </div>
                                     </form>
                                 </div>

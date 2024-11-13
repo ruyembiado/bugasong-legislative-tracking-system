@@ -51,13 +51,17 @@ redirectNotLogin();
                             <div class="card-body">
                                 <div id="ocrResults">
                                     <?php $ordinance = getOrdinanceByID($_GET['ordinance_id']) ?>
+                                    <div class="document-view mt-2">
+                                        <label class="" for="attachment">Attachment:</label><br>
+                                        <a href="<?php echo $ordinance['file']; ?>" target="_blanks"><?php echo get_filename($ordinance['file']); ?></a>
+                                    </div>
                                     <form id="ordinanceForm" action="../actions/admin_update.php" method="POST" enctype="multipart/form-data">
-                                        <label class="mt-2" for="tag">Tag:</label>
-                                        <select class="form-control text-gray-800" name="tag" id="tag">
+                                        <label class="mt-2" for="ordinance_category">Category:</label>
+                                        <select class="form-control text-gray-800" name="ordinance_category" id="ordinance_category">
                                             <option value="">Select option:</option>
-                                            <?php foreach (getAllTagAsc('tag_name', null) as $tag) : ?>
-                                                <option value="<?php echo $tag['tag_id']; ?>" <?php echo ($tag['tag_id'] == $ordinance['tag_id']) ? 'selected' : ''; ?>>
-                                                    <?php echo getTagByID($tag['tag_id'])['tag_name']; ?>
+                                            <?php foreach (getAllOrdinanceCategoryAsc('ordinance_category_name', null) as $ordinance_category) : ?>
+                                                <option value="<?php echo $ordinance_category['ordinance_cat_id']; ?>" <?php echo ($ordinance_category['ordinance_cat_id'] == $ordinance['ordinance_cat_id']) ? 'selected' : ''; ?>>
+                                                    <?php echo getOrdinanceCatByID($ordinance_category['ordinance_cat_id'])['ordinance_category_name']; ?>
                                                 </option>
                                             <?php endforeach; ?>
                                         </select>
@@ -197,7 +201,7 @@ if (isset($_SESSION['errorMessage'])) {
 
 ?>
 
-<script>
+<!-- <script>
     document.getElementById('uploadForm').addEventListener('submit', function(event) {
         event.preventDefault();
 
@@ -265,4 +269,4 @@ if (isset($_SESSION['errorMessage'])) {
                 console.error('Error:', error);
             });
     });
-</script>
+</script> -->

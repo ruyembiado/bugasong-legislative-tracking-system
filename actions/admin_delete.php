@@ -23,14 +23,25 @@ if (isset($_GET['delete_ordinance']) && $_GET['delete_ordinance'] == 'delete') :
     }
 endif;
 
-if (isset($_GET['delete_tag']) && $_GET['delete_tag'] == 'delete') :
-    $delete = delete('tags', ['tag_id' => $_GET['tag_id']]);
+if (isset($_GET['resolution_cat']) && $_GET['resolution_cat'] == 'delete') :
+    $delete = delete('resolution_cat', ['resolution_cat_id' => $_GET['resolution_cat_id']]);
     if ($delete) {
-        setFlash('success', 'Tag Deleted Successfully');
-        redirect('admin_tag');
+        setFlash('success', 'Category Deleted Successfully');
+        redirect('admin_resolution_category');
     } else {
         setFlash('failed', 'Delete Failed');
-        redirect('admin_tag');
+        redirect('admin_resolution_category');
+    }
+endif;
+
+if (isset($_GET['ordinance_cat']) && $_GET['ordinance_cat'] == 'delete') :
+    $delete = delete('ordinance_cat', ['ordinance_cat_id' => $_GET['ordinance_cat_id']]);
+    if ($delete) {
+        setFlash('success', 'Category Deleted Successfully');
+        redirect('admin_ordinance_category');
+    } else {
+        setFlash('failed', 'Delete Failed');
+        redirect('admin_ordinance_category');
     }
 endif;
 

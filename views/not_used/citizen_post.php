@@ -34,7 +34,7 @@ redirectNotLogin();
                                     <th style="">No. of Like</th>
                                     <th style="">No. of Dislike</th>
                                     <th style="">No. of Comment</th>
-                                    <th style="">Dated Added</th>
+                                    <th style="">Date Added</th>
                                     <th style="width: 19%;">Action</th>
                                 </tr>
                             </thead>

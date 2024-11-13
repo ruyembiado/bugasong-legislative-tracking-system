@@ -25,12 +25,12 @@
                         <input type="text" name="keyword" placeholder="Keyword(s)" class="form-control" value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>">
                     </div>
                     <div class="type-selection p-0 mr-2 mt-2 col-3">
-                        <label for="type-selection">Type:</label>
-                        <select name="tag" id="tag" class="form-control">
+                        <label for="type-selection">Category:</label>
+                        <select name="category_name" id="category_name" class="form-control">
                             <option value="">Select option:</option>
-                            <?php foreach (getAllTagAsc('tag_name', null) as $tag) : ?>
-                                <option value="<?php echo $tag['tag_id']; ?>" <?php echo (isset($_GET['tag']) && $_GET['tag'] == $tag['tag_id']) ? 'selected' : ''; ?>>
-                                    <?php echo $tag['tag_name']; ?>
+                            <?php foreach (getAllCategoryAsc('category_name', null) as $cat) : ?>
+                                <option value="<?php echo $cat['category_name']; ?>" <?php echo (isset($_GET['category_name']) && $_GET['category_name'] == $cat['category_name']) ? 'selected' : ''; ?>>
+                                    <?php echo $cat['category_name']; ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -58,12 +58,12 @@
             <div class="document-lists col-5 p-0 mx-auto">
                 <?php
                 $keyword = $_GET['keyword'] ?? '';
-                $tag = $_GET['tag'] ?? '';
+                $cat = $_GET['category_name'] ?? '';
                 $date_start = $_GET['date_start'] ?? '';
                 $date_end = $_GET['date_end'] ?? '';
 
                 if (isset($_GET['search_document'])) {
-                    $documents = searchDocument($keyword, $tag, $date_start, $date_end);
+                    $documents = searchDocument($keyword, $cat, $date_start, $date_end);
                 } else {
                     $documents = getAllDocumentsDesc(999);
                 }

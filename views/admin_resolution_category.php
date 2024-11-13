@@ -21,13 +21,13 @@ redirectNotLogin();
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Tag</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Resolution Categories</h1>
                 </div>
 
                 <!-- Content Row -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <a href="admin_add_tag.php" class="btn btn-primary px-2 py-1">Add Tag</a>
+                        <a href="admin_add_resolution_cat.php" class="btn btn-primary px-2 py-1">Add Category</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -35,22 +35,22 @@ redirectNotLogin();
                                 <thead>
                                     <tr>
                                         <th style="width: 5%;">No.</th>
-                                        <th style="width: 40%;">Tag</th>
-                                        <th style="width: 20%;">Dated Added</th>
+                                        <th style="width: 40%;">Category Name</th>
+                                        <th style="width: 20%;">Date Added</th>
                                         <th style="width: 20%;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $count = 1; ?>
-                                    <?php foreach (getAllTagDesc('tag_id', null) as $tag) :  ?>
+                                    <?php foreach (getAllResolutionCatDesc('resolution_cat_id', null) as $res_cat) :  ?>
                                         <tr>
                                             <td><?php echo $count++; ?></td>
-                                            <td class="text-gray-800"><?php echo $tag['tag_name']; ?></td>
-                                            <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($tag['date_added'])); ?>
+                                            <td class="text-gray-800"><?php echo $res_cat['resolution_category_name']; ?></td>
+                                            <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($res_cat['date_added'])); ?>
                                             </td>
                                             <td>
-                                                <a href="admin_update_tag.php?tag_id=<?php echo $tag['tag_id']; ?>" class="btn btn-primary px-2 py-1 my-1">Update</a>
-                                                <a href="../actions/admin_delete.php?delete_tag=delete&tag_id=<?php echo $tag['tag_id']; ?>" class="btn btn-danger px-2 py-1 my-1 delete">Delete</a>
+                                                <a href="admin_update_resolution_cat.php?resolution_cat_id=<?php echo $res_cat['resolution_cat_id']; ?>" class="btn btn-primary px-2 py-1 my-1">Update</a>
+                                                <a href="../actions/admin_delete.php?resolution_cat=delete&resolution_cat_id=<?php echo $res_cat['resolution_cat_id']; ?>" class="btn btn-danger px-2 py-1 my-1 delete">Delete</a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

@@ -105,3 +105,29 @@ a.document-link:hover {
 .citizen-bg {
     background-color: #C0DFFE;
 }
+
+.login-legislative p.text-light.home-login {
+    font-size: 25px !important;
+}
+
+@media (max-width: 1024px) {
+    .login-legislative p.text-light.home-login {
+        font-size: 20px !important;
+    }
+
+    .login-legislative div:first-child {
+        padding: 30px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-legislative div:first-child {
+        padding: 50px !important;
+    }
+}
+
+@media (max-width: 320px) {
+    .login-legislative div:first-child {
+        padding: 25px !important;
+    }
+}

@@ -15,7 +15,7 @@ redirectNotLogin();
         <?php @include('top_navbar.php'); ?>
         <!-- End of Topbar -->
 
-        <?php if (isAdmin()) : ?>
+        <?php if (isAdmin()): ?>
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
@@ -37,27 +37,37 @@ redirectNotLogin();
                                         <th style="width: 5%;">No.</th>
                                         <th>Topic</th>
                                         <th>Content</th>
-                                        <th>Dated Added</th>
+                                        <th>Date Added</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $count = 1; ?>
-                                    <?php foreach (getAllPostDescAdmin() as $post) :  ?>
+                                    <?php foreach (getAllPostDescAdmin() as $post): ?>
                                         <tr>
                                             <td><?php echo $count++; ?></td>
                                             <td class="text-gray-800"><?php echo $post['topic']; ?></td>
                                             <td class="text-gray-800"><?php echo $post['message']; ?></td>
-                                            <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
+                                            <td class="text-gray-800">
+                                                <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
                                             </td>
                                             <td class="text-gray-800">
-                                                <a class="status-button <?php echo ($post['status'] == '0') ? '' : 'unpublish'; ?>" href="../actions/admin_update.php?update_status=<?php echo $post['status']; ?>&post_id=<?php echo $post['post_id']; ?>"><?php echo ($post['status'] == '0') ? '<p class="text-light btn btn-danger ">Unpublished</p>' : '<p class="text-light btn btn-success">Published</p>' ?></a>
+                                                <a class="status-button <?php echo ($post['status'] == '0') ? '' : 'unpublish'; ?>"
+                                                    href="../actions/admin_update.php?update_status=<?php echo $post['status']; ?>&post_id=<?php echo $post['post_id']; ?>"><?php echo ($post['status'] == '0') ? '<p class="text-light btn btn-danger ">Disapproved</p>' : '<p class="text-light btn btn-success">Approved</p>' ?></a>
                                             </td>
                                             <td>
-                                                <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>" class="btn btn-secondary px-2 py-1 my-1">View</a>
-                                                <!-- <a href="admin_update_post.php?post_id=<?php echo $post['post_id']; ?>" class="btn btn-primary px-2 py-1 my-1">Update</a> -->
-                                                <a href="../actions/admin_delete.php?delete_post=delete&post_id=<?php echo $post['post_id']; ?>" class="btn btn-danger px-2 py-1 my-1 delete">Delete</a>
+                                                <a class="nav-link" href="#" id="actionDropdownMenu" role="button"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v text-dark"></i>
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="actionDropdownMenu">
+                                                    <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>"
+                                                        class="dropdown-item">View</a>
+                                                    <!-- <a href="admin_update_post.php?post_id=<?php echo $post['post_id']; ?>" class="btn btn-primary px-2 py-1 my-1">Update</a> -->
+                                                    <a href="../actions/admin_delete.php?delete_post=delete&post_id=<?php echo $post['post_id']; ?>"
+                                                        class="dropdown-item delete">Delete</a>
+                                                </ul>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -70,7 +80,8 @@ redirectNotLogin();
 
             </div>
             <!-- /.container-fluid -->
-        <?php else : redirect('dashboard', ''); ?>
+        <?php else:
+            redirect('dashboard', ''); ?>
         <?php endif; ?>
 
     </div>

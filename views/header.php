@@ -126,10 +126,16 @@ clearPassVerification();
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link Links" href="admin_tag.php" id="TagsLink" data-title="BLTS - Tags">
+                        <a class="nav-link Links" id="CategoriesLink" href="#" data-toggle="collapse" data-target="#CategoriesPage" aria-expanded="true" aria-controls="CategoriesPage" data-title="BLTS - Categories">
                             <i class="fas fa-tag"></i>
-                            <span>Tags</span>
+                            <span>Categories</span>
                         </a>
+                        <div id="CategoriesPage" class="collapse <?php echo (isActiveMenu('/admin_resolution_category.php') || isActiveMenu('/admin_add_resolution_cat.php') || isActiveMenu('/admin_update_resolution_cat.php') || isActiveMenu('/admin_ordinance_category.php') || isActiveMenu('/admin_add_ordinance_cat.php') || isActiveMenu('/admin_update_ordinance_cat.php')) ? 'show' : ''; ?>" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item <?php echo (isActiveMenu('/admin_resolution_category.php') || isActiveMenu('/admin_add_resolution_cat.php') || isActiveMenu('/admin_update_resolution_cat.php')) ? 'bg-secondary text-light' : '' ?>" href="admin_resolution_category.php">Resolution Categories</a>
+                                <a class="collapse-item <?php echo (isActiveMenu('/admin_ordinance_category.php') || isActiveMenu('/admin_add_ordinance_cat.php') || isActiveMenu('/admin_update_ordinance_cat.php')) ? 'bg-secondary text-light' : '' ?>" href="admin_ordinance_category.php">Ordinance Categories</a>
+                            </div>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link Links" href="admin_user_management.php" id="UserManagementLink" data-title="BLTS - User Management">
@@ -141,6 +147,12 @@ clearPassVerification();
                         <a class="nav-link Links" href="admin_system_setting.php" id="SystemSettingLink" data-title="BLTS - System Settings">
                             <i class="fas fa-cog"></i>
                             <span>System Settings</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link Links" href="admin_log_history.php" id="LogHistoryLink" data-title="BLTS - Log History">
+                            <i class="fas fa-history"></i>
+                            <span>Log History</span>
                         </a>
                     </li>
                     <li class="nav-item">

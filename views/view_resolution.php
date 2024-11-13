@@ -46,9 +46,9 @@ redirectNotLogin();
                                         </div>
                                     </div>
                                     <div class="mr-4">
-                                        <label class="mt-2 text-primary" for="tag">Tag</label>
+                                        <label class="mt-2 text-primary" for="tag">Category</label>
                                         <div class="tag">
-                                            <?php echo !empty(getTagByID($resolution['tag_id'])['tag_name']) ? getTagByID($resolution['tag_id'])['tag_name'] : ''; ?>
+                                            <?php echo !empty(getResolutionCatByID($resolution['resolution_cat_id'])['resolution_category_name']) ? getResolutionCatByID($resolution['resolution_cat_id'])['resolution_category_name'] : ''; ?>
                                         </div>
                                     </div>
                                     <div class="mr-4">

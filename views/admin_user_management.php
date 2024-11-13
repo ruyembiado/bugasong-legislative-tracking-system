@@ -37,7 +37,7 @@ redirectNotLogin();
                                         <th style="">Name</th>
                                         <th style="">Email</th>
                                         <th style="">Type</th>
-                                        <th style="">Dated Added</th>
+                                        <th style="">Date Added</th>
                                         <th style="">Status</th>
                                         <th style="width: 14%;">Action</th>
                                     </tr>

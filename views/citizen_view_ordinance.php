@@ -36,9 +36,9 @@
                                         </div>
                                     </div>
                                     <div class="mr-4">
-                                        <label class="mt-2 text-primary" for="tag">Tag</label>
-                                        <div class="tag">
-                                            <h5><?php echo !empty(getTagByID($ordinance['tag_id'])['tag_name']) ? getTagByID($ordinance['tag_id'])['tag_name'] : ''; ?></h5>
+                                    <label class="mt-2 text-primary" for="category">Category</label>
+                                    <div class="category">
+                                            <h5><?php echo !empty(getOrdinanceCatByID($ordinance['ordinance_cat_id'])['ordinance_category_name']) ? getOrdinanceCatByID($ordinance['ordinance_cat_id'])['ordinance_category_name'] : ''; ?></h5>
                                         </div>
                                     </div>
                                     <div class="mr-4">

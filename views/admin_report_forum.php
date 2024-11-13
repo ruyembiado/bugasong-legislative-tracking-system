@@ -44,13 +44,36 @@ redirectNotLogin();
                                 </div> -->
                                 <div class="date-input mr-2 mt-2">
                                     <div class="d-flex p-0">
-                                        <div class="start-date mr-2">
-                                            <label for="start-date">Date Added Start:</label>
-                                            <input type="date" name="date_added_start" class="form-control" value="<?php echo isset($_GET['date_added_start']) ? htmlspecialchars($_GET['date_added_start']) : ''; ?>">
+                                        <div class="month mr-2">
+                                            <label for="month">Month:</label>
+                                            <select name="month" id="month" class="form-control">
+                                                <option value="">Select Month</option>
+                                                <option value="01" <?php echo (isset($_GET['month']) && $_GET['month'] == '01') ? 'selected' : ''; ?>>January</option>
+                                                <option value="02" <?php echo (isset($_GET['month']) && $_GET['month'] == '02') ? 'selected' : ''; ?>>February</option>
+                                                <option value="03" <?php echo (isset($_GET['month']) && $_GET['month'] == '03') ? 'selected' : ''; ?>>March</option>
+                                                <option value="04" <?php echo (isset($_GET['month']) && $_GET['month'] == '04') ? 'selected' : ''; ?>>April</option>
+                                                <option value="05" <?php echo (isset($_GET['month']) && $_GET['month'] == '05') ? 'selected' : ''; ?>>May</option>
+                                                <option value="06" <?php echo (isset($_GET['month']) && $_GET['month'] == '06') ? 'selected' : ''; ?>>June</option>
+                                                <option value="07" <?php echo (isset($_GET['month']) && $_GET['month'] == '07') ? 'selected' : ''; ?>>July</option>
+                                                <option value="08" <?php echo (isset($_GET['month']) && $_GET['month'] == '08') ? 'selected' : ''; ?>>August</option>
+                                                <option value="09" <?php echo (isset($_GET['month']) && $_GET['month'] == '09') ? 'selected' : ''; ?>>September</option>
+                                                <option value="10" <?php echo (isset($_GET['month']) && $_GET['month'] == '10') ? 'selected' : ''; ?>>October</option>
+                                                <option value="11" <?php echo (isset($_GET['month']) && $_GET['month'] == '11') ? 'selected' : ''; ?>>November</option>
+                                                <option value="12" <?php echo (isset($_GET['month']) && $_GET['month'] == '12') ? 'selected' : ''; ?>>December</option>
+                                            </select>
                                         </div>
-                                        <div class="end-date">
-                                            <label for="end-date">Date Added End:</label>
-                                            <input type="date" name="date_added_end" class="form-control" value="<?php echo isset($_GET['date_added_end']) ? htmlspecialchars($_GET['date_added_end']) : ''; ?>">
+                                        <div class="year">
+                                            <label for="year">Year:</label>
+                                            <select name="year" id="year" class="form-control">
+                                                <option value="">Select Year</option>
+                                                <?php
+                                                $currentYear = date("Y");
+                                                $selectedYear = $_GET['year'] ?? '';
+                                                for ($year = $currentYear; $year >= 1900; $year--) {
+                                                    echo "<option value=\"$year\"" . ($selectedYear == $year ? ' selected' : '') . ">$year</option>";
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -66,7 +89,7 @@ redirectNotLogin();
                                         </div>
                                     </div>
                                 </div> -->
-                                <div class="date-input mr-2 mt-2">
+                                <!-- <div class="date-input mr-2 mt-2">
                                     <div class="d-flex p-0">
                                         <div class="end-date">
                                             <label for="end-date">Status:</label>
@@ -83,7 +106,7 @@ redirectNotLogin();
                                             </select>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="form-submit mt-2">
                                     <button type="submit" name="search_forum_report" value="search_forum_report" class="btn btn-primary">Submit</button>
                                     <a class="btn btn-danger" href="admin_report_forum.php">Reset</a>
@@ -96,16 +119,17 @@ redirectNotLogin();
                     </div>
 
                     <?php
-                    $date_added_start = $_GET['date_added_start'] ?? '';
-                    $date_added_end = $_GET['date_added_end'] ?? '';
+                    $_month = $_GET['month'] ?? '';
+                    $_year = $_GET['year'] ?? '';
                     $status = $_GET['status'] ?? '';
 
                     if (isset($_GET['search_forum_report'])) {
-                        $posts = searchPostReport($date_added_start, $date_added_end, $status);
+                        $posts = searchPostReport($_month, $_year, $status);
                     } else {
                         $posts = ForumReport(999);
                     }
                     ?>
+
 
                     <div class="card-body">
                         <div class="table-responsive">
@@ -140,6 +164,9 @@ redirectNotLogin();
                                                 <?php endforeach; ?>
                                             </tbody>
                                         </table>
+                                        <div style="text-align: right;">
+                                            <strong>Total Topics: <?php echo $count - 1; ?></strong>
+                                        </div>
                                     </div>
                                 </div>
                             <?php endif; ?>
@@ -183,14 +210,14 @@ redirectNotLogin();
             // Get the table to print
             const printArea = document.getElementById('print-area');
             if (!printArea) {
-                console.error('Print area element not found.');
+                console.log('Print area element not found.');
                 return;
             }
 
             // Adjust table style for printing (remove borders)
             const printContainer = printArea.querySelector('#print-container');
             if (!printContainer) {
-                console.error('Table element not found inside print area.');
+                console.log('Table element not found inside print area.');
                 return;
             }
             printContainer.style.border = 'none'; // Remove borders for printing

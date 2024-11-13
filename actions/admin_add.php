@@ -41,7 +41,7 @@ if (isset($_POST['add_resolution'])) : //check if the button is click
 
         if (empty($errors)) { //check if the errors is empty
             $data = [
-                'tag_id' => $_POST['tag'],
+                'resolution_cat_id' => $_POST['resolution_category'],
                 'resolutionNo' => $_POST['resolutionNo'],
                 'title' => $_POST['title'],
                 'whereasClauses' => $_POST['whereasClauses'],
@@ -71,18 +71,24 @@ if (isset($_POST['add_resolution'])) : //check if the button is click
 
 endif;
 
-// Add Tag
-if (isset($_POST['add_tag'])) : //check if the button is click
+// Add Resolution Category
+if (isset($_POST['add_ordinance_category'])) : //check if the button is click
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check if the method is post 
 
         $fields = [
-            'tag_name' => $_POST['tag_name'],
+            'ordinance_category_name' => $_POST['ordinance_category_name'],
         ];
 
         $validations = [
-            'tag_name' => [
+            'ordinance_category_name' => [
                 'required' => false,
+                'unique' => [
+                    [
+                        'fieldName' => 'ordinance_category_name',
+                        'tableName' => 'ordinance_cat'
+                    ],
+                ]
             ]
         ];
 
@@ -90,23 +96,70 @@ if (isset($_POST['add_tag'])) : //check if the button is click
 
         if (empty($errors)) { //check if the errors is empty
             $data = [
-                'tag_name' => $_POST['tag_name'],
+                'ordinance_category_name' => $_POST['ordinance_category_name'],
             ]; //put it in array before saving
 
-            $save = save('tags', $data); // $save = save('table_name', ['colum_name'=>$username]); if there is one data to save use this
+            $save = save('ordinance_cat', $data); // $save = save('table_name', ['colum_name'=>$username]); if there is one data to save use this
 
             if ($save) {
                 removeValue(); //remove the retain value in inputs
-                setFlash('success', 'Tag Added Successfully'); //set message
-                redirect('admin_add_tag'); //shortcut for header('location:index.php ');
+                setFlash('success', 'Resolution Category Added Successfully'); //set message
+                redirect('admin_add_ordinance_cat'); //shortcut for header('location:index.php ');
             } else {
                 retainValue(); //retain value even if there is errors or refresh
                 setFlash('failed', 'Add Failed'); //set message
-                redirect('admin_add_tag'); //shortcut for header('location:index.php ');
+                redirect('admin_add_ordinance_cat'); //shortcut for header('location:index.php ');
             }
         } else {
             retainValue(); //retain value even if there is errors or refresh
-            redirect('admin_add_tag', $errors); //shortcut for header('location:register.php?errors=$errors');
+            redirect('admin_add_ordinance_cat', $errors); //shortcut for header('location:register.php?errors=$errors');
+        }
+    }
+
+endif;
+
+// Add Ordinance Category
+if (isset($_POST['add_resolution_category'])) : //check if the button is click
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check if the method is post 
+
+        $fields = [
+            'resolution_category_name' => $_POST['resolution_category_name'],
+        ];
+
+        $validations = [
+            'resolution_category_name' => [
+                'required' => false,
+                'unique' => [
+                    [
+                        'fieldName' => 'resolution_category_name',
+                        'tableName' => 'resolution_cat'
+                    ],
+                ]
+            ]
+        ];
+
+        $errors = validate($fields, $validations); //activate the validation
+
+        if (empty($errors)) { //check if the errors is empty
+            $data = [
+                'resolution_category_name' => $_POST['resolution_category_name'],
+            ]; //put it in array before saving
+
+            $save = save('resolution_cat', $data); // $save = save('table_name', ['colum_name'=>$username]); if there is one data to save use this
+
+            if ($save) {
+                removeValue(); //remove the retain value in inputs
+                setFlash('success', 'Resolution Category Added Successfully'); //set message
+                redirect('admin_add_resolution_cat'); //shortcut for header('location:index.php ');
+            } else {
+                retainValue(); //retain value even if there is errors or refresh
+                setFlash('failed', 'Add Failed'); //set message
+                redirect('admin_add_resolution_cat'); //shortcut for header('location:index.php ');
+            }
+        } else {
+            retainValue(); //retain value even if there is errors or refresh
+            redirect('admin_add_resolution_cat', $errors); //shortcut for header('location:register.php?errors=$errors');
         }
     }
 
@@ -159,7 +212,7 @@ if (isset($_POST['add_ordinance'])) : // check if the button is clicked
 
         if (empty($errors)) { // check if the errors are empty
             $data = [
-                'tag_id' => $_POST['tag'],
+                'ordinance_cat_id' => $_POST['ordinance_category'],
                 'ordinanceNo' => $_POST['ordinanceNo'],
                 'title' => $_POST['title'],
                 'preamble' => $_POST['preamble'],

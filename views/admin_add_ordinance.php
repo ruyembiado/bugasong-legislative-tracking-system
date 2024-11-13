@@ -51,11 +51,11 @@ redirectNotLogin();
                             <div class="card-body">
                                 <div id="ocrResults">
                                     <form id="ordinanceForm" action="../actions/admin_add.php" method="POST" enctype="multipart/form-data">
-                                        <label class="mt-2" for="tag">Tag:</label>
-                                        <select class="form-control text-gray-800" name="tag" id="tag">
+                                        <label class="mt-2" for="ordinance_category">Category:</label>
+                                        <select class="form-control text-gray-800" name="ordinance_category" id="ordinance_category">
                                             <option value="">Select option:</option>
-                                            <?php foreach (getAllTagAsc('tag_name', null) as $tag) : ?>
-                                                <option value="<?php echo $tag['tag_id']; ?>" <?php if (getValue('tag') === $tag['tag_id']) echo ' selected'; ?>><?php echo $tag['tag_name']; ?> </option>
+                                            <?php foreach (getAllOrdinanceCategoryAsc('ordinance_category_name', null) as $ordinance_category) : ?>
+                                                <option value="<?php echo $ordinance_category['ordinance_cat_id']; ?>" <?php if (getValue('ordinance_category') === $ordinance_category['ordinance_cat_id']) echo ' selected'; ?>><?php echo $ordinance_category['ordinance_category_name']; ?> </option>
                                             <?php endforeach; ?>
                                         </select>
 
