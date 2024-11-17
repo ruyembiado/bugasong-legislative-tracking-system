@@ -14,9 +14,14 @@ redirectNotLogin();
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">Forum</h1>
                 <div class="back-button mb-3">
-                    <a href="citizen_home.php" class="btn btn-primary mr-2">Home</a>
-                    <a href="citizen_legislative_list.php" class="btn btn-primary mr-5">List of Legislative</a>
-                    <a href="citizen_home.php" class="btn btn-primary">Back</a>
+                    <?php if (isMember()) { ?>
+                        <a href="citizen_home.php" class="btn btn-primary mr-2">Home</a>
+                        <a href="citizen_legislative_list.php" class="btn btn-primary mr-5">List of Legislative</a>
+                        <a href="citizen_home.php" class="btn btn-primary">Back</a>
+                    <?php } ?>
+                    <?php if (isAdmin()) { ?>
+                        <a href="admin_home.php" class="btn btn-primary mr-2">Dashboard</a>
+                    <?php } ?>
                 </div>
             </div>
 
@@ -79,7 +84,7 @@ redirectNotLogin();
                                         <div class="card-header pt-2 pb-0 forum-topic">
                                             <div class="d-flex flex-column">
                                                 <span class="user" style="font-size: 13px;">
-                                                    <?php foreach (getPostUser($post['post_id']) as $user) : echo $user['name'];
+                                                    <?php foreach (getPostUserByPostID($post['post_id']) as $user) : echo $user['name'];
                                                     endforeach; ?> - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
                                                 </span>
                                                 <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>" class="citizen-view-post">
@@ -132,7 +137,7 @@ redirectNotLogin();
                                     <?php foreach (getMyPosts(user_id(), 5) as $post) : ?>
                                         <div class="d-flex flex-column">
                                             <span class="user" style="font-size: 13px;">
-                                                <?php foreach (getPostUser($post['post_id']) as $user) : echo $user['name'];
+                                                <?php foreach (getPostUserByPostID($post['post_id']) as $user) : echo $user['name'];
                                                 endforeach; ?>
                                                 - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
                                             </span>
@@ -178,7 +183,7 @@ redirectNotLogin();
                                     <?php foreach (getAllPostDesc(5) as $post) : ?>
                                         <div class="d-flex flex-column">
                                             <span class="user" style="font-size: 13px;">
-                                                <?php foreach (getPostUser($post['post_id']) as $user) : echo $user['name'];
+                                                <?php foreach (getPostUserByPostID($post['post_id']) as $user) : echo $user['name'];
                                                 endforeach; ?>
                                                 - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
                                             </span>
@@ -224,7 +229,7 @@ redirectNotLogin();
                                     <?php foreach (getTopLikes(5) as $post) : ?>
                                         <div class="d-flex flex-column">
                                             <span class="user" style="font-size: 13px;">
-                                                <?php foreach (getPostUser($post['post_id']) as $user) : echo $user['name'];
+                                                <?php foreach (getPostUserByPostID($post['post_id']) as $user) : echo $user['name'];
                                                 endforeach; ?>
                                                 - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
                                             </span>

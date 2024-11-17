@@ -25,8 +25,12 @@ if (isset($_POST['update_comment'])) : //check if the button is click
             ]; //put it in array before saving
 
             $update = update('post_comments',  ['post_comment_id' => $_POST['post_comment_id']], $data);
+            $post = getPostByID($_POST['post_id']);
 
             if ($update) {
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Update Comment', $post['topic']);
+
                 removeValue(); //remove the retain value in inputs
                 setFlash('success', 'Comment Updated Successfully'); //set message
                 redirect('view_post', ['post_id' => $_POST['post_id']]); //shortcut for header('location:index.php ');
@@ -72,8 +76,12 @@ if (isset($_POST['update_post'])) : //check if the button is click
             ]; //put it in array before saving
 
             $update = update('posts',  ['post_id' => $_POST['post_id']], $data);
+            $post = getPostByID($_POST['post_id']);
 
             if ($update) {
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Update Topic', $post['topic']);
+
                 removeValue(); //remove the retain value in inputs
                 setFlash('success', 'Post Updated Successfully'); //set message
                 redirect('citizen_post_update', ['post_id' => $_POST['post_id']]); //shortcut for header('location:index.php ');

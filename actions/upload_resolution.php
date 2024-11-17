@@ -108,6 +108,7 @@ if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0
     $uploadedFileUrls = []; // Initialize array to store uploaded file URLs
     $pdftoimageUrls = []; // Initialize array to store URLs of images generated from PDFs
     $allExtractedText = ''; // Initialize variable to store all extracted text
+
     foreach ($uploadedFiles['tmp_name'] as $key => $tmp_name) {
         $fileName = $uploadedFiles['name'][$key];
         $fileTmpPath = $uploadedFiles['tmp_name'][$key];
@@ -116,12 +117,15 @@ if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0
         $fileNameCmps = explode(".", $fileName);
         $fileExtension = strtolower(end($fileNameCmps));
         $allowedfileExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
+
         if (in_array($fileExtension, $allowedfileExtensions)) {
             $uploadFileDir = '../uploads/';
             $dest_path = $uploadFileDir . $fileName;
+
             if (move_uploaded_file($fileTmpPath, $dest_path)) {
                 $uploadedFileUrls[] = $dest_path; // Collect the URL of the uploaded file
                 $extractedText = ''; // Define extracted text variable
+
                 if ($fileExtension === 'pdf') {
                     // Extract text from PDF
                     $extractedText = extractTextFromPdf($dest_path, $pdftoimageUrls);
@@ -129,6 +133,7 @@ if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0
                     // Extract text from image
                     $extractedText = extractTextFromImage($dest_path);
                 }
+
                 // Clean the extracted text
                 $cleanExtractedText = $extractedText;
                 // Add a marker indicating the order of extraction
@@ -150,12 +155,13 @@ if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0
             exit;
         }
     }
+
     // After looping through all images, parse the combined extracted text
-    $resolutionData = parseResolutionText($allExtractedText);
+    $ordinanceData = parseResolutionText($allExtractedText);
 
     echo json_encode([
         'success' => true,
-        'resolutionData' => $resolutionData,
+        'ordinanceData' => $ordinanceData,
         'extractedText' => $allExtractedText, // Include combined extracted text in the response
         'uploadedFileUrls' => $uploadedFileUrls, // Include URLs of uploaded files
     ]);

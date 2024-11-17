@@ -51,7 +51,7 @@ function extractTextFromPdf($pdfPath, &$pdftoimageUrls)
     return $fullText;
 }
 
-function parseResolutionText($text)
+function parseOrdinanceText($text)
 {
     $ordinanceData = [
         'ordinanceNo' => '',
@@ -129,9 +129,25 @@ if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0
         $fileNameCmps = explode(".", $fileName);
         $fileExtension = strtolower(end($fileNameCmps));
         $allowedfileExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
+
         if (in_array($fileExtension, $allowedfileExtensions)) {
             $uploadFileDir = '../uploads/';
             $dest_path = $uploadFileDir . $fileName;
+
+            // **Check if file already exists in the database**
+            $existingFileQuery = "SELECT * FROM resolutions WHERE file = ?";
+            $stmt = $db->prepare($existingFileQuery);
+            $stmt->execute([$dest_path]);
+
+            if ($stmt->rowCount() > 0) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'The file "' . $fileName . '" already exists in the system. Please rename the file or choose a different one.'
+                ]);
+                exit;
+            }
+
+            // Proceed to upload the file if it doesn't exist
             if (move_uploaded_file($fileTmpPath, $dest_path)) {
                 $uploadedFileUrls[] = $dest_path; // Collect the URL of the uploaded file
                 $extractedText = ''; // Define extracted text variable
@@ -164,7 +180,7 @@ if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0
         }
     }
     // After looping through all images, parse the combined extracted text
-    $ordinanceData = parseResolutionText($allExtractedText);
+    $ordinanceData = parseOrdinanceText($allExtractedText);
 
     echo json_encode([
         'success' => true,

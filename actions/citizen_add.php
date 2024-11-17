@@ -32,6 +32,9 @@ if (isset($_POST['create_post'])) :
             $save = save('posts', $data); // $save = save('table_name', ['colum_name'=>$username]); if there is one data to save use this
 
             if ($save) {
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Create Post', $_POST['topic']);
+
                 removeValue(); //remove the retain value in inputs
                 setFlash('success', 'Your topic is being checked. You will be notified once it is diplayed on the forum.'); //set message
                 redirect('citizen_forum'); //shortcut for header('location:index.php ');
@@ -72,7 +75,12 @@ if (isset($_POST['create_comment'])) :
 
             $save = save('post_comments', $data);
 
+            $post = getPostByID($_POST['post_id']);
+
             if ($save) {
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Create Comment', $post['topic']);
+
                 removeValue(); //remove the retain value in inputs
                 setFlash('success', 'Comment Added Successfully'); //set message
                 redirect('view_post', ['post_id' => $_POST['post_id']]); //shortcut for header('location:index.php ');

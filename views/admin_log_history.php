@@ -31,9 +31,11 @@ redirectNotLogin();
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>User</th>
+                                        <th>User Type</th>
+                                        <th>Log Type</th>
                                         <th>Description</th>
-                                        <th>Date Added</th>
+                                        <th>Device</th>
+                                        <th>Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -42,8 +44,10 @@ redirectNotLogin();
                                         <tr>
                                             <td><?php echo $count++; ?></td>
                                             <td class="text-gray-800"><?php echo $log_history['user']; ?></td>
+                                            <td class="text-gray-800"><?php echo $log_history['log_type']; ?></td>
                                             <td class="text-gray-800"><?php echo $log_history['log_description']; ?></td>
-                                            <td class="text-gray-800"><?php echo $log_history['date_added']; ?></td>
+                                            <td class="text-gray-800"><?php echo $log_history['device']; ?></td>
+                                            <td class="text-gray-800"> <?php echo date('M d Y h:i:s a', strtotime($log_history['date_added'])); ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

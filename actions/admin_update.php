@@ -55,6 +55,10 @@ if (isset($_POST['update_resolution'])) : //check if the button is click
             $update = update('resolutions',  ['resolution_id' => $_POST['resolution_id']], $data);
 
             if ($update) {
+                $resolution = getResolutionByID($_POST['resolution_id']);
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Update Resolution', $resolution['title']);
+
                 removeValue(); //remove the retain value in inputs
                 setFlash('success', 'Resolution Updated Successfully'); //set message
                 redirect('admin_update_resolution', ['resolution_id' => $_POST['resolution_id']]); //shortcut for header('location:index.php ');
@@ -75,10 +79,12 @@ endif;
 if (isset($_GET['update_status'])) : //check if the button is click
 
     $status = '';
-    if ($_GET['update_status'] == '0')
-        echo $status = 1;
-    else {
-        echo $status = 0;
+    if ($_GET['update_status'] == '0') {
+        $status = 1;
+        $status_name = "Published";
+    } else {
+        $status = 0;
+        $status_name = "Unpublished";
     }
 
     // Update resolution status
@@ -91,6 +97,11 @@ if (isset($_GET['update_status'])) : //check if the button is click
         $update = update('resolutions',  ['resolution_id' => $_GET['resolution_id']], $data);
 
         if ($update) {
+            $resolution = getResolutionByID($_GET['resolution_id']);
+            $additional = '' . $resolution['resolutionNo'] . '`s status to ' . $status_name;
+            // Log History
+            create_log_history($_SESSION['user_id'], 'Update Resolution', $additional);
+
             removeValue(); //remove the retain value in inputs
             setFlash('success', 'Status Updated Successfully'); //set message
             redirect('admin_resolution', ['publish' => '']); //shortcut for header('location:index.php ');
@@ -103,7 +114,6 @@ if (isset($_GET['update_status'])) : //check if the button is click
 
     if (isset($_GET['ordinance_id'])) {
 
-
         $data = [
             'status' => $status,
             'date_publish' => date('Y-m-d H:i:s'),
@@ -111,6 +121,11 @@ if (isset($_GET['update_status'])) : //check if the button is click
         $update = update('ordinances',  ['ordinance_id' => $_GET['ordinance_id']], $data);
 
         if ($update) {
+            $ordinance = getOrdinanceByID($_GET['ordinance_id']);
+            $additional = $ordinance['ordinanceNo'] . '`s status to ' . $status_name;
+            // Log History
+            create_log_history($_SESSION['user_id'], 'Update Ordinance', $additional);
+
             removeValue(); //remove the retain value in inputs
             setFlash('success', 'Status Updated Successfully'); //set message
             redirect('admin_ordinance', ['publish' => '']); //shortcut for header('location:index.php ');
@@ -122,12 +137,24 @@ if (isset($_GET['update_status'])) : //check if the button is click
     }
 
     if (isset($_GET['user_id'])) {
+
+        if ($_GET['update_status'] == '0') {
+            $user_status = "Active";
+        } else {
+            $user_status = "Inactive";
+        }
+
         $data = [
             'status' => $status,
         ];
         $update = update('users',  ['user_id' => $_GET['user_id']], $data);
 
         if ($update) {
+            $user = getUserDataByID($_GET['user_id']);
+            $additional = $user['name'] . '`s status to ' . $user_status;
+            // Log History
+            create_log_history($_SESSION['user_id'], 'Update User', $additional);
+
             removeValue(); //remove the retain value in inputs
             setFlash('success', 'Status Updated Successfully'); //set message
             redirect('admin_user_management'); //shortcut for header('location:index.php ');
@@ -139,6 +166,13 @@ if (isset($_GET['update_status'])) : //check if the button is click
     }
 
     if (isset($_GET['post_id'])) {
+        $post_status = '';
+        if ($_GET['update_status'] == '0') {
+            $post_status = "Published";
+        } else {
+            $post_status = "Unpublished";
+        }
+
         $data = [
             'status' => $status,
         ];
@@ -146,11 +180,15 @@ if (isset($_GET['update_status'])) : //check if the button is click
         $update = update('posts',  ['post_id' => $_GET['post_id']], $data);
 
         if ($update) {
+            $post = getPostByID($_GET['post_id']);
+            $additional = $post['topic'] . ' status to ' . $post_status;
+            // Log History
+            create_log_history($_SESSION['user_id'], 'Update Post', $additional);
             removeValue(); //remove the retain value in inputs
             setFlash('success', 'Status Updated Successfully'); //set message
 
             if ($_GET['view'] === 'true') {
-                redirect('view_post.php?post_id='.$_GET['post_id']);
+                redirect('view_post.php?post_id=' . $_GET['post_id']);
             }
             redirect('admin_forum'); //shortcut for header('location:index.php ');
         } else {
@@ -191,10 +229,14 @@ if (isset($_POST['update_resolution_category'])) : //check if the button is clic
             $data = [
                 'resolution_category_name' => $_POST['resolution_category_name'],
             ]; //put it in array before saving
+            $category = getResolutionCatByID($_POST['resolution_cat_id']);
 
             $update = update('resolution_cat', ['resolution_cat_id' => $_POST['resolution_cat_id']], $data);
-
             if ($update) {
+                $additional = 'name ' . $category['resolution_category_name'] . ' to ' . $_POST['resolution_category_name'];
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Update Category', $additional);
+
                 removeValue(); //remove the retain value in inputs
                 setFlash('success', 'Resolution Category Updated Successfully'); //set message
                 redirect('admin_resolution_category'); //shortcut for header('location:index.php ');
@@ -235,6 +277,7 @@ if (isset($_POST['update_ordinance_category'])) : //check if the button is click
         ];
 
         $errors = validate($fields, $validations); //activate the validation
+        $category = getOrdinanceCatByID($_POST['ordinance_cat_id']);
 
         if (empty($errors)) { //check if the errors is empty
             $data = [
@@ -244,6 +287,9 @@ if (isset($_POST['update_ordinance_category'])) : //check if the button is click
             $update = update('ordinance_cat', ['ordinance_cat_id' => $_POST['ordinance_cat_id']], $data);
 
             if ($update) {
+                $additional = 'name ' . $category['ordinance_category_name'] . ' to ' . $_POST['ordinance_category_name'];
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Update Category', $additional);
                 removeValue(); //remove the retain value in inputs
                 setFlash('success', 'Resolution Category Updated Successfully'); //set message
                 redirect('admin_ordinance_category'); //shortcut for header('location:index.php ');
@@ -323,6 +369,8 @@ if (isset($_POST['update_ordinance'])) : // check if the button is clicked
             $update = update('ordinances', ['ordinance_id' => $_POST['ordinance_id']], $data);
 
             if ($update) {
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Update Ordinance', $_POST['ordinanceNo']);
                 removeValue(); //remove the retain value in inputs
                 setFlash('success', 'Ordinance Updated Successfully'); //set message
                 redirect('admin_update_ordinance', ['ordinance_id' => $_POST['ordinance_id']]); //shortcut for header('location:index.php ');
@@ -413,6 +461,8 @@ if (isset($_POST['update_user'])) :
             $save = update('users', ['user_id' => $_POST['user_id']], $data);
 
             if ($save) {
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Update User', $name);
                 removeValue(); // Remove the retained value in inputs
                 setFlash('success', 'User Updated Successfully'); // Set message
                 redirect('admin_update_user', ['user_id' => $_POST['user_id']]); // Shortcut for header('location:index.php');

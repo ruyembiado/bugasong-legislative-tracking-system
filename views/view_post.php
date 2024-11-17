@@ -16,7 +16,7 @@ redirectNotLogin();
                 <div class="d-flex">
                     <h1 class="h3 mb-0 text-gray-800">View Topic</h1>
                     <?php if (isAdmin()) { ?>
-                        <?php foreach ($get_user_post = getPostUser($_GET['post_id']) as $user_post) { ?>
+                        <?php foreach ($get_user_post = getPostUserByPostID($_GET['post_id']) as $user_post) { ?>
                             <a class="ml-3 status-button <?php echo ($user_post['status'] == '0') ? '' : 'unpublish'; ?>"
                                 href="../actions/admin_update.php?update_status=<?php echo $user_post['status']; ?>&post_id=<?php echo $user_post['post_id']; ?>&view=true"><?php echo ($user_post['status'] == '0') ? '<p class="text-light btn btn-danger ">Disapproved</p>' : '<p class="text-light btn btn-success">Approved</p>' ?></a>
                         <?php } ?>
@@ -36,7 +36,7 @@ redirectNotLogin();
                     <div class="card shadow mb-3">
                         <div class="card-header py-3 d-flex flex-column">
                             <span class="user" style="font-size: 13px;">
-                                <?php foreach (getPostUser($post['post_id']) as $user):
+                                <?php foreach (getPostUserByPostID($post['post_id']) as $user):
                                     echo $user['name'];
                                 endforeach; ?> - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
                             </span>
@@ -98,7 +98,7 @@ redirectNotLogin();
                                             <div class="comment">
                                                 <div class="d-flex justify-content-between">
                                                     <span class="user" style="font-size: 13px;">
-                                                        <?php echo getUserData($comment['user_id'])['name']; ?> -
+                                                        <?php echo getUserDataByID($comment['user_id'])['name']; ?> -
                                                         <?php echo date('M d Y h:i:s a', strtotime($comment['date_added'])); ?>
                                                     </span>
                                                     <div class="comment-action">
@@ -180,7 +180,7 @@ redirectNotLogin();
                                     <?php foreach (getMyPosts(user_id(), 5) as $post): ?>
                                         <div class="d-flex flex-column">
                                             <span class="user" style="font-size: 13px;">
-                                                <?php foreach (getPostUser($post['post_id']) as $user):
+                                                <?php foreach (getPostUserByPostID($post['post_id']) as $user):
                                                     echo $user['name'];
                                                 endforeach; ?>
                                                 - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
@@ -234,7 +234,7 @@ redirectNotLogin();
                                     <?php foreach (getAllPostDesc(5) as $post): ?>
                                         <div class="d-flex flex-column">
                                             <span class="user" style="font-size: 13px;">
-                                                <?php foreach (getPostUser($post['post_id']) as $user):
+                                                <?php foreach (getPostUserByPostID($post['post_id']) as $user):
                                                     echo $user['name'];
                                                 endforeach; ?>
                                                 - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
@@ -290,7 +290,7 @@ redirectNotLogin();
                                             class="citizen-view-post">
                                             <div class="d-flex flex-column">
                                                 <span class="user" style="font-size: 13px;">
-                                                    <?php foreach (getPostUser($post['post_id']) as $user):
+                                                    <?php foreach (getPostUserByPostID($post['post_id']) as $user):
                                                         echo $user['name'];
                                                     endforeach; ?>
                                                     - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>

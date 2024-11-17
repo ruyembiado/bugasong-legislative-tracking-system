@@ -22,6 +22,10 @@ if (isset($_POST['post_reaction'])) {
     if (!$reaction) {
         $save = save('post_reactions', $data);
         if ($save) {
+            $post = getPostByID($_POST['post_id']);
+            // Log History
+            $additional = $post_reaction . ' the post topic ' . $post['topic'];
+            create_log_history($_SESSION['user_id'], 'Post Reaction', $additional);
             $likeCount = countReaction($post_id, 'liked');
             $dislikeCount = countReaction($post_id, 'disliked');
             echo json_encode([
@@ -47,6 +51,10 @@ if (isset($_POST['post_reaction'])) {
         if ($check_reaction == $_POST['post_reaction'] && $check_post_id == $_POST['post_id']) {
             $delete = delete('post_reactions', ['post_id' => $post_id, 'user_id' => $user_id]);
             if ($delete) {
+                $post = getPostByID($_POST['post_id']);
+                // Log History
+                $additional = 'removed the reaction to the post on the topic ' . $post['topic'];
+                create_log_history($_SESSION['user_id'], 'Post Reaction', $additional);
                 $likeCount = countReaction($post_id, 'liked');
                 $dislikeCount = countReaction($post_id, 'disliked');
                 echo json_encode([
@@ -67,6 +75,10 @@ if (isset($_POST['post_reaction'])) {
         } else {
             $update = update('post_reactions', ['post_id' => $post_id, 'user_id' => $user_id], $data);
             if ($update) {
+                $post = getPostByID($_POST['post_id']);
+                // Log History
+                $additional = $post_reaction . ' the post topic ' . $post['topic'];
+                create_log_history($_SESSION['user_id'], 'Post Reaction', $additional);
                 $message = "Reaction updated.";
                 $likeCount = countReaction($post_id, 'liked');
                 $dislikeCount = countReaction($post_id, 'disliked');

@@ -39,7 +39,7 @@ redirectNotLogin();
                     </div>
                     <div class="card-body">
                         <form action="../actions/update_profile.php" method="POST">
-                            <?php $user = getUserData($_SESSION['user_id']); ?>
+                            <?php $user = getUserDataByID($_SESSION['user_id']); ?>
                             <div class="my-1">
                                 <label class="label">Name</label>
                                 <div class="d-flex align-items-center">

@@ -229,8 +229,7 @@ function getAllPostRand()
     return $posts;
 }
 
-
-function getPostUser($post_id)
+function getPostUserByPostID($post_id)
 {
     return joinTable("users", [["posts", "users.user_id", "posts.user_id"]], ["posts.post_id" => $post_id]);
 }
@@ -606,7 +605,7 @@ function viewPostComments($post_id)
     return $comments;
 }
 
-function getUserData($user_id)
+function getUserDataByID($user_id)
 {
     global $conn;
 
@@ -1638,6 +1637,12 @@ function getAllLogHistoryDesc($limit)
     return findAll('log_history', 'log_history_id', 'DESC', $limit);
 }
 
+function getPostByID($post_id)
+{
+    $post = find('posts', ['post_id' => $post_id]);
+    return $post;
+}
+
 function AnalyzePost($topic, $message)
 {
     try {
@@ -1711,4 +1716,122 @@ function AnalyzePost($topic, $message)
             curl_close($ch);
         }
     }
+}
+
+function getDeviceType()
+{
+    $userAgent = $_SERVER['HTTP_USER_AGENT'];
+
+    if (preg_match('/mobile/i', $userAgent)) {
+        return 'Mobile';
+    } elseif (preg_match('/tablet|ipad|playbook|silk/i', $userAgent)) {
+        return 'Tablet';
+    } elseif (preg_match('/iPhone|iPod/i', $userAgent)) {
+        return 'iPhone';
+    } elseif (preg_match('/Android/i', $userAgent)) {
+        return 'Android';
+    } elseif (preg_match('/Windows NT/i', $userAgent)) {
+        return 'Desktop (Windows)';
+    } elseif (preg_match('/Macintosh|Mac OS X/i', $userAgent)) {
+        return 'Desktop (Mac)';
+    } elseif (preg_match('/Linux/i', $userAgent)) {
+        return 'Desktop (Linux)';
+    } else {
+        return 'Unknown';
+    }
+}
+
+function create_log_history($user_id, $log_type, $additional = '')
+{
+    // Log History
+    $userData = getUserDataByID($user_id);
+    $log_description = '';
+
+    switch ($log_type) {
+            // Authentication
+        case 'Login':
+            $log_description = $userData['name'] . ' logged to the system.';
+            break;
+        case 'Logout':
+            $log_description = $userData['name'] . 'logged out to the system.';
+            break;
+        case 'Update Profile':
+            $log_description = $userData['name'] . 'updated his/her profile.';
+            break;
+        case 'Post Reaction':
+            $log_description = $userData['name'] . ' ' . $additional;
+            break;
+            // Admin - User
+        case 'Create User':
+            $log_description = $userData['name'] . 'created new user account for ' . $additional . '.';
+            break;
+        case 'Update User':
+            $log_description = $userData['name'] . 'updated the user account for ' . $additional . '.';
+            break;
+        case 'Delete User':
+            $log_description = $userData['name'] . 'deleted the user account for ' . $additional . '.';
+            break;
+            // Admin - Resolution
+        case 'Create Resolution':
+            $log_description = $userData['name'] . 'added new resolution with ' . $additional . '.';
+            break;
+        case 'Update Resolution':
+            $log_description = $userData['name'] . 'updated the ' . $additional . '.';
+            break;
+        case 'Delete Resolution':
+            $log_description = $userData['name'] . 'deleted the resolution with ' . $additional . '.';
+            break;
+            // Admin - Ordinance
+        case 'Create Ordinance':
+            $log_description = $userData['name'] . 'added new ordinance with ' . $additional . '.';
+            break;
+        case 'Update Ordinance':
+            $log_description = $userData['name'] . 'updated the ' . $additional . '.';
+            break;
+        case 'Delete Ordinance':
+            $log_description = $userData['name'] . 'deleted the ordinance with ' . $additional . '.';
+            break;
+            // Admin - Categories
+        case 'Create Category':
+            $log_description = $userData['name'] . 'added new category ' . $additional . '.';
+            break;
+        case 'Update Category':
+            $log_description = $userData['name'] . 'updated the category ' . $additional . '.';
+            break;
+        case 'Delete Category':
+            $log_description = $userData['name'] . 'deleted the category ' . $additional . '.';
+            break;
+            // Posts
+        case 'Create Post':
+            $log_description = $userData['name'] . 'added new post with the topic ' . $additional . '.';
+            break;
+        case 'Update Post':
+            $log_description = $userData['name'] . 'updated the post on the topic ' . $additional . '.';
+            break;
+        case 'Delete Post':
+            $log_description = $userData['name'] . 'deleted the post on the topic ' . $additional . '.';
+            break;
+            // Post Comments
+        case 'Create Comment':
+            $log_description = $userData['name'] . 'added new comment to the topic ' . $additional . '.';
+            break;
+        case 'Update Comment':
+            $log_description = $userData['name'] . 'updated the comment on the topic ' . $additional . '.';
+            break;
+        case 'Delete Comment':
+            $log_description = $userData['name'] . 'deleted the comment on the topic ' . $additional . '.';
+            break;
+            // System Settings
+        case 'System Setting':
+            $log_description = $userData['name'] . 'updated the system ' . $additional . '.';
+            break;
+    }
+
+    $log_history = [
+        'user'     => $userData['user_type'],
+        'log_type'     => $log_type,
+        'log_description'     => $log_description,
+        'device' => getDeviceType(),
+    ];
+    save('log_history', $log_history);
 }

@@ -1,6 +1,11 @@
 <?php
 require_once '../config/config.php';
 
+if (isLogin()) {
+    // Log History
+    create_log_history($_SESSION['user_id'], 'Logout', '');
+}
+
 session_destroy();
 
 redirect('index', '');

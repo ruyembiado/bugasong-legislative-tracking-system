@@ -78,7 +78,7 @@ redirectNotLogin();
                     <?php foreach (getAllPostDesc(5) as $post) : ?>
                         <div class="d-flex flex-column">
                             <span class="user" style="font-size: 13px;">
-                                <?php foreach (getPostUser($post['post_id']) as $user) : echo $user['name'];
+                                <?php foreach (getPostUserByPostID($post['post_id']) as $user) : echo $user['name'];
                                 endforeach; ?>
                                 - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
                             </span>

@@ -55,6 +55,9 @@ if (isset($_POST['add_resolution'])) : //check if the button is click
             $save = save('resolutions', $data); // $save = save('table_name', ['colum_name'=>$username]); if there is one data to save use this
 
             if ($save) {
+                // Log History
+                create_log_history($user['user_id'], 'Create Resolution', $_POST['resolutionNo']);
+
                 removeValue(); //remove the retain value in inputs
                 setFlash('success', 'Resolution Added Successfully'); //set message
                 redirect('admin_add_resolution'); //shortcut for header('location:index.php ');
@@ -71,7 +74,7 @@ if (isset($_POST['add_resolution'])) : //check if the button is click
 
 endif;
 
-// Add Resolution Category
+// Add Ordinance Category
 if (isset($_POST['add_ordinance_category'])) : //check if the button is click
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check if the method is post 
@@ -102,6 +105,9 @@ if (isset($_POST['add_ordinance_category'])) : //check if the button is click
             $save = save('ordinance_cat', $data); // $save = save('table_name', ['colum_name'=>$username]); if there is one data to save use this
 
             if ($save) {
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Create Category', $_POST['ordinance_category_name']);
+
                 removeValue(); //remove the retain value in inputs
                 setFlash('success', 'Resolution Category Added Successfully'); //set message
                 redirect('admin_add_ordinance_cat'); //shortcut for header('location:index.php ');
@@ -118,7 +124,7 @@ if (isset($_POST['add_ordinance_category'])) : //check if the button is click
 
 endif;
 
-// Add Ordinance Category
+// Add Resolution Category
 if (isset($_POST['add_resolution_category'])) : //check if the button is click
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check if the method is post 
@@ -149,6 +155,9 @@ if (isset($_POST['add_resolution_category'])) : //check if the button is click
             $save = save('resolution_cat', $data); // $save = save('table_name', ['colum_name'=>$username]); if there is one data to save use this
 
             if ($save) {
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Create Category', $_POST['resolution_category_name']);
+
                 removeValue(); //remove the retain value in inputs
                 setFlash('success', 'Resolution Category Added Successfully'); //set message
                 redirect('admin_add_resolution_cat'); //shortcut for header('location:index.php ');
@@ -228,6 +237,9 @@ if (isset($_POST['add_ordinance'])) : // check if the button is clicked
             $save = save('ordinances', $data); // $save = save('table_name', ['column_name' => $username]); if there is one data to save use this
 
             if ($save) {
+                // Log History
+                create_log_history($user['user_id'], 'Create Ordinance', $_POST['ordinanceNo']);
+
                 removeValue(); // remove the retain value in inputs
                 setFlash('success', 'Ordinance Added Successfully'); // set message
                 redirect('admin_add_ordinance'); // shortcut for header('location:index.php');
@@ -315,8 +327,10 @@ if (isset($_POST['add_user'])) :
             $save = save('users', $data); // $save = save('table_name', ['colum_name'=>$username]); if there is one data to save use this
 
             if ($save) {
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Create User', $_POST['name']);
                 removeValue(); //remove the retain value in inputs
-                setFlash('success', 'Registered Successfully'); //set message
+                setFlash('success', 'User Registered Successfully'); //set message
                 redirect('admin_add_user'); //shortcut for header('location:index.php ');
             } else {
                 retainValue(); //retain value even if there is errors or refresh

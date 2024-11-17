@@ -75,6 +75,9 @@ if (isset($_POST['update_logo'])) : // Check if the button is clicked
             $save = update('system_settings', ['system_setting_id' => $id], $data); // Save to the database
 
             if ($save) {
+                // Log History
+                create_log_history($_SESSION['user_id'], 'System Setting', 'logo');
+
                 removeValue(); // Remove the retain value in inputs
                 setFlash('success', 'System Logo Updated Successfully'); // Set success message
                 redirect('admin_system_setting'); // Redirect

@@ -24,13 +24,7 @@ if (isset($_POST['user_login'])) : // Check if the button is clicked
                     // var_dump($_SESSION); // Use to test the session variables
 
                     // Log History
-                    $userData = getUserData($user['user_id']);
-                    $log_history = [
-                        'user'     => $userData['user_type'],
-                        'log_type'     => 'Login',
-                        'log_description'     => $userData['name'].' '.'logged to the system.',
-                    ];
-                    save('log_history', $log_history);
+                    create_log_history($user['user_id'], 'Login');
 
                     setFlash('success', 'Welcome ' . $user['name']); // Set message
                     if ($user['user_type'] == 'admin') {

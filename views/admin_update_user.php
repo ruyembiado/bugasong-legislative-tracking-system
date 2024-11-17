@@ -35,7 +35,7 @@ redirectNotLogin();
                             </div>
                             <div class="card-body">
                                 <form action="../actions/admin_update.php" method="POST">
-                                    <?php $user = getUserData($_GET['user_id']); ?>
+                                    <?php $user = getUserDataByID($_GET['user_id']); ?>
                                     <div class="my-1">
                                         <label class="label">Name</label>
                                         <div class="d-flex align-items-center">

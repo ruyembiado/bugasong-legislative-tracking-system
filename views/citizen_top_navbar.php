@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 border border-bottom">
     <!-- Topbar Navbar -->
     <div class="d-flex align-items-center justify-content-between col-12">
-        <a class="sidebar-brand d-flex align-items-center justify-content-between nav-link Links" id="HomeLink" data-title="BLTS - Home" href="citizen_home.php">
+        <a class="sidebar-brand d-flex align-items-center justify-content-between nav-link Links" id="HomeLink" data-title="BLTS - Home" href="<?php echo isMember() ? 'citizen_home.php' : 'admin_home.php'; ?>">
             <div class="sidebar-brand-icon">
                 <img src="../img/blts.png" class="img-profile" alt="">
             </div>

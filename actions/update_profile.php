@@ -74,7 +74,12 @@ if (isset($_POST['update_profile'])) :
 
             $save = update('users', ['user_id' => $_POST['user_id']], $data);
 
+            $additional;
+
             if ($save) {
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Update Profile', '');
+
                 removeValue(); // Remove the retained value in inputs
                 setFlash('success', 'Profile Updated Successfully'); // Set message
                 redirect('profile', ['user_id' => $_POST['user_id']]); // Shortcut for header('location:index.php');
