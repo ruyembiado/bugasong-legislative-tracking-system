@@ -80,7 +80,7 @@ redirectNotLogin();
                             <span class="user" style="font-size: 13px;">
                                 <?php foreach (getPostUserByPostID($post['post_id']) as $user) : echo $user['name'];
                                 endforeach; ?>
-                                - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
+                                - <?php echo date('F d Y h:i:s a', strtotime($post['date_added'])); ?>
                             </span>
                             <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>" class="citizen-view-post">
                                 <h5 class="topic text-primary"><?php echo $post['topic']; ?></h5>

@@ -50,7 +50,7 @@ redirectNotLogin();
                                             <td class="text-gray-800"><?php echo $post['topic']; ?></td>
                                             <td class="text-gray-800"><?php echo $post['message']; ?></td>
                                             <td class="text-gray-800">
-                                                <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
+                                                <?php echo date('F d Y h:i:s a', strtotime($post['date_added'])); ?>
                                             </td>
                                             <td class="text-gray-800">
                                                 <a class="status-button <?php echo ($post['status'] == '0') ? '' : 'unpublish'; ?>"

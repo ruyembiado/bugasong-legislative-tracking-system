@@ -1660,10 +1660,10 @@ function AnalyzePost($topic, $message)
         $data = [
             'model' => 'gpt-3.5-turbo',
             'messages' => [
-                ['role' => 'system', 'content' => 'You are a content moderator. Your task is to evaluate whether a forum post is appropriate for publication based on its content. Please identify if the tone is offensive, harmful, or inappropriate.'],
-                ['role' => 'user', 'content' => "Topic: $topic\nMessage: $message\n\nPlease assess if this post is suitable for publication. If it contains offensive or inappropriate language, please advise whether it should be unpublished, and provide reasoning."]
+                ['role' => 'system', 'content' => 'You are a content moderator. Your task is to evaluate whether a forum post is appropriate for publication based on its content. Please identify if the tone is offensive, harmful, or inappropriate. Provide concise feedback suitable for an admin to relay to the user.'],
+                ['role' => 'user', 'content' => "Topic: $topic\nMessage: $message\n\nPlease assess if this post is suitable for publication. If it contains offensive or inappropriate language, please advise whether it should be unpublished, and provide a brief reason."]
             ],
-            'max_tokens' => 150,
+            'max_tokens' => 100,
         ];
 
         // Set up cURL to make the API request to OpenAI
@@ -1692,10 +1692,13 @@ function AnalyzePost($topic, $message)
         $gptResponse = $responseData['choices'][0]['message']['content'] ?? '';
 
         // If GPT identifies offensive or inappropriate language, return as "pending"
-        if (stripos($gptResponse, 'unpublish') || stripos($gptResponse, 'harmful') !== false) {
+        if (stripos($gptResponse, 'unpublish') !== false || stripos($gptResponse, 'harmful') !== false) {
+            // Shorten the reason to be more concise like an admin message
+            $reason = "Your post has been set to pending status because: " . strtok($gptResponse, '.');
+
             return [
                 'status' => 'pending',
-                'reason' => $gptResponse,
+                'reason' => $reason,
             ];
         }
 
@@ -1834,4 +1837,69 @@ function create_log_history($user_id, $log_type, $additional = '')
         'device' => getDeviceType(),
     ];
     save('log_history', $log_history);
+}
+
+function getLatestPost()
+{
+    global $conn;
+
+    $query = "SELECT * FROM posts ORDER BY date_added DESC LIMIT 1";
+
+    $result = mysqli_query($conn, $query);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        return mysqli_fetch_assoc($result);
+    } else {
+        return null; // Return null if there are no posts
+    }
+}
+
+function getMyNotification($user_id, $limit = null, $onlyUnread = false)
+{
+    global $conn;
+
+    // Base SQL query to fetch notifications
+    $sql = "SELECT *
+            FROM notification n
+            INNER JOIN users u ON n.user_id = u.user_id
+            WHERE u.user_id = ?";
+
+    // Add condition to get only unread notifications if specified
+    if ($onlyUnread) {
+        $sql .= " AND n.is_read = 0";
+    }
+
+    $sql .= " ORDER BY n.date_added DESC";
+
+    // Add a LIMIT clause if a limit is provided
+    if ($limit !== null) {
+        $sql .= " LIMIT ?";
+    }
+
+    // Prepare the statement
+    $stmt = $conn->prepare($sql);
+
+    // Bind parameters based on whether a limit is provided
+    if ($limit !== null) {
+        $stmt->bind_param("ii", $user_id, $limit);
+    } else {
+        $stmt->bind_param("i", $user_id);
+    }
+
+    // Execute the query
+    $stmt->execute();
+
+    // Fetch the results as an associative array
+    $result = $stmt->get_result();
+    $notifications = $result->fetch_all(MYSQLI_ASSOC);
+
+    // Close the statement
+    $stmt->close();
+
+    return $notifications;
+}
+
+function read_notification($notification_id)
+{
+    update('notification', ['notification_id' => $notification_id], ['is_read' => 1]);
 }

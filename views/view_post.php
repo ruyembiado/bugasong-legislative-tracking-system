@@ -1,6 +1,11 @@
 <?php
 @include('citizen_header.php');
 redirectNotLogin();
+
+if (isset($_GET['read_notification'])) {
+    read_notification($_GET['read_notification']);
+}
+
 ?>
 <!-- Content Wrapper -->
 <div class="d-flex flex-column mt-4 mx-auto col-10" style="width: 100%;">
@@ -38,7 +43,7 @@ redirectNotLogin();
                             <span class="user" style="font-size: 13px;">
                                 <?php foreach (getPostUserByPostID($post['post_id']) as $user):
                                     echo $user['name'];
-                                endforeach; ?> - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
+                                endforeach; ?> - <?php echo date('F d Y h:i:s a', strtotime($post['date_added'])); ?>
                             </span>
                             <?php if (isAdmin() || ($_SESSION['user_id'] == $post['user_id'])) : ?>
                                 <span class="status" style="font-size: 13px;">
@@ -99,7 +104,7 @@ redirectNotLogin();
                                                 <div class="d-flex justify-content-between">
                                                     <span class="user" style="font-size: 13px;">
                                                         <?php echo getUserDataByID($comment['user_id'])['name']; ?> -
-                                                        <?php echo date('M d Y h:i:s a', strtotime($comment['date_added'])); ?>
+                                                        <?php echo date('F d Y h:i:s a', strtotime($comment['date_added'])); ?>
                                                     </span>
                                                     <div class="comment-action">
                                                         <?php if ($comment['user_id'] === user_id()): ?>
@@ -183,7 +188,7 @@ redirectNotLogin();
                                                 <?php foreach (getPostUserByPostID($post['post_id']) as $user):
                                                     echo $user['name'];
                                                 endforeach; ?>
-                                                - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
+                                                - <?php echo date('F d Y h:i:s a', strtotime($post['date_added'])); ?>
                                             </span>
                                             <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>"
                                                 class="citizen-view-post">
@@ -237,7 +242,7 @@ redirectNotLogin();
                                                 <?php foreach (getPostUserByPostID($post['post_id']) as $user):
                                                     echo $user['name'];
                                                 endforeach; ?>
-                                                - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
+                                                - <?php echo date('F d Y h:i:s a', strtotime($post['date_added'])); ?>
                                             </span>
                                             <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>"
                                                 class="citizen-view-post">
@@ -293,7 +298,7 @@ redirectNotLogin();
                                                     <?php foreach (getPostUserByPostID($post['post_id']) as $user):
                                                         echo $user['name'];
                                                     endforeach; ?>
-                                                    - <?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?>
+                                                    - <?php echo date('F d Y h:i:s a', strtotime($post['date_added'])); ?>
                                                     <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>"
                                                         class="citizen-view-post">
                                                         <h5 class="topic text-primary"><?php echo $post['topic']; ?></h5>

@@ -15,8 +15,14 @@
         <div class="container-fluid">
 
             <?php
-            $topic = "1";
-            $message = "1";
+
+            $latestpost = getLatestPost();
+            echo '<pre>';
+            print_r($latestpost);
+            echo '</pre>';
+
+            $topic = "gagu kaba?";
+            $message = "JULOL";
             $result = AnalyzePost($topic, $message);
 
             // Display the status and reason with line breaks

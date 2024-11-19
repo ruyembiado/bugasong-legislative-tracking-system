@@ -46,7 +46,7 @@ redirectNotLogin();
                                         <tr>
                                             <td><?php echo $count++; ?></td>
                                             <td class="text-gray-800"><?php echo $ordi_cat['ordinance_category_name']; ?></td>
-                                            <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($ordi_cat['date_added'])); ?>
+                                            <td class="text-gray-800"><?php echo date('F d Y h:i:s a', strtotime($ordi_cat['date_added'])); ?>
                                             </td>
                                             <td>
                                                 <a href="admin_update_ordinance_cat.php?ordinance_cat_id=<?php echo $ordi_cat['ordinance_cat_id']; ?>" class="btn btn-primary px-2 py-1 my-1">Update</a>

@@ -32,6 +32,20 @@ if (isset($_POST['create_post'])) :
             $save = save('posts', $data); // $save = save('table_name', ['colum_name'=>$username]); if there is one data to save use this
 
             if ($save) {
+                $analyzepost = AnalyzePost($_POST['topic'], $_POST['message']);
+                if ($analyzepost) {
+                    $latestpost = getLatestPost();
+                    if ($analyzepost['status'] === "pending") {
+                        update('posts', ['post_id' => $latestpost['post_id']], ['reason' => $analyzepost['reason']]);
+                    }
+                    $notif_data = [
+                        'post_id' => $latestpost['post_id'],
+                        'user_id' => $latestpost['user_id'],
+                        'notification_content' => $analyzepost['reason'],
+                        'is_read' => 0,
+                    ];
+                    save('notification', $notif_data);
+                }
                 // Log History
                 create_log_history($_SESSION['user_id'], 'Create Post', $_POST['topic']);
 

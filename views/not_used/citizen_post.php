@@ -48,7 +48,7 @@ redirectNotLogin();
                                         <td class="text-gray-800"><?php echo countReaction($post['post_id'], 'liked'); ?></td>
                                         <td class="text-gray-800"><?php echo countReaction($post['post_id'], 'disliked'); ?></td>
                                         <td class="text-gray-800"><?php echo countPostComments($post['post_id']); ?></td>
-                                        <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?></td>
+                                        <td class="text-gray-800"><?php echo date('F d Y h:i:s a', strtotime($post['date_added'])); ?></td>
                                         <td>
                                             <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>" class="btn btn-secondary px-2 py-1 my-1">View</a>
                                             <a href="citizen_post_update.php?post_id=<?php echo $post['post_id']; ?>" class="btn btn-primary px-2 py-1 my-1">Update</a>

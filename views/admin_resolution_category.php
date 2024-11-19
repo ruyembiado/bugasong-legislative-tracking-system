@@ -46,7 +46,7 @@ redirectNotLogin();
                                         <tr>
                                             <td><?php echo $count++; ?></td>
                                             <td class="text-gray-800"><?php echo $res_cat['resolution_category_name']; ?></td>
-                                            <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($res_cat['date_added'])); ?>
+                                            <td class="text-gray-800"><?php echo date('F d Y h:i:s a', strtotime($res_cat['date_added'])); ?>
                                             </td>
                                             <td>
                                                 <a href="admin_update_resolution_cat.php?resolution_cat_id=<?php echo $res_cat['resolution_cat_id']; ?>" class="btn btn-primary px-2 py-1 my-1">Update</a>

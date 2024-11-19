@@ -50,7 +50,7 @@ redirectNotLogin();
                                             <td class="text-gray-800"><?php echo $user['name']; ?></td>
                                             <td class="text-gray-800"><?php echo $user['email']; ?></td>
                                             <td class="text-gray-800"><?php echo ucfirst($user['user_type']); ?></td>
-                                            <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($user['date_added'])); ?></td>
+                                            <td class="text-gray-800"><?php echo date('F d Y h:i:s a', strtotime($user['date_added'])); ?></td>
                                             <td>
                                                 <a class="status-button py-1 my-1 <?php echo ($user['status'] == '1') ? '' : 'deactivate'; ?>" href="../actions/admin_update.php?update_status=<?php echo $user['status']; ?>&user_id=<?php echo $user['user_id']; ?>"><?php echo ($user['status'] == '1') ? '<span class="text-light py-1 btn btn-danger">Deactivated</span>' : '<span class="text-light py-1 btn btn-success">Active</span>' ?></a>
                                             </td>

@@ -156,7 +156,7 @@ redirectNotLogin();
                                                         <td><?php echo $count++; ?></td>
                                                         <td class="text-gray-800"><?php echo $post['topic']; ?></td>
                                                         <td class="text-gray-800"><?php echo countParticipants($post['post_id']); ?></td>
-                                                        <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($post['date_added'])); ?></td>
+                                                        <td class="text-gray-800"><?php echo date('F d Y h:i:s a', strtotime($post['date_added'])); ?></td>
                                                         <td>
                                                             <?php echo ($post['status'] == '0') ? '<p>Unpublished</p>' : '<p>Published</p>' ?>
                                                         </td>

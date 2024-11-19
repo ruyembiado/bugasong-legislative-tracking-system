@@ -65,9 +65,9 @@ redirectNotLogin();
                                                 <?php echo getResolutionViewCount($resolution['resolution_id']); ?>
                                             </td>
                                             <td class="text-gray-800">
-                                                <?php echo date('M d Y h:i:s a', strtotime($resolution['date_added'])); ?>
+                                                <?php echo date('F d Y h:i:s a', strtotime($resolution['date_added'])); ?>
                                             </td>
-                                            <td><?php echo ($resolution['status'] == 1) ? date('M d Y h:i:s a', strtotime($resolution['date_publish'])) : ''; ?>
+                                            <td><?php echo ($resolution['status'] == 1) ? date('F d Y h:i:s a', strtotime($resolution['date_publish'])) : ''; ?>
                                             </td>
                                             <td>
                                                 <?php if (isset($_GET['manage'])): ?>

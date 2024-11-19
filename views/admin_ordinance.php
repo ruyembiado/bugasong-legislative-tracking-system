@@ -65,10 +65,10 @@ redirectNotLogin();
                                                 <?php echo getOrdinanceViewCount($ordinance['ordinance_id']); ?>
                                             </td>
                                             <td class="text-gray-800">
-                                                <?php echo date('M d Y h:i:s a', strtotime($ordinance['date_added'])); ?>
+                                                <?php echo date('F d Y h:i:s a', strtotime($ordinance['date_added'])); ?>
                                             </td>
                                             <td class="text-gray-800">
-                                                <?php echo ($ordinance['status'] == 1) ? date('M d Y h:i:s a', strtotime($ordinance['date_publish'])) : ''; ?>
+                                                <?php echo ($ordinance['status'] == 1) ? date('F d Y h:i:s a', strtotime($ordinance['date_publish'])) : ''; ?>
                                             </td>
                                             <td>
                                                 <?php if (isset($_GET['manage'])): ?>

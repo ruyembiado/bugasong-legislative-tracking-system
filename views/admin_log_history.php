@@ -47,7 +47,7 @@ redirectNotLogin();
                                             <td class="text-gray-800"><?php echo $log_history['log_type']; ?></td>
                                             <td class="text-gray-800"><?php echo $log_history['log_description']; ?></td>
                                             <td class="text-gray-800"><?php echo $log_history['device']; ?></td>
-                                            <td class="text-gray-800"> <?php echo date('M d Y h:i:s a', strtotime($log_history['date_added'])); ?></td>
+                                            <td class="text-gray-800"> <?php echo date('F d Y h:i:s a', strtotime($log_history['date_added'])); ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

@@ -164,9 +164,9 @@ redirectNotLogin();
                                                             ?>
                                                         </td>
                                                         <td class="text-gray-800"><?php echo $viewersCount; ?></td>
-                                                        <td class="text-gray-800"><?php echo date('M d Y h:i:s a', strtotime($document['date_added'])); ?></td>
+                                                        <td class="text-gray-800"><?php echo date('F d Y h:i:s a', strtotime($document['date_added'])); ?></td>
                                                         <td class="text-gray-800">
-                                                            <?php echo ($document['status'] == 1) ? date('M d Y h:i:s a', strtotime($document['date_publish'])) : ''; ?>
+                                                            <?php echo ($document['status'] == 1) ? date('F d Y h:i:s a', strtotime($document['date_publish'])) : ''; ?>
                                                         </td>
                                                         <td>
                                                             <?php echo ($document['status'] == '0') ? '<p>Unpublished</p>' : '<p>Published</p>' ?>
