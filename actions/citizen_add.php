@@ -82,26 +82,43 @@ if (isset($_POST['create_comment'])) :
 
         if (empty($errors)) { //check if the errors is empty
             $data = [
-                'post_id'       => $_POST['post_id'], //or $_POST['name']
-                'user_id'       => $_POST['user_id'], //or $_POST['name']
+                'post_id'       => $_POST['post_id'],
+                'user_id'       => $_POST['user_id'],
                 'post_comment'       => $_POST['comment'],
             ]; //put it in array before saving
 
-            $save = save('post_comments', $data);
+            $analyzed_comment = AnalyzeComment($_POST['comment']);
+            if ($analyzed_comment['status'] == 'pending') {
 
-            $post = getPostByID($_POST['post_id']);
-
-            if ($save) {
-                // Log History
-                create_log_history($_SESSION['user_id'], 'Create Comment', $post['topic']);
+                $notif_data = [
+                    'post_id' => $_POST['post_id'],
+                    'user_id' => $_POST['user_id'],
+                    'notification_content' => $analyzed_comment['reason'],
+                    'is_read' => 0,
+                ];
+                save('notification', $notif_data);
 
                 removeValue(); //remove the retain value in inputs
                 setFlash('success', 'Comment Added Successfully'); //set message
                 redirect('view_post', ['post_id' => $_POST['post_id']]); //shortcut for header('location:index.php ');
+
             } else {
-                retainValue(); //retain value even if there is errors or refresh
-                setFlash('failed', 'Add Failed'); //set message
-                redirect('view_post', ['post_id' => $_POST['post_id']]); //shortcut for header('location:index.php ');
+
+                $save = save('post_comments', $data);
+                $post = getPostByID($_POST['post_id']);
+
+                if ($save) {
+                    // Log History
+                    create_log_history($_SESSION['user_id'], 'Create Comment', $post['topic']);
+
+                    removeValue(); //remove the retain value in inputs
+                    setFlash('success', 'Comment Added Successfully'); //set message
+                    redirect('view_post', ['post_id' => $_POST['post_id']]); //shortcut for header('location:index.php ');
+                } else {
+                    retainValue(); //retain value even if there is errors or refresh
+                    setFlash('failed', 'Add Failed'); //set message
+                    redirect('view_post', ['post_id' => $_POST['post_id']]); //shortcut for header('location:index.php ');
+                }
             }
         } else {
             $errors['post_id'] =  $_POST['post_id'];

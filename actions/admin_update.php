@@ -167,10 +167,13 @@ if (isset($_GET['update_status'])) : //check if the button is click
 
     if (isset($_GET['post_id'])) {
         $post_status = '';
+        $notif_message = '';
         if ($_GET['update_status'] == '0') {
             $post_status = "Published";
+            $notif_message = 'Your post has been published to the forum site.';
         } else {
             $post_status = "Unpublished";
+            $notif_message = 'Your post has been unpublished from the forum site.';
         }
 
         $data = [
@@ -184,6 +187,15 @@ if (isset($_GET['update_status'])) : //check if the button is click
             $additional = $post['topic'] . ' status to ' . $post_status;
             // Log History
             create_log_history($_SESSION['user_id'], 'Update Post', $additional);
+
+            $notif_data = [
+                'post_id' => $_GET['post_id'],
+                'user_id' => $post['user_id'],
+                'notification_content' => $notif_message,
+                'is_read' => 0,
+            ];
+            save('notification', $notif_data);
+            
             removeValue(); //remove the retain value in inputs
             setFlash('success', 'Status Updated Successfully'); //set message
 

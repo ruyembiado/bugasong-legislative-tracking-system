@@ -24,20 +24,39 @@ if (isset($_POST['update_comment'])) : //check if the button is click
                 'post_comment' => $_POST['post_comment'],
             ]; //put it in array before saving
 
-            $update = update('post_comments',  ['post_comment_id' => $_POST['post_comment_id']], $data);
-            $post = getPostByID($_POST['post_id']);
+            $analyzed_comment = AnalyzeComment($_POST['post_comment']);
+            if ($analyzed_comment['status'] == 'pending') {
 
-            if ($update) {
-                // Log History
-                create_log_history($_SESSION['user_id'], 'Update Comment', $post['topic']);
+                $notif_data = [
+                    'post_id' => $_POST['post_id'],
+                    'user_id' => $_POST['user_id'],
+                    'notification_content' => $analyzed_comment['reason'],
+                    'is_read' => 0,
+                ];
+                save('notification', $notif_data);
+                delete('post_comments', ['post_comment_id' => $_POST['post_comment_id']]);
 
                 removeValue(); //remove the retain value in inputs
                 setFlash('success', 'Comment Updated Successfully'); //set message
                 redirect('view_post', ['post_id' => $_POST['post_id']]); //shortcut for header('location:index.php ');
+
             } else {
-                retainValue(); //retain value even if there is errors or refresh
-                setFlash('failed', 'Update Failed'); //set message
-                redirect('view_post', ['post_id' => $_POST['post_id']]); //shortcut for header('location:index.php ');
+
+                $update = update('post_comments',  ['post_comment_id' => $_POST['post_comment_id']], $data);
+                $post = getPostByID($_POST['post_id']);
+
+                if ($update) {
+                    // Log History
+                    create_log_history($_SESSION['user_id'], 'Update Comment', $post['topic']);
+
+                    removeValue(); //remove the retain value in inputs
+                    setFlash('success', 'Comment Updated Successfully'); //set message
+                    redirect('view_post', ['post_id' => $_POST['post_id']]); //shortcut for header('location:index.php ');
+                } else {
+                    retainValue(); //retain value even if there is errors or refresh
+                    setFlash('failed', 'Update Failed'); //set message
+                    redirect('view_post', ['post_id' => $_POST['post_id']]); //shortcut for header('location:index.php ');
+                }
             }
         } else {
             $errors['post_id'] =  $_POST['post_id'];
@@ -79,6 +98,19 @@ if (isset($_POST['update_post'])) : //check if the button is click
             $post = getPostByID($_POST['post_id']);
 
             if ($update) {
+                $analyzepost = AnalyzePost($_POST['topic'], $_POST['message']);
+                if ($analyzepost) {
+                    if ($analyzepost['status'] === "pending") {
+                        update('posts', ['post_id' => $post['post_id']], ['reason' => $analyzepost['reason'], 'status' => 0]);
+                    }
+                    $notif_data = [
+                        'post_id' => $post['post_id'],
+                        'user_id' => $post['user_id'],
+                        'notification_content' => $analyzepost['reason'],
+                        'is_read' => 0,
+                    ];
+                    save('notification', $notif_data);
+                }
                 // Log History
                 create_log_history($_SESSION['user_id'], 'Update Topic', $post['topic']);
 

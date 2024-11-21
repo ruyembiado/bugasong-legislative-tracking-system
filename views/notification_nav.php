@@ -8,7 +8,7 @@ $unreadCount = count($unreadNotifications); // Count unread notifications
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-bell fa-fw"></i>
         <!-- Counter - Alerts -->
-        <span class="badge badge-danger badge-counter"><?php echo $unreadCount ?: ''; ?></span>
+        <span class="badge badge-danger badge-counter" id="notification-count"><?php echo $unreadCount ?: ''; ?></span>
     </a>
     <!-- Dropdown - Alerts -->
     <div class="notification-alert dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -17,7 +17,7 @@ $unreadCount = count($unreadNotifications); // Count unread notifications
         <div class="notication-container">
             <?php if ($notifications) : ?>
                 <?php foreach ($notifications as $notification) : ?>
-                    <a class="dropdown-item d-flex align-items-center" href="view_post.php?post_id=<?php echo $notification['post_id']; ?>&read_notification=<?php echo $notification['notification_id']; ?>">
+                    <a class="dropdown-item d-flex align-items-center" href="../actions/read_notification.php?post_id=<?php echo $notification['post_id']; ?>&read_notification=<?php echo $notification['notification_id']; ?>">
                         <div class="mr-3">
                             <div class="icon-circle bg-<?php echo $notification['is_read'] == 0 ? 'primary' : 'secondary'; ?>">
                                 <i class="fas fa-bell text-white"></i>

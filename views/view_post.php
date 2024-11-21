@@ -2,10 +2,6 @@
 @include('citizen_header.php');
 redirectNotLogin();
 
-if (isset($_GET['read_notification'])) {
-    read_notification($_GET['read_notification']);
-}
-
 ?>
 <!-- Content Wrapper -->
 <div class="d-flex flex-column mt-4 mx-auto col-10" style="width: 100%;">
@@ -125,6 +121,8 @@ if (isset($_GET['read_notification'])) {
                                                     <form action="../actions/citizen_update.php" method="post">
                                                         <input type="hidden" name="post_id"
                                                             value="<?php echo $_GET['post_id']; ?>">
+                                                            <input type="hidden" name="user_id"
+                                                            value="<?php echo $comment['user_id']; ?>">
                                                         <input type="hidden" name="post_comment_id"
                                                             value="<?php echo $comment['post_comment_id']; ?>">
                                                         <textarea rows="4" name="post_comment"

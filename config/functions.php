@@ -1721,6 +1721,84 @@ function AnalyzePost($topic, $message)
     }
 }
 
+function AnalyzeComment($comment)
+{
+    try {
+        // Load environment variables from the parent directory (where your .env file is)
+        $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
+        $dotenv->load();
+
+        // Get API key from environment variable
+        $apiKey = $_ENV['OPENAI_API_KEY'] ?? null;
+        if (!$apiKey) {
+            throw new Exception('API key is missing.');
+        }
+
+        // Prepare the request data for GPT-3, asking to evaluate the content's appropriateness for readers
+        $data = [
+            'model' => 'gpt-3.5-turbo',
+            'messages' => [
+                ['role' => 'system', 'content' => 'You are a content moderator. Your task is to evaluate whether a comment is appropriate for publication based on its content. Please identify if the tone is offensive, harmful, or inappropriate. Provide concise feedback suitable for an admin to relay to the user.'],
+                ['role' => 'user', 'content' => "Comment: $comment\n\nPlease assess if this comment is suitable for publication. If it contains offensive or inappropriate language, please advise whether it should be unpublished, and provide a brief reason."]
+            ],
+            'max_tokens' => 100,
+        ];
+
+        // Set up cURL to make the API request to OpenAI
+        $url = 'https://api.openai.com/v1/chat/completions';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Authorization: Bearer ' . $apiKey
+        ]);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+        // Execute the request and capture the response
+        $response = curl_exec($ch);
+
+        // Check for cURL errors
+        if (curl_errno($ch)) {
+            throw new Exception('cURL error: ' . curl_error($ch));
+        }
+
+        // Decode the response
+        $responseData = json_decode($response, true);
+
+        // Extract the assistant's reply
+        $gptResponse = $responseData['choices'][0]['message']['content'] ?? '';
+
+        // If GPT identifies offensive or inappropriate language, return as "pending"
+        if (stripos($gptResponse, 'unpublish') !== false || stripos($gptResponse, 'harmful') !== false) {
+            // Shorten the reason to be more concise like an admin message
+            $reason = "Your comment has been deleted because: " . strtok($gptResponse, '.');
+
+            return [
+                'status' => 'pending',
+                'reason' => $reason,
+            ];
+        }
+
+        // If GPT says it's okay, mark the post as approved
+        return [
+            'status' => 'approved',
+            'reason' => 'Your comment has been published on the forum site because the content is appropriate and non-offensive.',
+        ];
+    } catch (Exception $e) {
+        // Return error information
+        return [
+            'status' => 'error',
+            'reason' => 'An error occurred: ' . $e->getMessage(),
+        ];
+    } finally {
+        // Always close cURL session
+        if (isset($ch) && is_resource($ch)) {
+            curl_close($ch);
+        }
+    }
+}
+
 function getDeviceType()
 {
     $userAgent = $_SERVER['HTTP_USER_AGENT'];
@@ -1756,77 +1834,77 @@ function create_log_history($user_id, $log_type, $additional = '')
             $log_description = $userData['name'] . ' logged to the system.';
             break;
         case 'Logout':
-            $log_description = $userData['name'] . 'logged out to the system.';
+            $log_description = $userData['name'] . ' logged out to the system.';
             break;
         case 'Update Profile':
-            $log_description = $userData['name'] . 'updated his/her profile.';
+            $log_description = $userData['name'] . ' updated his/her profile.';
             break;
         case 'Post Reaction':
             $log_description = $userData['name'] . ' ' . $additional;
             break;
             // Admin - User
         case 'Create User':
-            $log_description = $userData['name'] . 'created new user account for ' . $additional . '.';
+            $log_description = $userData['name'] . ' created new user account for ' . $additional . '.';
             break;
         case 'Update User':
-            $log_description = $userData['name'] . 'updated the user account for ' . $additional . '.';
+            $log_description = $userData['name'] . ' updated the user account for ' . $additional . '.';
             break;
         case 'Delete User':
-            $log_description = $userData['name'] . 'deleted the user account for ' . $additional . '.';
+            $log_description = $userData['name'] . ' deleted the user account for ' . $additional . '.';
             break;
             // Admin - Resolution
         case 'Create Resolution':
-            $log_description = $userData['name'] . 'added new resolution with ' . $additional . '.';
+            $log_description = $userData['name'] . ' added new resolution with ' . $additional . '.';
             break;
         case 'Update Resolution':
-            $log_description = $userData['name'] . 'updated the ' . $additional . '.';
+            $log_description = $userData['name'] . ' updated the ' . $additional . '.';
             break;
         case 'Delete Resolution':
-            $log_description = $userData['name'] . 'deleted the resolution with ' . $additional . '.';
+            $log_description = $userData['name'] . ' deleted the resolution with ' . $additional . '.';
             break;
             // Admin - Ordinance
         case 'Create Ordinance':
-            $log_description = $userData['name'] . 'added new ordinance with ' . $additional . '.';
+            $log_description = $userData['name'] . ' added new ordinance with ' . $additional . '.';
             break;
         case 'Update Ordinance':
-            $log_description = $userData['name'] . 'updated the ' . $additional . '.';
+            $log_description = $userData['name'] . ' updated the ' . $additional . '.';
             break;
         case 'Delete Ordinance':
-            $log_description = $userData['name'] . 'deleted the ordinance with ' . $additional . '.';
+            $log_description = $userData['name'] . ' deleted the ordinance with ' . $additional . '.';
             break;
             // Admin - Categories
         case 'Create Category':
-            $log_description = $userData['name'] . 'added new category ' . $additional . '.';
+            $log_description = $userData['name'] . ' added new category ' . $additional . '.';
             break;
         case 'Update Category':
-            $log_description = $userData['name'] . 'updated the category ' . $additional . '.';
+            $log_description = $userData['name'] . ' updated the category ' . $additional . '.';
             break;
         case 'Delete Category':
-            $log_description = $userData['name'] . 'deleted the category ' . $additional . '.';
+            $log_description = $userData['name'] . ' deleted the category ' . $additional . '.';
             break;
             // Posts
         case 'Create Post':
-            $log_description = $userData['name'] . 'added new post with the topic ' . $additional . '.';
+            $log_description = $userData['name'] . ' added new post with the topic ' . $additional . '.';
             break;
         case 'Update Post':
-            $log_description = $userData['name'] . 'updated the post on the topic ' . $additional . '.';
+            $log_description = $userData['name'] . ' updated the post on the topic ' . $additional . '.';
             break;
         case 'Delete Post':
-            $log_description = $userData['name'] . 'deleted the post on the topic ' . $additional . '.';
+            $log_description = $userData['name'] . ' deleted the post on the topic ' . $additional . '.';
             break;
             // Post Comments
         case 'Create Comment':
-            $log_description = $userData['name'] . 'added new comment to the topic ' . $additional . '.';
+            $log_description = $userData['name'] . ' added new comment to the topic ' . $additional . '.';
             break;
         case 'Update Comment':
-            $log_description = $userData['name'] . 'updated the comment on the topic ' . $additional . '.';
+            $log_description = $userData['name'] . ' updated the comment on the topic ' . $additional . '.';
             break;
         case 'Delete Comment':
-            $log_description = $userData['name'] . 'deleted the comment on the topic ' . $additional . '.';
+            $log_description = $userData['name'] . ' deleted the comment on the topic ' . $additional . '.';
             break;
             // System Settings
         case 'System Setting':
-            $log_description = $userData['name'] . 'updated the system ' . $additional . '.';
+            $log_description = $userData['name'] . ' updated the system ' . $additional . '.';
             break;
     }
 
@@ -1903,3 +1981,4 @@ function read_notification($notification_id)
 {
     update('notification', ['notification_id' => $notification_id], ['is_read' => 1]);
 }
+
