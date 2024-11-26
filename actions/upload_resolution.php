@@ -32,7 +32,7 @@ function extractTextFromImage($imagePath)
     return (new TesseractOCR($imagePath))->run();
 }
 
-function extractTextFromPdf($pdfPath, &$pdftoimageUrls)
+function extractTextFromPdf($pdfPath, $pdftoimageUrls)
 {
     $outputDir = '../uploads/temp_images';
 
@@ -157,11 +157,11 @@ if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0
     }
 
     // After looping through all images, parse the combined extracted text
-    $ordinanceData = parseResolutionText($allExtractedText);
+    $resolutionData = parseResolutionText($allExtractedText);
 
     echo json_encode([
         'success' => true,
-        'ordinanceData' => $ordinanceData,
+        'resolutionData' => $resolutionData,
         'extractedText' => $allExtractedText, // Include combined extracted text in the response
         'uploadedFileUrls' => $uploadedFileUrls, // Include URLs of uploaded files
     ]);

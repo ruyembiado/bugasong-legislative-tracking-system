@@ -32,7 +32,7 @@ function extractTextFromImage($imagePath)
     return (new TesseractOCR($imagePath))->run();
 }
 
-function extractTextFromPdf($pdfPath, &$pdftoimageUrls)
+function extractTextFromPdf($pdfPath, $pdftoimageUrls)
 {
     $outputDir = '../uploads/temp_images';
 
@@ -133,19 +133,6 @@ if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0
         if (in_array($fileExtension, $allowedfileExtensions)) {
             $uploadFileDir = '../uploads/';
             $dest_path = $uploadFileDir . $fileName;
-
-            // **Check if file already exists in the database**
-            $existingFileQuery = "SELECT * FROM resolutions WHERE file = ?";
-            $stmt = $db->prepare($existingFileQuery);
-            $stmt->execute([$dest_path]);
-
-            if ($stmt->rowCount() > 0) {
-                echo json_encode([
-                    'success' => false,
-                    'message' => 'The file "' . $fileName . '" already exists in the system. Please rename the file or choose a different one.'
-                ]);
-                exit;
-            }
 
             // Proceed to upload the file if it doesn't exist
             if (move_uploaded_file($fileTmpPath, $dest_path)) {

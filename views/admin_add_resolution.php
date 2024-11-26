@@ -35,7 +35,7 @@ redirectNotLogin();
                                 <h6 class="m-0 font-weight-bold text-primary">Upload files for OCR</h6>
                             </div>
                             <div class="card-body">
-                                <form id="uploadForm" action="../actions/upload_resolution.php" method="post" enctype="multipart/form-data">
+                                <form id="uploadForm" method="post" enctype="multipart/form-data">
                                     <label class="mt-2" for="uploadedFiles">Choose files to upload:</label>
                                     <input class="form-control-file text-gray-800" type="file" multiple name="uploadedFiles[]" id="uploadedFiles">
                                     <div class="mb-0 mt-2 d-flex justify-content-end">
@@ -245,7 +245,6 @@ if (isset($_SESSION['errorMessage'])) {
             .catch(error => {
                 // Hide loading screen
                 document.getElementById('loadingScreen').style.display = 'none';
-
                 console.error('Error:', error);
             });
     });
