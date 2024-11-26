@@ -122,6 +122,16 @@ if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0
             $uploadFileDir = '../uploads/';
             $dest_path = $uploadFileDir . $fileName;
 
+            $resolution_file = get_file_by_filename('resolutions', $dest_path);
+
+            if ($resolution_file && $dest_path == $resolution_file['file']) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'The file uploaded already exists in the system. Please rename the file or choose a different one.'
+                ]);
+                exit;
+            }
+
             if (move_uploaded_file($fileTmpPath, $dest_path)) {
                 $uploadedFileUrls[] = $dest_path; // Collect the URL of the uploaded file
                 $extractedText = ''; // Define extracted text variable

@@ -134,7 +134,16 @@ if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0
             $uploadFileDir = '../uploads/';
             $dest_path = $uploadFileDir . $fileName;
 
-            // Proceed to upload the file if it doesn't exist
+            $ordinance_file = get_file_by_filename('ordinances', $dest_path);
+
+            if ($ordinance_file && $dest_path == $ordinance_file['file']) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'The file uploaded already exists in the system. Please rename the file or choose a different one.'
+                ]);
+                exit;
+            }
+
             if (move_uploaded_file($fileTmpPath, $dest_path)) {
                 $uploadedFileUrls[] = $dest_path; // Collect the URL of the uploaded file
                 $extractedText = ''; // Define extracted text variable

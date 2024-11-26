@@ -1982,3 +1982,8 @@ function read_notification($notification_id)
     update('notification', ['notification_id' => $notification_id], ['is_read' => 1]);
 }
 
+function get_file_by_filename($table, $filename)
+{
+    $file = find($table, ['file' => $filename]);
+    return $file;
+}
