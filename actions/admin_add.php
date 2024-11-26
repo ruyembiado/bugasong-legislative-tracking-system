@@ -56,7 +56,7 @@ if (isset($_POST['add_resolution'])) : //check if the button is click
 
             if ($save) {
                 // Log History
-                create_log_history($user['user_id'], 'Create Resolution', $_POST['resolutionNo']);
+                create_log_history($_SESSION['user_id'], 'Create Resolution', $_POST['resolutionNo']);
 
                 removeValue(); //remove the retain value in inputs
                 setFlash('success', 'Resolution Added Successfully'); //set message
@@ -238,7 +238,7 @@ if (isset($_POST['add_ordinance'])) : // check if the button is clicked
 
             if ($save) {
                 // Log History
-                create_log_history($user['user_id'], 'Create Ordinance', $_POST['ordinanceNo']);
+                create_log_history($_SESSION['user_id'], 'Create Ordinance', $_POST['ordinanceNo']);
 
                 removeValue(); // remove the retain value in inputs
                 setFlash('success', 'Ordinance Added Successfully'); // set message
