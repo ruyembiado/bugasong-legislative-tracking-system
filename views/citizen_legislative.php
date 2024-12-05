@@ -11,20 +11,20 @@
                 <h1 class="h3 mb-0 text-gray-800 text-start">Advanced Search:</h1>
                 <div class="back-button mb-3">
                     <?php if (isLogin()) { ?>
-                        <a href="citizen_home.php" class="btn btn-primary mr-2">Home</a>
-                        <a href="citizen_forum.php" class="btn btn-primary mr-5">Forum</a>
+                        <a href="citizen_home.php" class="btn btn-primary m-1">Home</a>
+                        <a href="citizen_forum.php" class="btn btn-primary m-1">Forum</a>
                     <?php } ?>
-                    <a href="citizen_home.php" class="btn btn-primary">Back</a>
+                    <a href="citizen_home.php" class="btn btn-primary m-1">Back</a>
                 </div>
             </div>
             <h1 class="h4 mb-0 text-gray-800 text-start">Ordinances and Resolutions</h1>
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" class="mb-4">
                 <div class="d-flex align-items-end flex-wrap search-container justify-content-center">
-                    <div class="keyword-input p-0 mr-2 mt-2 col-4">
+                    <div class="keyword-input p-0 mr-2 mt-2 col-12 col-sm-5 col-lg-4">
                         <label for="keyword-input">Keyword(s):</label>
                         <input type="text" name="keyword" placeholder="Keyword(s)" class="form-control" value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>">
                     </div>
-                    <div class="type-selection p-0 mr-2 mt-2 col-3">
+                    <div class="type-selection p-0 mr-2 mt-2 col-12 col-sm-5 col-lg-3">
                         <label for="type-selection">Category:</label>
                         <select name="category_name" id="category_name" class="form-control">
                             <option value="">Select option:</option>
@@ -35,13 +35,13 @@
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="date-input mr-2 mt-2">
-                        <div class="d-flex p-0">
-                            <div class="start-date mr-2">
+                    <div class="date-input col-12 col-sm-12 col-lg-3 p-0 mr-0 mt-2">
+                        <div class="d-flex align-items-center justify-content-center p-0 flex-wrap">
+                            <div class="start-date col-12 col-sm-5 p-0 mr-2">
                                 <label for="start-date">Date Start:</label>
                                 <input type="date" name="date_start" class="form-control" value="<?php echo isset($_GET['date_start']) ? htmlspecialchars($_GET['date_start']) : ''; ?>">
                             </div>
-                            <div class="end-date mr-2">
+                            <div class="end-date col-12 col-sm-5 p-0 mr-2">
                                 <label for="end-date">Date End:</label>
                                 <input type="date" name="date_end" class="form-control" value="<?php echo isset($_GET['date_end']) ? htmlspecialchars($_GET['date_end']) : ''; ?>">
                             </div>
@@ -54,8 +54,8 @@
                 </div>
             </form>
         </div>
-        <div class="d-flex">
-            <div class="document-lists col-5 p-0 mx-auto">
+        <div class="d-flex flex-wrap">
+            <div class="document-lists col-12 col-sm-6 p-0 mx-auto">
                 <?php
                 $keyword = $_GET['keyword'] ?? '';
                 $cat = $_GET['category_name'] ?? '';
@@ -87,7 +87,6 @@
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>
-            <div class="col-6"></div>
         </div>
     </div>
 </div>

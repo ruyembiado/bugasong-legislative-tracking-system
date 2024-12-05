@@ -8,8 +8,8 @@ redirectNotLogin();
         <!-- <a class="mx-2 btn btn-secondary">View Recent</a> -->
         <!-- <a class="mx-2 btn btn-primary">Masterlist</a> -->
     </div>
-    <div class="legislative-container d-flex justify-content-around">
-        <div class="municipal-legislative col-3 p-2">
+    <div class="legislative-container d-flex flex-wrap">
+        <div class="municipal-legislative col-12 col-md-6 col-lg-3 p-2">
             <div class="document-list">
                 <h6 class="m-0 font-weight-bold text-primary text-start">Municipal Legislative</h6>
                 <?php foreach (getAllDocumentsDesc(5) as $document) : ?>
@@ -22,7 +22,7 @@ redirectNotLogin();
                 <a class="btn btn-primary Links" href="citizen_legislative_list.php" id="LegislativeLink" data-title="BLTS - Legislative Documents">More</a>
             </div>
         </div>
-        <div class="list-legislative col-3 p-2">
+        <div class="list-legislative col-12 col-md-6 col-lg-3 p-2">
             <div class="document-list">
                 <h6 class="m-0 font-weight-bold text-primary text-start">List of Legislative</h6>
                 <?php foreach (getAllDocumentsAsc(5) as $document) : ?>
@@ -35,7 +35,7 @@ redirectNotLogin();
                 <a class="btn btn-primary Links" href="citizen_legislative_list.php" id="LegislativeLink" data-title="BLTS - Legislative Documents">More</a>
             </div>
         </div>
-        <div class="list-legislative col-3 p-2">
+        <div class="list-legislative col-12 col-md-6 col-lg-3 p-2">
             <div class="document-list">
                 <h6 class="m-0 font-weight-bold text-primary text-start">Create Post</h6>
                 <form action="../actions/citizen_add.php" method="POST" class="">
@@ -66,7 +66,7 @@ redirectNotLogin();
                 </form>
             </div>
         </div>
-        <div class="forum-container col-3 p-2">
+        <div class="forum-container col-12 col-md-6 col-lg-3 p-2">
             <div class="forum-list">
                 <h6 class="m-0 font-weight-bold text-primary text-start">Forum Topics</h6>
                 <div class="forum-content mt-3 mb-1">

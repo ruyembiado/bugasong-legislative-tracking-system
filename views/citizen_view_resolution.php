@@ -18,14 +18,14 @@
                 <h1 class="h3 mb-0 text-gray-800">View Resolution</h1>
             </div>
             <div class="back-button mb-3">
-                <a href="citizen_legislative_list.php" class="btn btn-primary">Back</a>
+                <a href="citizen_legislative_list.php" class="btn btn-primary m-1">Back</a>
             </div>
 
             <!-- Content Row -->
             <div class="row">
-                <div class="form-container col-12">
+                <div class="form-container p-0 col-12">
                     <div class="card mb-4">
-                        <div class="card-body">
+                        <div class="card-body p-2">
                             <div id="ocrResults">
                                 <?php $resolution = getResolutionByID($_GET['resolution_id']) ?>
                                 <div class="d-flex flex-column text-center">

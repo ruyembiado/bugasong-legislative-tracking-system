@@ -102,9 +102,6 @@ redirectNotLogin();
                             </div>
                         </form>
                     </div>
-                    <div class="print-button bg-white card-header text-right">
-                        <button id="printButton" class="btn btn-primary">Print</button>
-                    </div>
 
                     <?php
                     $document_type = $_GET['document_type'] ?? '';
@@ -117,7 +114,22 @@ redirectNotLogin();
                     } else {
                         $documents = getAllDocumentsReport(999);
                     }
+
+                    $totalViews = 0;
+                    foreach ($documents as $document) :
+                        // Get the number of viewers for the current document
+                        $viewersCount = countViewers($document['id']);
+                        // Add the viewers count to the total
+                        $totalViews += $viewersCount;
+                    endforeach;
                     ?>
+
+                    <div class="d-flex justify-content-between align-items-center print-button bg-white card-header text-right">
+                        <div style="text-align: right;">
+                            <strong>Number of Views: <?php echo $totalViews; ?></strong>
+                        </div>
+                        <button id="printButton" class="btn btn-primary">Print</button>
+                    </div>
 
                     <div class="card-body">
                         <div class="table-responsive">
@@ -176,7 +188,7 @@ redirectNotLogin();
                                             </tbody>
                                         </table>
                                         <div style="text-align: right;">
-                                            <strong>Total Views: <?php echo $totalViews; ?></strong> 
+                                            <strong>Total Views: <?php echo $totalViews; ?></strong>
                                         </div>
                                     </div>
                                 </div>

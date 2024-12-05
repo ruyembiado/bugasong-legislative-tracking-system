@@ -3,21 +3,21 @@
 redirectNotLogin();
 ?>
 <!-- Content Wrapper -->
-<div class="d-flex flex-column mt-4 mx-auto col-10" style="width: 100%;">
+<div class="d-flex flex-column mt-4 mx-auto col-12 col-md-12 col-lg-10" style="width: 100%;">
 
     <!-- Main Content -->
     <div id="content">
         <!-- Begin Page Content -->
-        <div class="container-fluid">
+        <div class="container-fluid p-0 m-0">
 
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">Forum</h1>
                 <div class="back-button mb-3">
                     <?php if (isMember()) { ?>
-                        <a href="citizen_home.php" class="btn btn-primary mr-2">Home</a>
-                        <a href="citizen_legislative_list.php" class="btn btn-primary mr-5">List of Legislative</a>
-                        <a href="citizen_home.php" class="btn btn-primary">Back</a>
+                        <a href="citizen_home.php" class="btn btn-primary m-1">Home</a>
+                        <a href="citizen_legislative_list.php" class="btn btn-primary m-1">List of Legislative</a>
+                        <a href="citizen_home.php" class="btn btn-primary m-1">Back</a>
                     <?php } ?>
                     <?php if (isAdmin()) { ?>
                         <a href="admin_home.php" class="btn btn-primary mr-2">Dashboard</a>

@@ -102,9 +102,6 @@ redirectNotLogin();
                             </div>
                         </form>
                     </div>
-                    <div class="print-button bg-white card-header text-right">
-                        <button id="printButton" class="btn btn-primary">Print</button>
-                    </div>
 
                     <?php
                     $document_type = $_GET['document_type'] ?? '';
@@ -117,7 +114,19 @@ redirectNotLogin();
                     } else {
                         $documents = getAllDocumentsReport(999);
                     }
+
+                    $count = 0;
+                    foreach ($documents as $document) :
+                        $count++;
+                    endforeach;
                     ?>
+
+                    <div class="d-flex justify-content-between align-items-center print-button bg-white card-header text-right">
+                        <div style="text-align: right;">
+                            <strong>Number of Documents: <?php echo $count; ?></strong>
+                        </div>
+                        <button id="printButton" class="btn btn-primary">Print</button>
+                    </div>
 
                     <div class="card-body">
                         <div class="table-responsive">

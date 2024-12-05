@@ -4,13 +4,13 @@ redirectNotLogin();
 
 ?>
 <!-- Content Wrapper -->
-<div class="d-flex flex-column mt-4 mx-auto col-10" style="width: 100%;">
+<div class="d-flex flex-column mt-4 mx-auto col-12 col-md-12 col-lg-10" style="width: 100%;">
 
     <!-- Main Content -->
     <div id="content">
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">
+        <div class="container-fluid m-0 p-0">
 
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -26,12 +26,12 @@ redirectNotLogin();
 
                 <div class="back-button mb-3">
                     <a href="<?php echo isAdmin() ? 'admin_forum.php' : 'citizen_home.php' ?>"
-                        class="btn btn-primary">Back</a>
+                        class="btn btn-primary m-1">Back</a>
                 </div>
             </div>
 
             <!-- Content Row -->
-            <div class="container-fluid p-0 d-flex flex-row">
+            <div class="container-fluid p-0 m-0 d-flex flex-row">
                 <div class="col-12 col-sm-8 p-0">
                     <?php $post = viewTopic($_GET['post_id']); ?>
                     <div class="card shadow mb-3">
@@ -94,7 +94,7 @@ redirectNotLogin();
                                     <?php $position = ($comment['user_id'] === user_id()) ? 'right' : 'left' ?>
                                     <?php $color = ($comment['user_id'] === user_id()) ? 'dark' : 'secondary' ?>
                                     <div
-                                        class="col-8 comments card border-left-<?php echo $color; ?> p-1 mb-2 float-<?php echo $position; ?> p-0">
+                                        class="col-12 col-sm-8 comments card border-left-<?php echo $color; ?> p-1 mb-2 float-<?php echo $position; ?> p-0">
                                         <div class="user-container d-flex flex-column">
                                             <div class="comment">
                                                 <div class="d-flex justify-content-between">

@@ -25,7 +25,7 @@ redirectNotLogin();
                 <?php
                 $href = isMember() ? "citizen_ordinance.php" : (isAdmin() ? "admin_ordinance.php?manage" : redirect('dashboard', ''));
                 ?>
-                <a href="<?php echo $href; ?>" class="btn btn-primary">Back</a>
+                <a href="<?php echo $href; ?>" class="btn btn-primary m-1">Back</a>
             </div>
 
             <!-- Content Row -->

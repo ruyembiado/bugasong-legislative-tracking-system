@@ -24,7 +24,7 @@ redirectNotLogin();
                     <h1 class="h3 mb-0 text-gray-800">Update Ordinance</h1>
                 </div>
                 <div class="back-button mb-3">
-                    <a href="admin_ordinance.php?manage" class="btn btn-primary">Back</a>
+                    <a href="admin_ordinance.php?manage" class="btn btn-primary m-1">Back</a>
                 </div>
 
                 <!-- Content Row -->

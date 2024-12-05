@@ -144,16 +144,16 @@ clearPassVerification();
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link Links" href="admin_system_setting.php" id="SystemSettingLink" data-title="BLTS - System Settings">
-                            <i class="fas fa-cog"></i>
+                        <a class="nav-link Links" id="SystemSettingLink" href="#" data-toggle="collapse" data-target="#SystemSettingPage" aria-expanded="true" aria-controls="SystemSettingPage" data-title="BLTS - System Settings">
+                            <i class="fas fa-tag"></i>
                             <span>System Settings</span>
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link Links" href="admin_log_history.php" id="LogHistoryLink" data-title="BLTS - Log History">
-                            <i class="fas fa-history"></i>
-                            <span>Log History</span>
-                        </a>
+                        <div id="SystemSettingPage" class="collapse <?php echo (isActiveMenu('/admin_change_logo.php') || isActiveMenu('/admin_log_history.php')) ? 'show' : ''; ?>" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item <?php echo (isActiveMenu('/admin_change_logo.php')) ? 'bg-secondary text-light' : '' ?>" href="admin_change_logo.php">Change System Logo</a>
+                                <a class="collapse-item <?php echo (isActiveMenu('/admin_log_history.php')) ? 'bg-secondary text-light' : '' ?>" href="admin_log_history.php">Log History</a>
+                            </div>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link Links" id="ReportLink" href="#" data-toggle="collapse" data-target="#ReportPage" aria-expanded="true" aria-controls="ReportPage" data-title="BLTS - Reports">

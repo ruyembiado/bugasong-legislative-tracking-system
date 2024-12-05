@@ -23,7 +23,7 @@ redirectNotLogin();
                     <h1 class="h3 mb-0 text-gray-800">Update User</h1>
                 </div>
                 <div class="back-button mb-3">
-                    <a href="admin_user_management.php" class="btn btn-primary">Back</a>
+                    <a href="admin_user_management.php" class="btn btn-primary m-1">Back</a>
                 </div>
 
                 <!-- Content Row -->

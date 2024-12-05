@@ -49,8 +49,15 @@ redirectNotLogin();
                                             <td class="text-gray-800"><?php echo date('F d Y h:i:s a', strtotime($res_cat['date_added'])); ?>
                                             </td>
                                             <td>
-                                                <a href="admin_update_resolution_cat.php?resolution_cat_id=<?php echo $res_cat['resolution_cat_id']; ?>" class="btn btn-primary px-2 py-1 my-1">Update</a>
-                                                <a href="../actions/admin_delete.php?resolution_cat=delete&resolution_cat_id=<?php echo $res_cat['resolution_cat_id']; ?>" class="btn btn-danger px-2 py-1 my-1 delete">Delete</a>
+                                                <a class="nav-link" href="#" id="actionDropdownMenu" role="button"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v text-dark"></i>
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="actionDropdownMenu">
+                                                    <a href="admin_update_resolution_cat.php?resolution_cat_id=<?php echo $res_cat['resolution_cat_id']; ?>" class="dropdown-item">Update</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a href="../actions/admin_delete.php?resolution_cat=delete&resolution_cat_id=<?php echo $res_cat['resolution_cat_id']; ?>" class="dropdown-item delete">Delete</a>
+                                                </ul>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

@@ -4,7 +4,7 @@
 
 <?php if (!isLogin()): ?>
     <div class="login-container vh-100" style="background: url('../uploads/blts-bg.jpg') no-repeat center center / cover;">
-        <div class="col-10 col-md-4 mx-auto mt-5 mb-5 p-5 rounded border shadow bg-light">
+        <div class="col-11 col-md-6 col-lg-4 mx-auto mt-5 mb-5 p-4 p-sm-5 rounded border shadow bg-light">
             <!-- <div class="position-absolute w-100 h-100"
                 style="background-color: rgba(0, 0, 0, .25); z-index: 1; border-radius: inherit; top: 0; left: 0;"></div>
             <div class="position-relative" style="z-index: 2;"> -->

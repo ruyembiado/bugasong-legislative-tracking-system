@@ -76,7 +76,6 @@ redirectNotLogin();
                                                         <i class="fa fa-ellipsis-v text-dark"></i>
                                                     </a>
                                                     <ul class="dropdown-menu" aria-labelledby="actionDropdownMenu">
-
                                                         <a href="view_resolution.php?resolution_id=<?php echo $resolution['resolution_id']; ?>"
                                                             class="dropdown-item">View</a>
                                                         <a href="admin_update_resolution.php?resolution_id=<?php echo $resolution['resolution_id']; ?>"

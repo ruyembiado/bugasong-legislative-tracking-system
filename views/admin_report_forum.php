@@ -114,10 +114,7 @@ redirectNotLogin();
                             </div>
                         </form>
                     </div>
-                    <div class="print-button bg-white card-header text-right">
-                        <button id="printButton" class="btn btn-primary">Print</button>
-                    </div>
-
+                    
                     <?php
                     $_month = $_GET['month'] ?? '';
                     $_year = $_GET['year'] ?? '';
@@ -128,8 +125,19 @@ redirectNotLogin();
                     } else {
                         $posts = ForumReport(999);
                     }
+
+                    $count = 0;
+                    foreach ($posts as $post) :
+                        $count++;
+                    endforeach;
                     ?>
 
+                    <div class="d-flex justify-content-between align-items-center print-button bg-white card-header text-right">
+                        <div style="text-align: right;">
+                            <strong>Number of Forum: <?php echo $count; ?></strong>
+                        </div>
+                        <button id="printButton" class="btn btn-primary">Print</button>
+                    </div>
 
                     <div class="card-body">
                         <div class="table-responsive">

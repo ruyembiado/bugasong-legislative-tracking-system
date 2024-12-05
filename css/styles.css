@@ -132,10 +132,6 @@ a.document-link:hover {
     }
 }
 
-.notification-alert.dropdown-list {
-    width: 27rem !important;
-}
-
 .notification-alert .notication-container {
     max-height: 80vh !important;
     overflow-y: auto;

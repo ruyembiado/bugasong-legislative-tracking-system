@@ -3,6 +3,7 @@ $notifications = getMyNotification($_SESSION['user_id']); // Fetch all notificat
 $unreadNotifications = getMyNotification($_SESSION['user_id'], null, true); // Fetch only unread notifications
 $unreadCount = count($unreadNotifications); // Count unread notifications
 ?>
+
 <li class="nav-item dropdown no-arrow mx-1">
     <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
