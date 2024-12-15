@@ -55,7 +55,7 @@
             </form>
         </div>
         <div class="d-flex flex-wrap">
-            <div class="document-lists col-12 col-sm-6 p-0">
+            <div class="document-lists col-12 col-sm-12 p-0">
                 <?php
                 $keyword = $_GET['keyword'] ?? '';
                 $cat = $_GET['category_name'] ?? '';
