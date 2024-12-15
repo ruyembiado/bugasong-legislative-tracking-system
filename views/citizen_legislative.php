@@ -14,7 +14,7 @@
                         <a href="citizen_home.php" class="btn btn-primary m-1">Home</a>
                         <a href="citizen_forum.php" class="btn btn-primary m-1">Forum</a>
                     <?php } ?>
-                    <a href="citizen_home.php" class="btn btn-primary m-1">Back</a>
+                    <a href="citizen_home.php" class="btn btn-primary m-1"><i class="fas fa-arrow-left"></i></a>
                 </div>
             </div>
             <h1 class="h4 mb-0 text-gray-800 text-start">Ordinances and Resolutions</h1>
@@ -55,7 +55,7 @@
             </form>
         </div>
         <div class="d-flex flex-wrap">
-            <div class="document-lists col-12 col-sm-6 p-0 mx-auto">
+            <div class="document-lists col-12 col-sm-6 p-0">
                 <?php
                 $keyword = $_GET['keyword'] ?? '';
                 $cat = $_GET['category_name'] ?? '';
