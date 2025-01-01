@@ -26,7 +26,7 @@ redirectNotLogin();
 
                 <div class="back-button mb-3">
                     <a href="<?php echo isAdmin() ? 'admin_forum.php' : 'citizen_home.php' ?>"
-                        class="btn btn-primary m-1">Back</a>
+                        class="btn btn-primary m-1"><i class="fas fa-arrow-left"></i></a>
                 </div>
             </div>
 

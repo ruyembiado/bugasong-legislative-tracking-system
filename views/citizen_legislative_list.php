@@ -24,7 +24,7 @@ redirectNotLogin();
                     <div class="document-list">
                         <h5 class="m-0 font-weight-bold text-dark text-start"><?php echo $category['resolution_category_name'] ?></h5>
                         <?php
-                        $documents = getDocumentsByCategoryName($category['resolution_category_name']);
+                        $documents = getDocumentsByCategoryName($category['resolution_category_name'], 'resolution');
                         if (!empty($documents)) :
                             foreach ($documents as $document) : ?>
                                 <div class="list my-3">
@@ -54,7 +54,7 @@ redirectNotLogin();
                         <h5 class="m-0 font-weight-bold text-dark text-start"><?php echo $category['ordinance_category_name'] ?></h5>
                         <?php if (!empty($category)) : ?>
                             <?php
-                            $documents = getDocumentsByCategoryName($category['ordinance_category_name']);
+                            $documents = getDocumentsByCategoryName($category['ordinance_category_name'], 'ordinance');
                             if (!empty($documents)) :
                                 foreach ($documents as $document) : ?>
                                     <div class="list my-3">

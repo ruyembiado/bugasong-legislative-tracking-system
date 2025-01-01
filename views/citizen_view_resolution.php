@@ -18,7 +18,7 @@
                 <h1 class="h3 mb-0 text-gray-800">View Resolution</h1>
             </div>
             <div class="back-button mb-3">
-                <a href="citizen_legislative_list.php" class="btn btn-primary m-1">Back</a>
+                <a href="citizen_legislative_list.php" class="btn btn-primary m-1"><i class="fas fa-arrow-left"></i></a>
             </div>
 
             <!-- Content Row -->

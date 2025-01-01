@@ -1582,46 +1582,58 @@ function clearSessionIfViews()
 
 clearSessionIfViews();
 
-function getDocumentsByCategoryName($category_name)
+function getDocumentsByCategoryName($category_name, $category_type)
 {
     global $conn;
 
     $documents = [];
 
-    $sql = "
-        SELECT 
-            o.ordinance_id AS id,
-            o.file,
-            o.ordinanceNo AS documentNo,
-            'ordinance' AS document_type,
-            oc.ordinance_category_name AS category_name
-        FROM ordinances o
-        INNER JOIN ordinance_cat oc ON o.ordinance_cat_id = oc.ordinance_cat_id
-        WHERE oc.ordinance_category_name = ?
-        UNION ALL
-        SELECT 
-            r.resolution_id AS id,
-            r.file,
-            r.resolutionNo AS documentNo,
-            'resolution' AS document_type,
-            rc.resolution_category_name AS category_name
-        FROM resolutions r
-        INNER JOIN resolution_cat rc ON r.resolution_cat_id = rc.resolution_cat_id
-        WHERE rc.resolution_category_name = ?
-    ";
+    // Validate the category_type to ensure it is either 'ordinance' or 'resolution'
+    if ($category_type !== 'ordinance' && $category_type !== 'resolution') {
+        throw new Exception('Invalid category type provided. It must be either "ordinance" or "resolution".');
+    }
+    // Prepare the SQL query based on the category_type
+    if ($category_type === 'ordinance') {
+        $sql = "
+            SELECT 
+                o.ordinance_id AS id,
+                o.file,
+                o.ordinanceNo AS documentNo,
+                'ordinance' AS document_type,
+                oc.ordinance_category_name AS category_name
+            FROM ordinances o
+            INNER JOIN ordinance_cat oc ON o.ordinance_cat_id = oc.ordinance_cat_id
+            WHERE oc.ordinance_category_name = ?
+        ";
+    } elseif ($category_type === 'resolution') {
+        $sql = "
+            SELECT 
+                r.resolution_id AS id,
+                r.file,
+                r.resolutionNo AS documentNo,
+                'resolution' AS document_type,
+                rc.resolution_category_name AS category_name
+            FROM resolutions r
+            INNER JOIN resolution_cat rc ON r.resolution_cat_id = rc.resolution_cat_id
+            WHERE rc.resolution_category_name = ?
+        ";
+    }
 
+    // Prepare the SQL statement
     $stmt = $conn->prepare($sql);
     if ($stmt === false) {
         throw new Exception('Database prepare failed: ' . $conn->error);
     }
 
     // Bind the parameter for secure injection
-    $stmt->bind_param("ss", $category_name, $category_name);
+    $stmt->bind_param("s", $category_name);
 
+    // Execute the query
     if (!$stmt->execute()) {
         throw new Exception('Execute failed: ' . $stmt->error);
     }
 
+    // Fetch the result
     $result = $stmt->get_result();
     if ($result) {
         $documents = $result->fetch_all(MYSQLI_ASSOC);
