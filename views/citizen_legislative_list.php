@@ -60,8 +60,8 @@ redirectNotLogin();
                                     <div class="list my-3">
                                         <a class="document-link" onclick="addDocumentView('<?php echo user_id(); ?>', '<?php echo $document['document_type']; ?>', <?php echo $document['id']; ?>)"
                                             href="<?php echo ($document['document_type'] === 'ordinance') ?
-                                                        'citizen_view_resolution.php?resolution_id=' . $document['id'] :
-                                                        'citizen_view_ordinance.php?ordinance_id=' . $document['id']; ?>">
+                                                        'citizen_view_ordinance.php?resolution_id=' . $document['id'] :
+                                                        'citizen_view_resolution.php?ordinance_id=' . $document['id']; ?>">
                                             <p class="m-0 font-weight-normal text-secondary"><?php echo $document['documentNo']; ?></p>
                                         </a>
                                     </div>
