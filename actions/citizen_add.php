@@ -50,7 +50,7 @@ if (isset($_POST['create_post'])) :
                 create_log_history($_SESSION['user_id'], 'Create Post', $_POST['topic']);
 
                 removeValue(); //remove the retain value in inputs
-                setFlash('success', 'Your topic is being checked. You will be notified once it is diplayed on the forum.'); //set message
+                setFlash('success', 'Your topic is being checked. You will be notified once it is Displayed on the forum.'); //set message
                 redirect('citizen_forum'); //shortcut for header('location:index.php ');
             } else {
                 retainValue(); //retain value even if there is errors or refresh
