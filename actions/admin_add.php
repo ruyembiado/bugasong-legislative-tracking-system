@@ -1,0 +1,345 @@
+<?php
+require_once '../config/config.php';
+
+// Add Resolution
+if (isset($_POST['add_resolution'])) : //check if the button is click
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check if the method is post 
+
+        $fields = [
+            'resolutionNo' => $_POST['resolutionNo'],
+            'title' => $_POST['title'],
+            'whereasClauses' => $_POST['whereasClauses'],
+            'resolvingClauses' => $_POST['resolvingClauses'],
+            'optionalClauses' => $_POST['optionalClauses'],
+            'approvalDetails' => $_POST['approvalDetails']
+        ];
+
+        $validations = [
+            'resolutionNo' => [
+                'required' => false,
+            ],
+            'resolutionNo' => [
+                'required' => true,
+            ],
+            'title' => [
+                'required' => true,
+            ],
+            'whereasClauses' => [
+                'required' => true,
+            ],
+            'resolvingClauses' => [
+                'required' => true,
+            ],
+            'optionalClauses' => [],
+            'approvalDetails' => [
+                'required' => true,
+            ],
+        ];
+
+        $errors = validate($fields, $validations); //activate the validation
+
+        if (empty($errors)) { //check if the errors is empty
+            $data = [
+                'resolution_cat_id' => $_POST['resolution_category'],
+                'resolutionNo' => $_POST['resolutionNo'],
+                'title' => $_POST['title'],
+                'whereasClauses' => $_POST['whereasClauses'],
+                'resolvingClauses' => $_POST['resolvingClauses'],
+                'optionalClauses' => $_POST['optionalClauses'],
+                'approvalDetails' => $_POST['approvalDetails'],
+                'file' => $_POST['file'],
+                'user_id' => $_POST['user_id']
+            ]; //put it in array before saving
+
+            $save = save('resolutions', $data); // $save = save('table_name', ['colum_name'=>$username]); if there is one data to save use this
+
+            if ($save) {
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Create Resolution', $_POST['resolutionNo']);
+
+                removeValue(); //remove the retain value in inputs
+                setFlash('success', 'Resolution Added Successfully'); //set message
+                redirect('admin_add_resolution'); //shortcut for header('location:index.php ');
+            } else {
+                retainValue(); //retain value even if there is errors or refresh
+                setFlash('failed', 'Add Failed'); //set message
+                redirect('admin_add_resolution'); //shortcut for header('location:index.php ');
+            }
+        } else {
+            retainValue(); //retain value even if there is errors or refresh
+            redirect('admin_add_resolution', $errors); //shortcut for header('location:register.php?errors=$errors');
+        }
+    }
+
+endif;
+
+// Add Ordinance Category
+if (isset($_POST['add_ordinance_category'])) : //check if the button is click
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check if the method is post 
+
+        $fields = [
+            'ordinance_category_name' => $_POST['ordinance_category_name'],
+        ];
+
+        $validations = [
+            'ordinance_category_name' => [
+                'required' => false,
+                'unique' => [
+                    [
+                        'fieldName' => 'ordinance_category_name',
+                        'tableName' => 'ordinance_cat'
+                    ],
+                ]
+            ]
+        ];
+
+        $errors = validate($fields, $validations); //activate the validation
+
+        if (empty($errors)) { //check if the errors is empty
+            $data = [
+                'ordinance_category_name' => $_POST['ordinance_category_name'],
+            ]; //put it in array before saving
+
+            $save = save('ordinance_cat', $data); // $save = save('table_name', ['colum_name'=>$username]); if there is one data to save use this
+
+            if ($save) {
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Create Category', $_POST['ordinance_category_name']);
+
+                removeValue(); //remove the retain value in inputs
+                setFlash('success', 'Resolution Category Added Successfully'); //set message
+                redirect('admin_add_ordinance_cat'); //shortcut for header('location:index.php ');
+            } else {
+                retainValue(); //retain value even if there is errors or refresh
+                setFlash('failed', 'Add Failed'); //set message
+                redirect('admin_add_ordinance_cat'); //shortcut for header('location:index.php ');
+            }
+        } else {
+            retainValue(); //retain value even if there is errors or refresh
+            redirect('admin_add_ordinance_cat', $errors); //shortcut for header('location:register.php?errors=$errors');
+        }
+    }
+
+endif;
+
+// Add Resolution Category
+if (isset($_POST['add_resolution_category'])) : //check if the button is click
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check if the method is post 
+
+        $fields = [
+            'resolution_category_name' => $_POST['resolution_category_name'],
+        ];
+
+        $validations = [
+            'resolution_category_name' => [
+                'required' => false,
+                'unique' => [
+                    [
+                        'fieldName' => 'resolution_category_name',
+                        'tableName' => 'resolution_cat'
+                    ],
+                ]
+            ]
+        ];
+
+        $errors = validate($fields, $validations); //activate the validation
+
+        if (empty($errors)) { //check if the errors is empty
+            $data = [
+                'resolution_category_name' => $_POST['resolution_category_name'],
+            ]; //put it in array before saving
+
+            $save = save('resolution_cat', $data); // $save = save('table_name', ['colum_name'=>$username]); if there is one data to save use this
+
+            if ($save) {
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Create Category', $_POST['resolution_category_name']);
+
+                removeValue(); //remove the retain value in inputs
+                setFlash('success', 'Resolution Category Added Successfully'); //set message
+                redirect('admin_add_resolution_cat'); //shortcut for header('location:index.php ');
+            } else {
+                retainValue(); //retain value even if there is errors or refresh
+                setFlash('failed', 'Add Failed'); //set message
+                redirect('admin_add_resolution_cat'); //shortcut for header('location:index.php ');
+            }
+        } else {
+            retainValue(); //retain value even if there is errors or refresh
+            redirect('admin_add_resolution_cat', $errors); //shortcut for header('location:register.php?errors=$errors');
+        }
+    }
+
+endif;
+
+// Add Ordinance
+if (isset($_POST['add_ordinance'])) : // check if the button is clicked
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') { // check if the method is post 
+
+        $fields = [
+            'ordinanceNo' => $_POST['ordinanceNo'],
+            'title' => $_POST['title'],
+            'preamble' => $_POST['preamble'],
+            'enactingClause' => $_POST['enactingClause'],
+            'body' => $_POST['body'],
+            'repealingClause' => $_POST['repealingClause'],
+            'effectivityClause' => $_POST['effectivityClause'],
+            'enactmentDetails' => $_POST['enactmentDetails'],
+        ];
+
+        $validations = [
+            'ordinanceNo' => [
+                'required' => true,
+            ],
+            'title' => [
+                'required' => true,
+            ],
+            'preamble' => [
+                'required' => true,
+            ],
+            'enactingClause' => [
+                'required' => true,
+            ],
+            'body' => [
+                'required' => true,
+            ],
+            'repealingClause' => [
+                'required' => true,
+            ],
+            'effectivityClause' => [
+                'required' => true,
+            ],
+            'enactmentDetails' => [
+                'required' => true,
+            ],
+        ];
+
+        $errors = validate($fields, $validations); // activate the validation
+
+        if (empty($errors)) { // check if the errors are empty
+            $data = [
+                'ordinance_cat_id' => $_POST['ordinance_category'],
+                'ordinanceNo' => $_POST['ordinanceNo'],
+                'title' => $_POST['title'],
+                'preamble' => $_POST['preamble'],
+                'enactingClause' => $_POST['enactingClause'],
+                'body' => $_POST['body'],
+                'repealingClause' => $_POST['repealingClause'],
+                'effectivityClause' => $_POST['effectivityClause'],
+                'enactmentDetails' => $_POST['enactmentDetails'],
+                'file' => $_POST['file'],
+                'user_id' => $_POST['user_id']
+            ]; // put it in an array before saving
+
+            $save = save('ordinances', $data); // $save = save('table_name', ['column_name' => $username]); if there is one data to save use this
+
+            if ($save) {
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Create Ordinance', $_POST['ordinanceNo']);
+
+                removeValue(); // remove the retain value in inputs
+                setFlash('success', 'Ordinance Added Successfully'); // set message
+                redirect('admin_add_ordinance'); // shortcut for header('location:index.php');
+            } else {
+                retainValue(); // retain value even if there are errors or refresh
+                setFlash('failed', 'Add Failed'); // set message
+                redirect('admin_add_ordinance'); // shortcut for header('location:index.php');
+            }
+        } else {
+            retainValue(); // retain value even if there are errors or refresh
+            redirect('admin_add_ordinance', $errors); // shortcut for header('location:register.php?errors=$errors');
+        }
+    }
+
+endif;
+
+
+// Add new user
+if (isset($_POST['add_user'])) :
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') { //check if the method is post
+
+        //get the value POST
+        $name = $_POST['name'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $confpassword = $_POST['confirm_password'];
+        $email = $_POST['email'];
+
+        //Input the fields
+        $fields = [
+            'name'          => $name, //or 'name =>$_POST['name'],'
+            'username'      => $username,
+            'password'      => $password,
+            'confirm_password'  => $confpassword,
+            'email'         => $email,
+        ];
+        //Create Validation if you want to see the choices ..go to database.php
+        $validations = [
+            'name' => [
+                'required' => true,
+                'min_length' => 2,
+                'max_length' => 100
+            ],
+            'username' => [
+                'required' => true,
+                'min_length' => 5,
+                'max_length' => 50,
+                'unique' => [
+                    [
+                        'fieldName' => 'username',
+                        'tableName' => 'users'
+                    ],
+                ],
+            ],
+            'email'    => [
+                'required'  => true,
+                'email'     => true,
+                'unique'    => [
+                    'fieldName' => 'email',
+                    'tableName' => 'users'
+                ],
+            ],
+            'password' => [
+                'required' => true,
+                'min_length' => 8,
+                'max_length' => 100
+            ],
+            'confirm_password' => [
+                'required' => true,
+                'match' => 'password'
+            ]
+        ];
+
+        $errors = validate($fields, $validations); //activate the validation
+
+        if (empty($errors)) { //check if the errors is empty
+            $data = [
+                'name'  => $name, //or $_POST['name']
+                'username'  => $username,
+                'password'  => password_hash($password, PASSWORD_DEFAULT), //encrypt the password like md5
+                'email'     => $email,
+                'user_type'      => 'citizen',
+            ]; //put it in array before saving
+
+            $save = save('users', $data); // $save = save('table_name', ['colum_name'=>$username]); if there is one data to save use this
+
+            if ($save) {
+                // Log History
+                create_log_history($_SESSION['user_id'], 'Create User', $_POST['name']);
+                removeValue(); //remove the retain value in inputs
+                setFlash('success', 'User Registered Successfully'); //set message
+                redirect('admin_add_user'); //shortcut for header('location:index.php ');
+            } else {
+                retainValue(); //retain value even if there is errors or refresh
+                setFlash('failed', 'Register Failed'); //set message
+                redirect('admin_add_user'); //shortcut for header('location:index.php ');
+            }
+        } else {
+            retainValue(); //retain value even if there is errors or refresh
+            redirect('admin_add_user', $errors); //shortcut for header('location:register.php?errors=$errors');
+        }
+    }
+endif;

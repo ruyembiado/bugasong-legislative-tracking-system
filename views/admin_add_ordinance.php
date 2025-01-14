@@ -1,0 +1,264 @@
+<?php
+@include('header.php');
+
+redirectNotLogin();
+
+?>
+
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+        <!-- Topbar -->
+        <?php @include('top_navbar.php'); ?>
+        <!-- End of Topbar -->
+
+        <?php if (isAdmin()) : ?>
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Add Ordinance</h1>
+                </div>
+                <div class="back-button mb-3">
+                    <a href="admin_ordinance.php?manage" class="btn btn-primary m-1">Back</a>
+                </div>
+
+                <!-- Content Row -->
+                <div class="row">
+                    <div class="form-container col-4">
+                        <div class="card shadow mb-3">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Upload files for OCR</h6>
+                            </div>
+                            <div class="card-body">
+                                <form id="uploadForm" method="post" enctype="multipart/form-data">
+                                    <label class="mt-2" for="uploadedFiles">Choose files to upload:</label>
+                                    <input class="form-control-file text-gray-800" type="file" multiple name="uploadedFiles[]" id="uploadedFiles">
+                                    <div class="mb-0 mt-2 d-flex justify-content-end">
+                                        <input type="submit" class="btn btn-primary" name="uploadBtn" value="Upload">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Ordinance Information</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="ocrResults">
+                                    <form id="ordinanceForm" action="../actions/admin_add.php" method="POST" enctype="multipart/form-data">
+                                        <label class="mt-2" for="ordinance_category">Category:</label>
+                                        <select class="form-control text-gray-800" name="ordinance_category" id="ordinance_category">
+                                            <option value="">Select option:</option>
+                                            <?php foreach (getAllOrdinanceCategoryAsc('ordinance_category_name', null) as $ordinance_category) : ?>
+                                                <option value="<?php echo $ordinance_category['ordinance_cat_id']; ?>" <?php if (getValue('ordinance_category') === $ordinance_category['ordinance_cat_id']) echo ' selected'; ?>><?php echo $ordinance_category['ordinance_category_name']; ?> </option>
+                                            <?php endforeach; ?>
+                                        </select>
+
+                                        <label class="mt-2" for="ordinanceNo">Ordinance No:</label>
+                                        <textarea rows="1" class="form-control text-gray-800" id="ordinanceNo" name="ordinanceNo"><?php echo getValue('ordinanceNo'); ?></textarea>
+                                        <?php if (showError('ordinanceNo')) : ?>
+                                            <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('ordinanceNo'); ?></p>
+                                        <?php endif; ?>
+
+                                        <label class="mt-2" for="title">Title:</label>
+                                        <textarea rows="3" class="form-control text-gray-800" id="title" name="title"><?php echo getValue('title'); ?></textarea>
+                                        <?php if (showError('title')) : ?>
+                                            <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('title'); ?></p>
+                                        <?php endif; ?>
+
+                                        <label class="mt-2" for="preamble">Preamble:</label>
+                                        <textarea rows="10" class="form-control text-gray-800" id="preamble" name="preamble"><?php echo getValue('preamble'); ?></textarea>
+                                        <?php if (showError('preamble')) : ?>
+                                            <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('preamble'); ?></p>
+                                        <?php endif; ?>
+
+                                        <label class="mt-2" for="enactingClause">Enacting Clause:</label>
+                                        <textarea rows="10" class="form-control text-gray-800" id="enactingClause" name="enactingClause"><?php echo getValue('enactingClause'); ?></textarea>
+                                        <?php if (showError('enactingClause')) : ?>
+                                            <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('enactingClause'); ?></p>
+                                        <?php endif; ?>
+
+                                        <label class="mt-2" for="body">Body:</label>
+                                        <textarea rows="10" class="form-control text-gray-800" id="body" name="body"><?php echo getValue('body'); ?></textarea>
+                                        <?php if (showError('body')) : ?>
+                                            <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('body'); ?></p>
+                                        <?php endif; ?>
+
+                                        <label class="mt-2" for="repealingClause">Repealing Clause:</label>
+                                        <textarea rows="10" class="form-control text-gray-800" id="repealingClause" name="repealingClause"><?php echo getValue('repealingClause'); ?></textarea>
+                                        <?php if (showError('repealingClause')) : ?>
+                                            <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('repealingClause'); ?></p>
+                                        <?php endif; ?>
+
+                                        <label class="mt-2" for="effectivityClause">Effectivity Clause:</label>
+                                        <textarea rows="10" class="form-control text-gray-800" id="effectivityClause" name="effectivityClause"><?php echo getValue('effectivityClause'); ?></textarea>
+                                        <?php if (showError('effectivityClause')) : ?>
+                                            <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('effectivityClause'); ?></p>
+                                        <?php endif; ?>
+
+                                        <label class="mt-2" for="enactmentDetails">Enactment Details:</label>
+                                        <textarea rows="10" class="form-control text-gray-800" id="enactmentDetails" name="enactmentDetails"><?php echo getValue('enactmentDetails'); ?></textarea>
+                                        <?php if (showError('enactmentDetails')) : ?>
+                                            <p class="error text-danger text-start m-0" style="font-size: 12px;"><?php echo showError('enactmentDetails'); ?></p>
+                                        <?php endif; ?>
+
+                                        <div class="mb-0 mt-2 d-flex justify-content-end">
+                                            <input type="hidden" name="file" id="file" value="<?php echo getValue('file'); ?>">
+                                            <input type="hidden" name="user_id" value="<?php echo user_id(); ?>">
+                                            <button type="submit" name="add_ordinance" class="btn btn-primary" value="add_ordinance">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-8 p-0">
+                        <div class="card shadow mb-3">
+                            <div class="card-header">
+                                <h6 class="m-0 font-weight-bold text-primary">Extracted File</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="ocr-result-container">
+                                    <div id="ocrResultsFile"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card shadow mb-3">
+                            <div class="card-header">
+                                <h6 class="m-0 font-weight-bold text-primary">Extracted Text</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="ocr-result-container">
+                                    <div id="ocrResultsText"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+
+        <?php else : redirect('dashboard', ''); ?>
+        <?php endif; ?>
+
+    </div>
+    <!-- End of Main Content -->
+
+    <!-- Loading screen -->
+    <div id="loadingScreen" style="display: none;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Bugasong Legislative Tracking System 2024</span>
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
+
+</div>
+<!-- End of Content Wrapper -->
+
+<?php
+@include('footer.php');
+?>
+
+<?php
+// Check if there is an error message in the URL parameter
+if (isset($_GET['failed'])) {
+    // Set the error message in the session
+    $_SESSION['errorMessage'] = urldecode($_GET['failed']);
+    // Redirect to the same page without the error message in the URL parameter
+    header('Location: ' . strtok($_SERVER['REQUEST_URI'], '?'));
+    exit();
+}
+
+// Check if there is an error message in the session
+if (isset($_SESSION['errorMessage'])) {
+    // Display error message
+    echo '<div class="alert alert-danger">' . $_SESSION['errorMessage'] . '</div>';
+    // Clear session message
+    unset($_SESSION['errorMessage']);
+}
+
+?>
+
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Show loading screen
+        document.getElementById('loadingScreen').style.display = 'flex';
+
+        var formData = new FormData(this);
+        fetch('../actions/upload_ordinance.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide loading screen
+                document.getElementById('loadingScreen').style.display = 'none';
+                if (data.success) {
+                    // Populate Ordinance Information form
+                    document.getElementById('ordinanceNo').value = data.ordinanceData.ordinanceNo;
+                    document.getElementById('title').value = data.ordinanceData.title;
+                    document.getElementById('preamble').value = data.ordinanceData.preamble;
+                    document.getElementById('enactingClause').value = data.ordinanceData.enactingClause;
+                    document.getElementById('body').value = data.ordinanceData.body;
+                    document.getElementById('repealingClause').value = data.ordinanceData.repealingClause;
+                    document.getElementById('effectivityClause').value = data.ordinanceData.effectivityClause;
+                    document.getElementById('enactmentDetails').value = data.ordinanceData.enactmentDetails;
+
+                    // Show Ordinance Information
+                    document.getElementById('ocrResults').style.display = 'block';
+
+                    // Update file input with URLs
+                    var fileInput = document.getElementById('file');
+                    fileInput.value = data.uploadedFileUrls;
+
+                    // Populate Extracted File section
+                    var ocrResultsFileDiv = document.getElementById('ocrResultsFile');
+                    var extractedImagesHtml = '';
+                    data.uploadedFileUrls.forEach(function(url) {
+                        if (url.endsWith('.jpg') || url.endsWith('.jpeg') || url.endsWith('.png')) {
+                            extractedImagesHtml += '<img src="' + url + '" alt="Scanned Image" class="img-thumbnail" style="max-width: 100%; height: auto; margin-bottom: 10px;">';
+                        } else if (url.endsWith('.pdf')) {
+                            extractedImagesHtml += '<iframe src="' + url + '" type="application/pdf" frameborder="0" marginheight="0" marginwidth="0" width="100%" height="500px" scrolling="auto" style="margin-bottom: 10px;"></iframe>';
+                        }
+                    });
+                    ocrResultsFileDiv.innerHTML = extractedImagesHtml;
+
+                    // Populate Extracted Text section
+                    var ocrResultsTextDiv = document.getElementById('ocrResultsText');
+                    ocrResultsTextDiv.innerHTML = '<pre style="white-space: pre-wrap; word-wrap: break-word;">' + data.extractedText + '</pre>';
+                } else {
+                    // Display error message as a flash message
+                    Swal.fire({
+                        icon: 'warning',
+                        iconColor: 'red',
+                        title: data.message,
+                        confirmButtonColor: '#4e73df',
+                        showConfirmButton: true,
+                    });
+                }
+            })
+            .catch(error => {
+                // Hide loading screen
+                document.getElementById('loadingScreen').style.display = 'none';
+
+                console.error('Error:', error);
+            });
+    });
+</script>

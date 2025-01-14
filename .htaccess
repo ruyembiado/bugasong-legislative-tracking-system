@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# Check if the requested filename is an existing file or directory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirect all other requests to views/index.php
+RewriteRule ^(.*)$ views/index.php [L]

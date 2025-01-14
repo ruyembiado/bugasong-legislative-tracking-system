@@ -1,0 +1,12 @@
+Install system requirements:
+1. Install Tesseract OCR from the requirements folder
+2. Paste poppler folder inside the C:\Program Files
+
+Set environment variables:
+1. Go to to search bar and search "Edit the system environment variables"
+2. Click on the Environment Variables button
+3. On the list of System  variables, double click the Path variable.
+4. On edit environment variable, click new and these variabless:
+
+C:\Program Files\Tesseract-OCR
+C:\Program Files\poppler\Library\bin
