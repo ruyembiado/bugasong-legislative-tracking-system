@@ -7,10 +7,6 @@
 
 <!-- Content Wrapper -->
 <div class="d-flex flex-column">
-<<<<<<< HEAD
-
-=======
->>>>>>> master
     <!-- Main Content -->
     <div id="content">
 

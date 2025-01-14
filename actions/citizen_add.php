@@ -37,11 +37,8 @@ if (isset($_POST['create_post'])) :
                     $latestpost = getLatestPost();
                     if ($analyzepost['status'] === "pending") {
                         update('posts', ['post_id' => $latestpost['post_id']], ['reason' => $analyzepost['reason']]);
-<<<<<<< HEAD
-=======
                     } else {
                         update('posts', ['post_id' => $latestpost['post_id']], ['reason' => $analyzepost['reason'], 'status' => '1']);
->>>>>>> master
                     }
                     $notif_data = [
                         'post_id' => $latestpost['post_id'],

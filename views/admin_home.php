@@ -32,11 +32,7 @@ redirectNotLogin();
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                         Total Resolutions</div>
-<<<<<<< HEAD
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count(getAllResolutionsDesc(null));?></div>
-=======
                                     <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count(getAllResolutionsDesc(null)); ?></div>
->>>>>>> master
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-file fa-2x text-gray-300"></i>
@@ -53,13 +49,8 @@ redirectNotLogin();
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-<<<<<<< HEAD
-                                    Published Resolutions</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count(find_where('resolutions', ['status'=> '1'])); ?></div>
-=======
                                         Published Resolutions</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count(find_where('resolutions', ['status' => '1'])); ?></div>
->>>>>>> master
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-file fa-2x text-gray-300"></i>
@@ -76,13 +67,8 @@ redirectNotLogin();
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-<<<<<<< HEAD
-                                    Unpublished Resolutions</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count(find_where('resolutions', ['status'=> '0'])); ?></div>
-=======
                                         Unpublished Resolutions</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count(find_where('resolutions', ['status' => '0'])); ?></div>
->>>>>>> master
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-file fa-2x text-gray-300"></i>
@@ -100,11 +86,7 @@ redirectNotLogin();
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                         Total Ordinances</div>
-<<<<<<< HEAD
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count(findAll('ordinances')); ?></div>
-=======
                                     <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count(findAll('ordinances')); ?></div>
->>>>>>> master
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-file fa-2x text-gray-300"></i>
@@ -121,13 +103,8 @@ redirectNotLogin();
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-<<<<<<< HEAD
-                                    Published Ordinances</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count(find_where('ordinances', ['status'=> '1'])); ?></div>
-=======
                                         Published Ordinances</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count(find_where('ordinances', ['status' => '1'])); ?></div>
->>>>>>> master
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-file fa-2x text-gray-300"></i>
@@ -144,13 +121,8 @@ redirectNotLogin();
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
-<<<<<<< HEAD
-                                    Unpublished Ordinances</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count(find_where('ordinances', ['status'=> '0'])); ?></div>
-=======
                                         Unpublished Ordinances</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count(find_where('ordinances', ['status' => '0'])); ?></div>
->>>>>>> master
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-file fa-2x text-gray-300"></i>
@@ -167,13 +139,8 @@ redirectNotLogin();
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
-<<<<<<< HEAD
-                                    Total Citizen Users</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count(find_where('users', ['user_type'=> 'citizen'])); ?></div>
-=======
                                         Total Citizen Users</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count(find_where('users', ['user_type' => 'citizen'])); ?></div>
->>>>>>> master
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -191,11 +158,7 @@ redirectNotLogin();
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                         Total Topics</div>
-<<<<<<< HEAD
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count(findAll('posts'));?></div>
-=======
                                     <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count(findAll('posts')); ?></div>
->>>>>>> master
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-comments fa-2x text-gray-300"></i>

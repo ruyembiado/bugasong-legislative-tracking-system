@@ -1949,11 +1949,7 @@ function getMyNotification($user_id, $limit = null, $onlyUnread = false)
     global $conn;
 
     // Base SQL query to fetch notifications
-<<<<<<< HEAD
-    $sql = "SELECT *
-=======
     $sql = "SELECT n.date_added, n.notification_id, n.post_id, n.user_id, n.notification_content, n.is_read
->>>>>>> master
             FROM notification n
             INNER JOIN users u ON n.user_id = u.user_id
             WHERE u.user_id = ?";
