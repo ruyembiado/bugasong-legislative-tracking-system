@@ -55,4 +55,8 @@ clearFormSession();
     <?php endif; ?>
     <!-- End Header -->
     <!-- Page Wrapper -->
+<<<<<<< HEAD
     <div id="wrapper" class="" style="min-height: 52vh">
+=======
+    <div id="" class="" style="min-height: 52vh">
+>>>>>>> master

@@ -22,8 +22,20 @@ redirectNotLogin();
         <?php } ?>
         <!-- End of Topbar -->
 
+<<<<<<< HEAD
         <?php if (isAdmin() || isMember()): ?>
             <!-- Begin Page Content -->
+=======
+        <?php if (isMember()) : ?>
+            <div class="back-button col-8 mb-3">
+                <a href="<?php echo isAdmin() ? 'admin_home.php' : 'citizen_home.php' ?>" class="float-right btn btn-primary m-1"><i class="fas fa-arrow-left"></i></a>
+            </div>
+        <?php endif; ?>
+
+        <?php if (isAdmin() || isMember()) : ?>
+            <!-- Begin Page Content -->
+
+>>>>>>> master
             <div class="container-fluid <?php echo isMember() ? 'd-flex justify-content-center pt-4' : ''; ?>">
                 <?php if (isAdmin()) : ?>
                     <!-- Page Heading -->
@@ -101,7 +113,11 @@ redirectNotLogin();
 
             </div>
             <!-- /.container-fluid -->
+<<<<<<< HEAD
         <?php else:
+=======
+        <?php else :
+>>>>>>> master
             redirect('dashboard', ''); ?>
         <?php endif; ?>
 
