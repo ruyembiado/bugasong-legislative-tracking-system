@@ -87,11 +87,7 @@ redirectNotLogin();
                                                 <?php endif; ?>
                                                 <?php if (isset($_GET['publish'])): ?>
                                                     <a class="status-button <?php echo ($resolution['status'] == '0') ? '' : 'unpublish'; ?>"
-<<<<<<< HEAD
                                                         href="../actions/admin_update.php?update_status=<?php echo $resolution['status']; ?>&resolution_id=<?php echo $resolution['resolution_id']; ?>"><?php echo ($resolution['status'] == '0') ? '<p class="text-light btn btn-danger ">Unpublished</p>' : '<p class="text-light btn btn-success">Published</p>' ?></a>
-=======
-                                                        href="../actions/admin_update.php?update_status=<?php echo $resolution['status']; ?>&resolution_id=<?php echo $resolution['resolution_id']; ?>"><?php echo ($resolution['status'] == '0') ? '<p class="text-light btn btn-danger ">Unpublish</p>' : '<p class="text-light btn btn-success">Publish</p>' ?></a>
->>>>>>> master
                                                 <?php endif; ?>
                                             </td>
                                         </tr>

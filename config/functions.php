@@ -1603,7 +1603,7 @@ function getDocumentsByCategoryName($category_name, $category_type)
                 oc.ordinance_category_name AS category_name
             FROM ordinances o
             INNER JOIN ordinance_cat oc ON o.ordinance_cat_id = oc.ordinance_cat_id
-            WHERE oc.ordinance_category_name = ?
+            WHERE o.status = 1 AND oc.ordinance_category_name = ?
         ";
     } elseif ($category_type === 'resolution') {
         $sql = "
@@ -1615,7 +1615,7 @@ function getDocumentsByCategoryName($category_name, $category_type)
                 rc.resolution_category_name AS category_name
             FROM resolutions r
             INNER JOIN resolution_cat rc ON r.resolution_cat_id = rc.resolution_cat_id
-            WHERE rc.resolution_category_name = ?
+            WHERE r.status = 1 AND rc.resolution_category_name = ?
         ";
     }
 

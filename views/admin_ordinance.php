@@ -88,7 +88,7 @@ redirectNotLogin();
                                                 <?php endif; ?>
                                                 <?php if (isset($_GET['publish'])): ?>
                                                     <a class="status-button <?php echo ($ordinance['status'] == '0') ? '' : 'unpublish'; ?>"
-                                                        href="../actions/admin_update.php?update_status=<?php echo $ordinance['status']; ?>&ordinance_id=<?php echo $ordinance['ordinance_id']; ?>"><?php echo ($ordinance['status'] == '0') ? '<p class="text-light btn btn-danger ">Unpublish</p>' : '<p class="text-light btn btn-success">Publish</p>' ?></a>
+                                                        href="../actions/admin_update.php?update_status=<?php echo $ordinance['status']; ?>&ordinance_id=<?php echo $ordinance['ordinance_id']; ?>"><?php echo ($ordinance['status'] == '0') ? '<p class="text-light btn btn-danger ">Unpublished</p>' : '<p class="text-light btn btn-success">Published</p>' ?></a>
                                                 <?php endif; ?>
                                             </td>
                                         </tr>
