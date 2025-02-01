@@ -28,9 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password'])) {
             'password'  => password_hash($_POST['password'], PASSWORD_DEFAULT), //encrypt the password like md5
         ]; //put it in array before saving
 
-        $update = update('users', ['email' => $_POST['email']], $data); // $update = update('table_name', ['colum_name'=>$username]); if there is one data to update use this
+        $update = update('users', ['email' => $_POST['user_id']], $data); // $update = update('table_name', ['colum_name'=>$username]); if there is one data to update use this
 
         if ($update) {
+            unset($_SESSION['user_id']);
             removeValue(); //remove the retain value in inputs
             setFlash('success', 'Password Updated Successfully'); //set message
             redirect('index'); //shortcut for header('location:index.php ');

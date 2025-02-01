@@ -31,7 +31,7 @@
                     <?php endif; ?>
                 </div>
                 <div class="m-1 mb-4">
-                    <input type="hidden" name="email" value="<?php echo $_SESSION['email_address']; ?>">
+                    <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
                     <button type="submit" name="new_password" value="new_password" class="button-size form-control btn-primary rounded" style="font-size: 14px;">Update</button>
                 </div>
             </form>

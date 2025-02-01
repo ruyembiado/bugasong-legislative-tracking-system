@@ -19,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset_password'])) {
         $otp = rand(100000, 999999);
         $_SESSION['otp'] = $otp;
         $_SESSION['otp_expiry'] = time() + 180; // Current time + 180 seconds (3 minutes)
-        $_SESSION['email_address'] = $_POST['email'];
-
+        $user = find('users', ['email' => $_POST['email']]);
+        $_SESSION['user_id'] = $user['user_id'];
         // Send OTP via PHPMailer
         $mail = new PHPMailer(true); // Passing `true` enables exceptions
 
