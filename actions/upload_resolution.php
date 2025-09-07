@@ -127,7 +127,7 @@ if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0
         $allowedfileExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
 
         if (in_array($fileExtension, $allowedfileExtensions)) {
-            $uploadFileDir = __DIR__ . '/../uploads/'; // safer: absolute path
+            $uploadFileDir = '../uploads/';
 
             // Check if uploads folder exists, if not create it
             if (!is_dir($uploadFileDir)) {

@@ -1,4 +1,10 @@
 <?php
+header('Content-Type: application/json; charset=utf-8');
+error_reporting(E_ALL);
+ini_set('display_errors', 0); // don’t print HTML errors
+ini_set('log_errors', 1);     // log errors to a file instead
+ini_set('error_log', __DIR__ . '/error.log'); // error log path
+
 require_once '../config/config.php';
 require '../vendor/autoload.php';
 
@@ -133,14 +139,14 @@ if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0
         $allowedfileExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
 
         if (in_array($fileExtension, $allowedfileExtensions)) {
-            $uploadFileDir = __DIR__ . '/../uploads/'; // safer: absolute path
+            $uploadFileDir = '../uploads/';
 
             // Check if uploads folder exists, if not create it
             if (!is_dir($uploadFileDir)) {
                 mkdir($uploadFileDir, 0777, true); // creates the folder with full permissions
             }
             $dest_path = $uploadFileDir . $fileName;
-            
+
             $ordinance_file = get_file_by_filename('ordinances', $dest_path);
 
             if ($ordinance_file && $dest_path == $ordinance_file['file']) {
