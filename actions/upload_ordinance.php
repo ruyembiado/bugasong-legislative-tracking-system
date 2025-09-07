@@ -8,7 +8,7 @@ function isTesseractInstalled()
 {
     $output = null;
     $retval = null;
-    exec('tesseract -v', $output, $retval);
+    exec('"C:\\Program Files\\Tesseract-OCR\\tesseract.exe" -v', $output, $retval);
     return $retval === 0;
 }
 
@@ -29,7 +29,7 @@ function convertPdfToImages($pdfPath, $outputDir)
 
 function extractTextFromImage($imagePath)
 {
-    return (new TesseractOCR($imagePath))->run();
+    return (new TesseractOCR($imagePath))->executable('C:\\Program Files\\Tesseract-OCR\\tesseract.exe')->run();
 }
 
 function extractTextFromPdf($pdfPath, $pdftoimageUrls)
@@ -107,6 +107,7 @@ if (!isTesseractInstalled()) {
         'success' => false,
         'message' => 'Tesseract OCR is not installed or not found in PATH.'
     ]);
+    exit;
 }
 
 if (!isPdftoppmInstalled()) {
@@ -114,6 +115,7 @@ if (!isPdftoppmInstalled()) {
         'success' => false,
         'message' => 'pdftoppm is not installed or not found in PATH.'
     ]);
+    exit;
 }
 
 if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0])) {

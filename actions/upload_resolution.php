@@ -1,4 +1,10 @@
 <?php
+header('Content-Type: application/json; charset=utf-8');
+error_reporting(E_ALL);
+ini_set('display_errors', 0); // don’t print HTML errors
+ini_set('log_errors', 1);     // log errors to a file instead
+ini_set('error_log', __DIR__ . '/error.log'); // error log path
+
 require_once '../config/config.php';
 require '../vendor/autoload.php';
 
@@ -8,7 +14,7 @@ function isTesseractInstalled()
 {
     $output = null;
     $retval = null;
-    exec('tesseract -v', $output, $retval);
+    exec('"C:\\Program Files\\Tesseract-OCR\\tesseract.exe" -v', $output, $retval);
     return $retval === 0;
 }
 
@@ -29,7 +35,7 @@ function convertPdfToImages($pdfPath, $outputDir)
 
 function extractTextFromImage($imagePath)
 {
-    return (new TesseractOCR($imagePath))->run();
+    return (new TesseractOCR($imagePath))->executable('C:\\Program Files\\Tesseract-OCR\\tesseract.exe')->run();
 }
 
 function extractTextFromPdf($pdfPath, $pdftoimageUrls)
@@ -94,6 +100,7 @@ if (!isTesseractInstalled()) {
         'success' => false,
         'message' => 'Tesseract OCR is not installed or not found in PATH.'
     ]);
+    exit;
 }
 
 if (!isPdftoppmInstalled()) {
@@ -101,6 +108,7 @@ if (!isPdftoppmInstalled()) {
         'success' => false,
         'message' => 'pdftoppm is not installed or not found in PATH.'
     ]);
+    exit;
 }
 
 if (isset($_FILES['uploadedFiles']) && !empty($_FILES['uploadedFiles']['name'][0])) {

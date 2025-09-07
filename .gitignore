@@ -1,0 +1,10 @@
+# Ignore uploads folder
+uploads/
+
+# Ignore common system files
+*.log
+*.env
+/vendor/
+/node_modules/
+/composer.lock
+/package-lock.json
